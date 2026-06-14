@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alberi Genealogici</title>
+<style>
+  :root{
+    --ink:#1a160f; --ink-2:#241e15; --ink-3:#352c1d;
+    --gold:#b8923f; --gold-bright:#d6ad52;
+    --parch:#12170f; --grid:#28331e;
+    --surface:#e7dabf; --surface-2:#dccdaa; --surface-3:#f0e6cd;
+    --text:#2c2417; --muted:#7a6e54;
+    --line:#c4b48c; --line-soft:#d3c5a0;
+    --danger:#a8412f; --danger-bright:#c0533f;
+    --on-ink:#ead9bb; --on-ink-muted:#a89a7c;
+    --shadow:0 16px 36px rgba(0,0,0,.5);
+    --display:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+    --ui:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0}
+  body{font-family:var(--ui);color:var(--text);background:var(--parch);overflow:hidden;display:flex}
+
+  /* ---------- Sidebar ---------- */
+  #sidebar{
+    width:288px;min-width:288px;height:100vh;background:var(--ink);color:var(--on-ink);
+    display:flex;flex-direction:column;border-right:1px solid #0d0f1c;z-index:30;
+  }
+  .brand{padding:20px 20px 14px;border-bottom:1px solid var(--ink-3)}
+  .brand h1{font-family:var(--display);font-size:23px;font-weight:600;margin:0;letter-spacing:.3px;display:flex;align-items:center;gap:9px}
+  .brand .crest{color:var(--gold)}
+  .brand p{margin:4px 0 0;font-size:11.5px;color:var(--on-ink-muted);letter-spacing:.4px;text-transform:uppercase}
+
+  .side-scroll{flex:1;overflow-y:auto;padding:14px 14px 4px}
+  .side-label{font-size:11px;text-transform:uppercase;letter-spacing:.9px;color:var(--on-ink-muted);margin:6px 4px 8px;font-weight:600}
+
+  .tree-row{display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:9px;cursor:pointer;margin-bottom:4px;border:1px solid transparent;transition:background .12s}
+  .tree-row:hover{background:var(--ink-2)}
+  .tree-row.active{background:var(--ink-2);border-color:var(--gold)}
+  .tree-row .dot{width:9px;height:9px;border-radius:50%;background:var(--gold);flex:none;opacity:.5}
+  .tree-row.active .dot{opacity:1}
+  .tree-row .tname{flex:1;font-size:14.5px;font-family:var(--display);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .tree-row .count{font-size:11px;color:var(--on-ink-muted)}
+  .tree-row .mini{opacity:0;background:none;border:none;color:var(--on-ink-muted);cursor:pointer;font-size:13px;padding:2px 4px;border-radius:5px}
+  .tree-row:hover .mini{opacity:1}
+  .tree-row .mini:hover{color:#fff;background:#0003}
+
+  .side-block{margin-top:16px;padding-top:14px;border-top:1px solid var(--ink-3)}
+  .legend{display:flex;flex-direction:column;gap:10px;padding:2px 4px}
+  .lg{display:flex;align-items:center;gap:11px;font-size:13.5px;color:#d8cdb2;font-family:var(--display)}
+  .lg-line{width:34px;border-top:3px solid var(--gold);flex:none;border-radius:2px}
+  .lg-line.dashed{border-top-style:dashed}
+  .lg-line.dotted{border-top-style:dotted}
+  .lg .hrt{color:#c97b6e;font-size:12px;margin-left:-3px}
+  .side-tip{font-size:11.5px;color:var(--on-ink-muted);line-height:1.45;margin:14px 4px 2px;font-style:italic}
+
+  /* per-character visibility chips (inside the character box) */
+  .show-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .schip{display:flex;align-items:center;gap:7px;border:1.5px solid var(--line);border-radius:9px;padding:8px 9px;font-size:13px;cursor:pointer;background:var(--surface-3);user-select:none;color:var(--text)}
+  .schip:has(input:checked){border-color:var(--gold);background:#ecdcb0;font-weight:600}
+  .schip input{accent-color:var(--gold);width:15px;height:15px;cursor:pointer}
+
+  .side-foot{padding:12px 14px;border-top:1px solid var(--ink-3);display:flex;flex-direction:column;gap:8px}
+  .saved-pill{display:flex;align-items:center;gap:7px;font-size:11.5px;color:var(--on-ink-muted);justify-content:center;height:16px;transition:opacity .3s}
+  .saved-pill .chk{color:#7ec98a}
+
+  /* ---------- Buttons ---------- */
+  button{font-family:inherit}
+  .btn{display:flex;align-items:center;justify-content:center;gap:8px;border:none;border-radius:9px;padding:10px 12px;font-size:13.5px;font-weight:600;cursor:pointer;transition:transform .05s, background .12s, filter .12s}
+  .btn:active{transform:translateY(1px)}
+  .btn-gold{background:var(--gold);color:#1e2235}
+  .btn-gold:hover{background:var(--gold-bright)}
+  .btn-ghost{background:var(--ink-2);color:#d9dcea;border:1px solid var(--ink-3)}
+  .btn-ghost:hover{background:var(--ink-3)}
+  .btn-row{display:flex;gap:8px}
+  .btn-row .btn{flex:1}
+
+  /* ---------- Canvas ---------- */
+  #stage{position:relative;flex:1;height:100vh;overflow:hidden;
+    background:var(--parch);
+    background-image:radial-gradient(var(--grid) 1.3px, transparent 1.4px);
+    background-size:28px 28px;
+    box-shadow:inset 0 0 240px 50px rgba(0,0,0,.55);
+    cursor:grab;}
+  #stage.panning{cursor:grabbing}
+  #world{position:absolute;left:0;top:0;width:0;height:0;transform-origin:0 0}
+  #edges{position:absolute;left:-12000px;top:-12000px;width:24000px;height:24000px;overflow:visible;z-index:1;pointer-events:none}
+  #edges line.hit{pointer-events:stroke;cursor:pointer}
+  #nodeLayer{position:absolute;left:0;top:0;z-index:2}
+  #labelLayer{position:absolute;left:0;top:0;z-index:4;pointer-events:none}
+
+  .elabel{position:absolute;transform:translate(-50%,-50%);background:var(--surface);
+    border:1px solid var(--line);border-radius:999px;padding:2px 10px;font-size:11px;font-weight:600;font-family:var(--display);
+    color:var(--text);box-shadow:0 3px 9px rgba(0,0,0,.4);white-space:nowrap;pointer-events:auto;cursor:pointer;letter-spacing:.3px}
+  .elabel:hover{border-color:var(--danger)}
+  .elabel .x{color:var(--danger);margin-left:6px;font-weight:700;opacity:0;width:0;display:inline-block;overflow:hidden;transition:opacity .1s}
+  .elabel:hover .x{opacity:1;width:auto;margin-left:6px}
+
+  /* ---------- Node card ---------- */
+  .node{position:absolute;width:190px;background:var(--surface);border:2.5px solid #3f6b4a;
+    border-radius:13px;box-shadow:var(--shadow), inset 0 0 0 1px rgba(60,46,24,.16);transform-origin:top left;user-select:none;cursor:grab;overflow:hidden}
+  .node.dragging{cursor:grabbing;z-index:5}
+  .node.selected{box-shadow:0 0 0 3px var(--gold), var(--shadow)}
+  .node-hd{display:flex;align-items:center;gap:9px;padding:8px 10px 8px 9px;min-height:30px;position:relative}
+  .avatar{width:34px;height:34px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;
+    font-weight:700;font-size:13px;overflow:hidden;background:rgba(255,255,255,.22);border:1.5px solid rgba(255,255,255,.5)}
+  .avatar img{width:100%;height:100%;object-fit:cover}
+  .node-name{flex:1;min-width:0;font-family:var(--display);font-size:15.5px;font-weight:600;line-height:1.14;white-space:normal;overflow-wrap:normal;word-break:normal;hyphens:none}
+  .node-edit{position:absolute;top:5px;right:5px;opacity:0;background:rgba(255,255,255,.3);border:none;border-radius:6px;width:21px;height:21px;cursor:pointer;font-size:12px;color:inherit;z-index:2}
+  .node:hover .node-edit{opacity:1}
+  .node-edit:hover{background:rgba(255,255,255,.55)}
+  .node-body{padding:7px 11px 9px;display:flex;flex-direction:column;gap:3px;background:var(--surface)}
+  .node-body:empty{display:none}
+  .row{display:flex;gap:7px;font-size:12px;line-height:1.3}
+  .row .k{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.4px;min-width:46px;padding-top:1px;font-weight:600}
+  .row .v{color:var(--text);flex:1;word-break:break-word}
+  .row.note .v{font-style:italic;color:#4a5066}
+  .rsz{position:absolute;right:0;bottom:0;width:18px;height:18px;cursor:nwse-resize;
+    background:linear-gradient(135deg,transparent 50%, #c9c2b2 50% 60%, transparent 60% 72%, #c9c2b2 72% 82%, transparent 82%);opacity:0}
+  .node:hover .rsz{opacity:.8}
+
+  /* ---------- Empty state ---------- */
+  #empty{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;pointer-events:none;color:#9a917e}
+  #empty .e-ic{font-size:46px;opacity:.6}
+  #empty p{font-size:15px;margin:0;text-align:center;max-width:300px;line-height:1.5}
+
+  /* ---------- Floating controls ---------- */
+  .fab-add{position:absolute;left:20px;top:18px;z-index:20;display:flex;gap:10px;flex-wrap:wrap}
+  .fab-add .btn{box-shadow:var(--shadow)}
+  .btn-paper{background:var(--surface);color:var(--text);border:1px solid var(--line)}
+  .btn-paper:hover{background:var(--surface-2)}
+
+  /* ---------- Link builder ---------- */
+  .lk-help{font-size:13px;color:var(--muted);line-height:1.55;margin:0 0 16px}
+  .lk-card{border:1.5px solid var(--line);border-radius:14px;padding:14px;margin-bottom:14px;background:var(--surface-3)}
+  .lk-top{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .lk-num{font-family:var(--display);font-weight:600;font-size:14px;color:var(--text);white-space:nowrap}
+  .lk-type{flex:1;border:1.5px solid var(--line);border-radius:9px;padding:8px 9px;font-size:13.5px;font-family:inherit;background:var(--surface);color:var(--text)}
+  .lk-del{background:none;border:none;color:var(--danger);cursor:pointer;font-size:15px;padding:4px 7px;border-radius:7px;flex:none}
+  .lk-del:hover{background:#0000000d}
+  .lk-cap{font-size:10.5px;text-transform:uppercase;letter-spacing:.6px;color:#5a4f38;font-weight:700;margin:6px 0 5px}
+  .lk-arrow{text-align:center;font-size:17px;color:var(--gold);margin:8px 0 0}
+  .lk-hint{font-size:11.5px;color:var(--muted);font-style:italic;margin-top:9px;line-height:1.4}
+  .ms-grid{display:flex;flex-wrap:wrap;gap:6px;border:1.5px solid var(--line);border-radius:10px;padding:8px;background:var(--surface);max-height:150px;overflow-y:auto}
+  .pick{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--line);background:var(--surface-3);border-radius:999px;padding:5px 11px;font-size:12.5px;font-weight:600;color:var(--text);cursor:pointer;font-family:inherit}
+  .pick:hover{border-color:var(--gold)}
+  .pick.on{background:#ecdcb0;border-color:var(--gold)}
+  .pick.on::after{content:"✓";margin-left:1px;color:#7a6526;font-weight:800}
+  .pick .dot{width:9px;height:9px;border-radius:50%;flex:none}
+  .ms-empty{font-size:12px;color:var(--muted);font-style:italic;padding:4px}
+  .lk-label{width:100%;border:1.5px solid var(--gold);border-radius:9px;padding:9px 10px;font-size:13.5px;font-family:inherit;background:#f6eed8;color:var(--text);margin-bottom:8px}
+  .lk-label:focus{outline:none;background:#fff}
+  .lk-add{width:100%;border:1.5px dashed var(--line);background:none;border-radius:11px;padding:12px;font-size:13.5px;font-weight:600;color:var(--text);cursor:pointer;font-family:inherit}
+  .lk-add:hover{background:var(--surface-3)}
+
+  #zoombar{position:absolute;right:20px;bottom:20px;z-index:20;display:flex;align-items:center;gap:2px;
+    background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);padding:4px}
+  #zoombar button{width:34px;height:34px;border:none;background:none;border-radius:8px;cursor:pointer;font-size:18px;color:var(--text);display:flex;align-items:center;justify-content:center}
+  #zoombar button:hover{background:var(--surface-2)}
+  #zoombar .zlabel{min-width:50px;text-align:center;font-size:12.5px;font-weight:600;color:var(--text);cursor:pointer;padding:0 4px}
+  #zoombar .sep{width:1px;height:22px;background:var(--line);margin:0 2px}
+
+  /* ---------- Modal ---------- */
+  .overlay{position:fixed;inset:0;background:rgba(10,8,4,.6);backdrop-filter:blur(2px);z-index:50;display:none;align-items:center;justify-content:center;padding:20px}
+  .overlay.show{display:flex}
+  .modal{background:var(--surface);width:560px;max-width:100%;max-height:92vh;overflow-y:auto;border-radius:18px;box-shadow:0 30px 70px rgba(0,0,0,.55)}
+  .m-hd{padding:20px 24px 14px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+  .m-hd h2{font-family:var(--display);font-size:21px;margin:0;font-weight:600}
+  .m-hd .close{background:none;border:none;font-size:24px;cursor:pointer;color:var(--muted);line-height:1;padding:0 4px}
+  .m-bd{padding:18px 24px 8px}
+  .field{margin-bottom:15px}
+  .field>label{display:block;font-size:12px;font-weight:600;color:#5a4f38;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px}
+  .field input[type=text],.field textarea,.field select{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:10px 11px;font-size:14px;font-family:inherit;background:var(--surface-3);color:var(--text)}
+  .field input[type=text]:focus,.field textarea:focus,.field select:focus{outline:none;border-color:var(--gold);background:#f6eed8}
+  .field textarea{resize:vertical;min-height:64px}
+  .two{display:flex;gap:12px}
+  .two>.field{flex:1}
+
+  .pron{display:flex;gap:7px;flex-wrap:wrap}
+  .pron .opt{border:1.5px solid var(--line);border-radius:9px;padding:8px 12px;font-size:13px;cursor:pointer;background:var(--surface-3);user-select:none}
+  .pron .opt.sel{border-color:var(--gold);background:#ecdcb0;font-weight:600}
+
+  .swatches{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .sw{width:26px;height:26px;border-radius:50%;cursor:pointer;border:2px solid var(--surface);box-shadow:0 0 0 1.5px var(--line)}
+  .sw.sel{box-shadow:0 0 0 2px var(--gold), 0 0 0 4px var(--surface) inset}
+  .custom-color{display:flex;align-items:center;gap:10px;margin-top:11px;border:1.5px solid var(--line);border-radius:11px;padding:8px 10px;background:var(--surface-3)}
+  .custom-color.active{border-color:var(--gold);background:#ecdcb0}
+  .cc-swatch{width:34px;height:34px;border-radius:9px;overflow:hidden;border:1.5px solid var(--line);flex:none;cursor:pointer;padding:0;display:block}
+  .cc-swatch input[type=color]{width:200%;height:200%;margin:-25%;border:none;padding:0;cursor:pointer;background:none}
+  .cc-hex{width:108px!important;text-transform:lowercase;font-family:ui-monospace,monospace}
+  .cc-txt{font-size:12.5px;color:#5a4f38;font-weight:600}
+
+  .photo-row{display:flex;align-items:center;gap:14px}
+  .photo-prev{width:62px;height:62px;border-radius:12px;background:var(--surface-2);border:1.5px dashed var(--line);display:flex;align-items:center;justify-content:center;overflow:hidden;font-size:22px;color:#a89878;flex:none}
+  .photo-prev img{width:100%;height:100%;object-fit:cover}
+  .photo-btns{display:flex;flex-direction:column;gap:6px}
+  .mini-btn{border:1px solid var(--line);background:var(--surface-3);border-radius:8px;padding:7px 12px;font-size:12.5px;cursor:pointer;font-weight:600;color:var(--text)}
+  .mini-btn:hover{background:var(--surface-2)}
+  .mini-btn.danger{color:var(--danger);border-color:#d6a99c}
+
+  .size-row{display:flex;align-items:center;gap:12px}
+  .size-row input[type=range]{flex:1;accent-color:var(--gold)}
+  .size-val{font-size:12.5px;color:var(--muted);min-width:42px;text-align:right}
+
+  .m-ft{padding:14px 24px 20px;display:flex;gap:10px;align-items:center;border-top:1px solid var(--line);margin-top:6px;position:sticky;bottom:0;background:var(--surface)}
+  .m-ft .spacer{flex:1}
+  .btn-primary{background:var(--gold);color:#1e2235;border:none;border-radius:10px;padding:11px 22px;font-size:14px;font-weight:700;cursor:pointer}
+  .btn-primary:hover{background:var(--gold-bright)}
+  .btn-cancel{background:none;border:1px solid var(--line);border-radius:10px;padding:11px 18px;font-size:14px;font-weight:600;cursor:pointer;color:#5a4f38}
+  .btn-del{background:none;border:none;color:var(--danger);font-size:13.5px;font-weight:600;cursor:pointer;padding:6px 4px}
+  .btn-del:hover{text-decoration:underline}
+
+  /* ---------- Toast ---------- */
+  #toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);z-index:80;
+    background:var(--ink);color:var(--on-ink);padding:11px 18px;border-radius:11px;font-size:13.5px;box-shadow:var(--shadow);
+    opacity:0;pointer-events:none;transition:opacity .2s, transform .2s;display:flex;align-items:center;gap:8px}
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  .hidden{display:none!important}
+  ::-webkit-scrollbar{width:10px;height:10px}
+  ::-webkit-scrollbar-thumb{background:#0000002e;border-radius:6px}
+  #sidebar ::-webkit-scrollbar-thumb{background:#ffffff24}
+</style>
+</head>
+<body>
+
+  <!-- SIDEBAR -->
+  <aside id="sidebar">
+    <div class="brand">
+      <h1><span class="crest">❦</span> Alberi Genealogici</h1>
+      <p>Lignaggi dei tuoi personaggi</p>
+    </div>
+
+    <div class="side-scroll">
+      <div class="side-label">I tuoi alberi</div>
+      <div id="treeList"></div>
+      <button class="btn btn-gold" style="width:100%;margin-top:6px" onclick="newTree()">＋ Nuovo albero</button>
+
+      <div class="side-block">
+        <div class="side-label">Legenda dei legami</div>
+        <div class="legend">
+          <div class="lg"><span class="lg-line"></span> Genitore</div>
+          <div class="lg"><span class="lg-line"></span> Partner <span class="hrt">♥</span></div>
+          <div class="lg"><span class="lg-line dashed"></span> Fratelli</div>
+          <div class="lg"><span class="lg-line dotted"></span> Altro</div>
+        </div>
+        <p class="side-tip">Ogni linea sfuma con i colori dei due personaggi che unisce. La visibilità delle informazioni si imposta dentro la scheda di ciascun personaggio.</p>
+      </div>
+    </div>
+
+    <div class="side-foot">
+      <div class="saved-pill" id="savedPill"><span class="chk">✓</span> Salvato automaticamente</div>
+    </div>
+  </aside>
+
+  <!-- CANVAS -->
+  <main id="stage">
+    <div class="fab-add">
+      <button class="btn btn-gold" onclick="openForm()">＋ Aggiungi personaggio</button>
+      <button class="btn btn-paper" onclick="openLinkModal()">🔗 Crea legame</button>
+    </div>
+
+    <div id="world">
+      <svg id="edges" viewBox="-12000 -12000 24000 24000" preserveAspectRatio="xMinYMin slice"></svg>
+      <div id="nodeLayer"></div>
+      <div id="labelLayer"></div>
+    </div>
+
+    <div id="empty">
+      <div class="e-ic">❦</div>
+      <p>Questo albero è vuoto.<br>Aggiungi il primo personaggio per iniziare il lignaggio.</p>
+    </div>
+
+    <!-- Zoom -->
+    <div id="zoombar">
+      <button title="Riduci" onclick="zoomBy(0.83)">−</button>
+      <span class="zlabel" id="zlabel" title="Adatta alla vista" onclick="fitView()">100%</span>
+      <button title="Ingrandisci" onclick="zoomBy(1.2)">＋</button>
+      <span class="sep"></span>
+      <button title="Centra / adatta" onclick="fitView()">⤢</button>
+    </div>
+  </main>
+
+  <!-- CHARACTER MODAL -->
+  <div id="overlay" class="overlay">
+    <div id="modal" class="modal">
+      <div class="m-hd">
+        <h2 id="mTitle">Nuovo personaggio</h2>
+        <button class="close" onclick="closeForm()">×</button>
+      </div>
+      <div class="m-bd">
+        <div class="field">
+          <label>Nome</label>
+          <input type="text" id="fName" placeholder="Es. Aelwyn Stormcrest" autocomplete="off">
+        </div>
+        <div class="field">
+          <label>Ruolo / Titolo</label>
+          <input type="text" id="fRole" placeholder="Es. Regina, Cavaliere, Mercante…" autocomplete="off">
+        </div>
+
+        <div class="field">
+          <label>Razza</label>
+          <select id="fRace" onchange="onRaceChange()">
+            <option value="">— Nessuna —</option>
+            <optgroup label="Razze comuni (D&D)">
+              <option>Umano</option><option>Elfo</option><option>Alto Elfo</option><option>Elfo dei Boschi</option>
+              <option>Drow (Elfo Oscuro)</option><option>Mezzelfo</option><option>Nano</option><option>Nano delle Colline</option>
+              <option>Nano delle Montagne</option><option>Halfling</option><option>Gnomo</option><option>Mezzorco</option>
+              <option>Tiefling</option><option>Dragonide (Dragonborn)</option><option>Aasimar</option><option>Genasi</option>
+              <option>Goliath</option><option>Tabaxi</option><option>Kenku</option><option>Tritone</option>
+              <option>Firbolg</option><option>Bugbear</option><option>Goblin</option><option>Hobgoblin</option><option>Lucertoloide</option>
+            </optgroup>
+            <optgroup label="Creature fantasy & mitologiche">
+              <option>Centauro</option><option>Ninfa</option><option>Fauno</option><option>Satiro</option>
+              <option>Fata / Folletto</option><option>Driade</option><option>Sirena / Tritone</option><option>Naiade</option>
+              <option>Minotauro</option><option>Arpia</option><option>Gorgone</option><option>Naga</option>
+              <option>Vampiro</option><option>Licantropo (Lupo Mannaro)</option><option>Angelo</option><option>Demone</option>
+              <option>Drago</option><option>Mezzodrago</option><option>Fenice</option><option>Elementale</option>
+              <option>Non-morto</option><option>Lich</option><option>Spettro</option><option>Semidio</option>
+              <option>Djinn / Genio</option><option>Gigante</option><option>Orco</option><option>Troll</option><option>Mutaforma</option>
+            </optgroup>
+          </select>
+          <input type="text" id="fRaceCustom" placeholder="Scrivi la razza personalizzata" autocomplete="off" style="margin-top:8px;display:none">
+          <div style="margin-top:6px"><label class="pron"><span class="opt" id="raceCustomToggle" onclick="toggleRaceCustom()">＋ Razza personalizzata</span></label></div>
+        </div>
+
+        <div class="field">
+          <label>Pronomi</label>
+          <div class="pron" id="pronOpts">
+            <span class="opt" data-g="m">Maschile</span>
+            <span class="opt" data-g="f">Femminile</span>
+            <span class="opt" data-g="n">Neutro</span>
+            <span class="opt" data-g="c">Personalizzato</span>
+          </div>
+          <input type="text" id="fPronCustom" placeholder="Es. xe/xem, ze/zir…" autocomplete="off" style="margin-top:8px;display:none">
+        </div>
+
+        <div class="two">
+          <div class="field"><label>Anno di nascita</label><input type="text" id="fBirth" placeholder="Es. 1023 T.E." autocomplete="off"></div>
+          <div class="field"><label>Anno di morte</label><input type="text" id="fDeath" placeholder="— se vivente" autocomplete="off"></div>
+        </div>
+
+        <div class="field">
+          <label>Colore del personaggio</label>
+          <div class="swatches" id="swatches"></div>
+          <div class="custom-color" id="customColor">
+            <label class="cc-swatch"><input type="color" id="colorInput"></label>
+            <input type="text" id="hexInput" class="cc-hex" maxlength="7" placeholder="#000000" autocomplete="off">
+            <span class="cc-txt">Colore personalizzato</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Foto</label>
+          <div class="photo-row">
+            <div class="photo-prev" id="photoPrev">👤</div>
+            <div class="photo-btns">
+              <button class="mini-btn" onclick="document.getElementById('fPhoto').click()">Carica immagine</button>
+              <button class="mini-btn danger" id="photoRemove" onclick="clearPhoto()" style="display:none">Rimuovi</button>
+            </div>
+            <input type="file" id="fPhoto" accept="image/*" style="display:none" onchange="onPhoto(event)">
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Dimensione icona</label>
+          <div class="size-row">
+            <input type="range" id="fSize" min="0.6" max="2.2" step="0.05" value="1" oninput="document.getElementById('sizeVal').textContent=Math.round(this.value*100)+'%'">
+            <span class="size-val" id="sizeVal">100%</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Cosa mostrare sulla scheda</label>
+          <div class="show-grid" id="showGrid">
+            <label class="schip"><input type="checkbox" data-k="name" checked> Nome</label>
+            <label class="schip"><input type="checkbox" data-k="role" checked> Ruolo</label>
+            <label class="schip"><input type="checkbox" data-k="race" checked> Razza</label>
+            <label class="schip"><input type="checkbox" data-k="years" checked> Anni</label>
+            <label class="schip"><input type="checkbox" data-k="pronouns"> Pronomi</label>
+            <label class="schip"><input type="checkbox" data-k="notes"> Note</label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Note</label>
+          <textarea id="fNotes" placeholder="Storia, legami, segreti…"></textarea>
+        </div>
+      </div>
+      <div class="m-ft">
+        <button class="btn-del" id="delBtn" onclick="deleteCurrent()" style="display:none">🗑 Elimina personaggio</button>
+        <div class="spacer"></div>
+        <button class="btn-cancel" onclick="closeForm()">Annulla</button>
+        <button class="btn-primary" onclick="saveForm()">Salva</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LINK MODAL -->
+  <div id="linkOverlay" class="overlay">
+    <div id="linkModal" class="modal">
+      <div class="m-hd">
+        <h2>Crea legami</h2>
+        <button class="close" onclick="closeLinkModal()">×</button>
+      </div>
+      <div class="m-bd">
+        <p class="lk-help">Scegli uno o più personaggi, il tipo di legame e con chi collegarli. Puoi impostare più legami insieme prima di confermare.</p>
+        <div id="lkRows"></div>
+        <button class="lk-add" onclick="addLinkRow()">＋ Aggiungi un altro legame</button>
+      </div>
+      <div class="m-ft">
+        <div class="spacer"></div>
+        <button class="btn-cancel" onclick="closeLinkModal()">Annulla</button>
+        <button class="btn-primary" onclick="commitLinks()">Crea legami</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+
+<script>
+/* ============================================================
+   STATE & PERSISTENCE
+============================================================ */
+const STORE_KEY = "alberi_genealogici_v4";
+const PRESETS = ["#7d3a36","#a9603e","#b8923f","#6f7a3f","#3f6b4a","#3a7d76","#4a6a8a","#5a4f8a","#79466e","#6a4f37"];
+const DEFAULT_COLOR = "#3f6b4a";
+const REL = {
+  parent:  {label:"genitore", dash:"none",  width:5},
+  partner: {label:"partner ♥", dash:"none",  width:5},
+  sibling: {label:"fratelli", dash:"10 7",  width:4},
+  other:   {label:"legame",   dash:"3 7",   width:4},
+};
+
+let state = load();
+let currentId = state.currentId && state.trees.find(t=>t.id===state.currentId) ? state.currentId
+              : (state.trees[0] ? state.trees[0].id : null);
+
+function uid(){ return (crypto.randomUUID?crypto.randomUUID():"id"+Date.now()+Math.random().toString(16).slice(2)); }
+
+function load(){
+  try{
+    const raw = localStorage.getItem(STORE_KEY);
+    if(raw){ const s = JSON.parse(raw); if(s && s.trees) return normalize(s); }
+  }catch(e){ console.warn("load failed", e); }
+  return { trees:[ blankTree("Albero 1") ], currentId:null };
+}
+function defaultShow(){ return {name:true, role:true, race:true, years:true, pronouns:false, notes:false}; }
+function blankTree(name){ return { id:uid(), name, nodes:[], edges:[], view:{panX:0,panY:0,zoom:1} }; }
+function normalize(s){
+  s.trees = (s.trees||[]).map(t=>({
+    id:t.id||uid(), name:t.name||"Albero", nodes:(t.nodes||[]), edges:(t.edges||[]),
+    view: t.view || {panX:0,panY:0,zoom:1}
+  }));
+  s.trees.forEach(t=>t.nodes.forEach(n=>{
+    n.scale = n.scale||1; n.color = n.color||DEFAULT_COLOR; n.x = n.x||0; n.y = n.y||0;
+    n.show = Object.assign(defaultShow(), n.show||{});
+  }));
+  s.trees.forEach(t=>t.edges.forEach(e=>{ if(e.type==="generic") e.type="other"; }));
+  return s;
+}
+
+let saveTimer=null, fsTimer=null;
+function save(){
+  try{
+    localStorage.setItem(STORE_KEY, JSON.stringify(persistState()));
+    flashSaved();
+  }catch(e){
+    console.error(e);
+    toast("⚠ Spazio di salvataggio pieno — usa «Salva su file» e rimuovi qualche foto.", 4000);
+  }
+}
+function persistState(){ return { trees:state.trees, currentId }; }
+function flashSaved(){
+  const p = document.getElementById("savedPill");
+  p.innerHTML = '<span class="chk">✓</span> Salvato';
+  p.style.opacity="1";
+  clearTimeout(saveTimer);
+  saveTimer=setTimeout(()=>{ p.innerHTML='<span class="chk">✓</span> Salvato automaticamente'; p.style.opacity="0.7"; },1200);
+}
+
+function tree(){ return state.trees.find(t=>t.id===currentId); }
+function view(){ return tree().view; }
+
+/* ============================================================
+   FILE SAVE / LOAD  (whole dataset incl. connections)
+============================================================ */
+let fileHandle=null;
+async function saveToFile(){
+  const data = JSON.stringify(persistState(), null, 2);
+  if(window.showSaveFilePicker){
+    try{
+      if(!fileHandle){
+        fileHandle = await window.showSaveFilePicker({
+          suggestedName:"alberi-genealogici.json",
+          types:[{description:"Dati alberi (JSON)", accept:{"application/json":[".json"]}}]
+        });
+      }
+      const w = await fileHandle.createWritable();
+      await w.write(data); await w.close();
+      toast("💾 Salvato su file");
+      return;
+    }catch(e){ if(e && e.name==="AbortError") return; /* fall back */ }
+  }
+  downloadBlob(data, "alberi-genealogici.json");
+  toast("💾 File scaricato");
+}
+function downloadBlob(text, name){
+  const b = new Blob([text], {type:"application/json"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(b); a.download = name; a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href), 1500);
+}
+async function loadFromFile(){
+  if(window.showOpenFilePicker){
+    try{
+      const [h] = await window.showOpenFilePicker({types:[{description:"JSON", accept:{"application/json":[".json"]}}]});
+      const f = await h.getFile();
+      importData(await f.text(), h);
+      return;
+    }catch(e){ if(e && e.name==="AbortError") return; }
+  }
+  const inp = document.createElement("input");
+  inp.type="file"; inp.accept=".json,application/json";
+  inp.onchange = () => { const f=inp.files[0]; if(!f) return; const r=new FileReader(); r.onload=()=>importData(r.result,null); r.readAsText(f); };
+  inp.click();
+}
+function importData(text, handle){
+  try{
+    const s = JSON.parse(text);
+    if(!s || !s.trees) throw new Error("formato");
+    if(!confirm("Caricare questi dati? Sostituiranno gli alberi attualmente aperti (puoi sempre ri-salvare prima da «Salva su file»).")) return;
+    state = normalize(s);
+    currentId = state.currentId && state.trees.find(t=>t.id===state.currentId) ? state.currentId : (state.trees[0]?state.trees[0].id:null);
+    if(handle) fileHandle = handle;
+    save(); renderAll();
+    toast("📂 Dati caricati");
+  }catch(e){ toast("⚠ File non valido"); }
+}
+
+/* ============================================================
+   SELECTION
+============================================================ */
+let selNodes = new Set();
+let selEdge = null;
+
+function toggleNode(id){ selEdge=null; if(selNodes.has(id)) selNodes.delete(id); else selNodes.add(id); renderNodes(); }
+function clearSelection(){ selNodes.clear(); selEdge=null; renderNodes(); renderEdges(); }
+function selectEdge(id){ selEdge=id; selNodes.clear(); renderNodes(); renderEdges(); }
+
+/* ============================================================
+   COORDINATE HELPERS
+============================================================ */
+const stage = document.getElementById("stage");
+const world = document.getElementById("world");
+function applyTransform(){
+  const v=view();
+  world.style.transform = `translate(${v.panX}px, ${v.panY}px) scale(${v.zoom})`;
+  document.getElementById("zlabel").textContent = Math.round(v.zoom*100)+"%";
+}
+function screenToWorld(cx, cy){
+  const r = stage.getBoundingClientRect(); const v=view();
+  return { x:(cx-r.left-v.panX)/v.zoom, y:(cy-r.top-v.panY)/v.zoom };
+}
+function viewportCenterWorld(){
+  const r = stage.getBoundingClientRect();
+  return screenToWorld(r.left + r.width/2, r.top + r.height/2);
+}
+
+/* ============================================================
+   ZOOM & PAN
+============================================================ */
+function zoomAtClient(cx, cy, factor){
+  const r = stage.getBoundingClientRect(); const v=view();
+  const fx=cx-r.left, fy=cy-r.top;
+  const wx=(fx-v.panX)/v.zoom, wy=(fy-v.panY)/v.zoom;
+  v.zoom = Math.min(3, Math.max(0.2, v.zoom*factor));
+  v.panX = fx - wx*v.zoom; v.panY = fy - wy*v.zoom;
+  applyTransform(); saveSoon();
+}
+function zoomBy(factor){
+  const r = stage.getBoundingClientRect();
+  zoomAtClient(r.left + r.width/2, r.top + r.height/2, factor);
+}
+function fitView(){
+  const t=tree(); const v=view();
+  if(!t.nodes.length){ v.panX=0; v.panY=0; v.zoom=1; applyTransform(); save(); return; }
+  let minX=1e9,minY=1e9,maxX=-1e9,maxY=-1e9;
+  t.nodes.forEach(n=>{
+    const el=document.querySelector(`.node[data-id="${n.id}"]`);
+    const w=(el?el.offsetWidth:190)*n.scale, h=(el?el.offsetHeight:90)*n.scale;
+    minX=Math.min(minX,n.x); minY=Math.min(minY,n.y);
+    maxX=Math.max(maxX,n.x+w); maxY=Math.max(maxY,n.y+h);
+  });
+  const r=stage.getBoundingClientRect();
+  const pad=80;
+  const zw=(r.width-pad*2)/(maxX-minX||1), zh=(r.height-pad*2)/(maxY-minY||1);
+  v.zoom=Math.min(2, Math.max(0.2, Math.min(zw,zh)));
+  v.panX = r.width/2 - ((minX+maxX)/2)*v.zoom;
+  v.panY = r.height/2 - ((minY+maxY)/2)*v.zoom;
+  applyTransform(); save();
+}
+let saveSoonTimer=null;
+function saveSoon(){ clearTimeout(saveSoonTimer); saveSoonTimer=setTimeout(save,400); }
+
+/* ============================================================
+   GLOBAL POINTER (pan / drag / resize)
+============================================================ */
+let drag=null;
+stage.addEventListener("mousedown", e=>{
+  if(e.button!==0) return;
+  const nodeEl = e.target.closest(".node");
+  const handle = e.target.closest(".rsz");
+  const editBtn = e.target.closest(".node-edit");
+  if(editBtn){ return; } // handled by its own click
+  if(handle && nodeEl){
+    const n = tree().nodes.find(x=>x.id===nodeEl.dataset.id);
+    drag={type:"resize", id:n.id, sx:e.clientX, sy:e.clientY, origScale:n.scale, moved:false};
+    e.preventDefault(); return;
+  }
+  if(nodeEl){
+    const n = tree().nodes.find(x=>x.id===nodeEl.dataset.id);
+    drag={type:"node", id:n.id, sx:e.clientX, sy:e.clientY, ox:n.x, oy:n.y, moved:false};
+    nodeEl.classList.add("dragging");
+    e.preventDefault(); return;
+  }
+  // empty area -> pan
+  const v=view();
+  drag={type:"pan", sx:e.clientX, sy:e.clientY, opx:v.panX, opy:v.panY, moved:false};
+  stage.classList.add("panning");
+});
+
+window.addEventListener("mousemove", e=>{
+  if(!drag) return;
+  const dx=e.clientX-drag.sx, dy=e.clientY-drag.sy;
+  if(Math.hypot(dx,dy)>4) drag.moved=true;
+  if(drag.type==="pan"){
+    const v=view(); v.panX=drag.opx+dx; v.panY=drag.opy+dy; applyTransform();
+  } else if(drag.type==="node"){
+    const v=view(); const n=tree().nodes.find(x=>x.id===drag.id);
+    n.x=drag.ox+dx/v.zoom; n.y=drag.oy+dy/v.zoom;
+    const el=document.querySelector(`.node[data-id="${n.id}"]`);
+    if(el){ el.style.left=n.x+"px"; el.style.top=n.y+"px"; }
+    renderEdges();
+  } else if(drag.type==="resize"){
+    const n=tree().nodes.find(x=>x.id===drag.id);
+    n.scale=Math.min(2.4, Math.max(0.5, drag.origScale + dx/170));
+    const el=document.querySelector(`.node[data-id="${n.id}"]`);
+    if(el) el.style.transform="scale("+n.scale+")";
+    renderEdges();
+  }
+});
+
+window.addEventListener("mouseup", e=>{
+  if(!drag) return;
+  const d=drag; drag=null;
+  stage.classList.remove("panning");
+  document.querySelectorAll(".node.dragging").forEach(el=>el.classList.remove("dragging"));
+  if(d.type==="pan"){ if(!d.moved){ clearSelection(); } else save(); }
+  else if(d.type==="node"){ if(!d.moved){ toggleNode(d.id); } else save(); }
+  else if(d.type==="resize"){ save(); }
+});
+
+// wheel: pan + ctrl-zoom + shift-horizontal
+stage.addEventListener("wheel", e=>{
+  e.preventDefault();
+  if(e.ctrlKey){ zoomAtClient(e.clientX, e.clientY, e.deltaY<0?1.1:0.9); return; }
+  const v=view();
+  if(e.shiftKey && e.deltaX===0){ v.panX -= e.deltaY; }
+  else { v.panX -= e.deltaX; v.panY -= e.deltaY; }
+  applyTransform(); saveSoon();
+}, {passive:false});
+
+// keyboard: delete selected edge
+window.addEventListener("keydown", e=>{
+  const charOpen = document.getElementById("overlay").classList.contains("show");
+  const linkOpen = document.getElementById("linkOverlay").classList.contains("show");
+  if(e.key==="Escape"){
+    if(charOpen){ closeForm(); return; }
+    if(linkOpen){ closeLinkModal(); return; }
+    clearSelection(); return;
+  }
+  if(charOpen || linkOpen) return;
+  if((e.key==="Delete"||e.key==="Backspace") && selEdge){
+    e.preventDefault(); deleteEdge(selEdge);
+  }
+});
+
+/* ============================================================
+   COLOR / TEXT CONTRAST
+============================================================ */
+function isLight(hex){
+  const c=(hex||DEFAULT_COLOR).replace("#","");
+  const r=parseInt(c.substr(0,2),16), g=parseInt(c.substr(2,2),16), b=parseInt(c.substr(4,2),16);
+  return (0.299*r + 0.587*g + 0.114*b)/255 > 0.62;
+}
+function on(hex){ return isLight(hex) ? "#241c10" : "#fbf3e1"; }
+function initials(name){
+  const p=(name||"").trim().split(/\s+/).filter(Boolean);
+  if(!p.length) return "?";
+  return (p[0][0]+(p[1]?p[1][0]:"")).toUpperCase();
+}
+function esc(s){ return (s||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+// Font size for the name: wraps at spaces; long single words shrink so they stay on one line.
+function nameFontSize(name){
+  const words=(name||"").trim().split(/\s+/).filter(Boolean);
+  const longest=words.reduce((m,w)=>Math.max(m,w.length),0);
+  if(longest<=8) return 15.5;
+  if(longest===9) return 14;
+  if(longest===10) return 13;
+  if(longest===11) return 12;
+  if(longest===12) return 11.2;
+  if(longest===13) return 10.6;
+  return 10;
+}
+
+/* ============================================================
+   RENDER
+============================================================ */
+function renderAll(){ renderSidebar(); applyTransform(); renderNodes(); renderEdges(); }
+
+function renderSidebar(){
+  const list=document.getElementById("treeList"); list.innerHTML="";
+  state.trees.forEach(t=>{
+    const row=document.createElement("div");
+    row.className="tree-row"+(t.id===currentId?" active":"");
+    row.innerHTML=`<span class="dot"></span>
+      <span class="tname">${esc(t.name)}</span>
+      <span class="count">${t.nodes.length}</span>
+      <button class="mini" title="Rinomina">✎</button>
+      <button class="mini" title="Elimina">🗑</button>`;
+    row.addEventListener("click", ev=>{
+      if(ev.target.closest(".mini")) return;
+      currentId=t.id; clearSelection(); save(); renderAll();
+    });
+    const btns=row.querySelectorAll(".mini");
+    btns[0].addEventListener("click",()=>renameTree(t.id));
+    btns[1].addEventListener("click",()=>deleteTree(t.id));
+    list.appendChild(row);
+  });
+}
+
+function nodeBodyHTML(n){
+  const d=n.show||defaultShow(); let rows="";
+  const add=(k,v)=>{ if(v) rows+=`<div class="row"><span class="k">${k}</span><span class="v">${esc(v)}</span></div>`; };
+  if(d.role) add("Ruolo", n.role);
+  if(d.race) add("Razza", n.race);
+  if(d.pronouns) add("Pronomi", pronounText(n));
+  if(d.years){
+    const y = n.birth || n.death ? `${n.birth?("★ "+esc(n.birth)):""}${n.death?(" † "+esc(n.death)):""}`.trim() : "";
+    if(y) rows+=`<div class="row"><span class="k">Anni</span><span class="v">${y}</span></div>`;
+  }
+  if(d.notes && n.notes) rows+=`<div class="row note"><span class="v">${esc(n.notes)}</span></div>`;
+  return rows;
+}
+function pronounText(n){
+  if(n.gender==="m") return "lui/lo";
+  if(n.gender==="f") return "lei/la";
+  if(n.gender==="n") return "neutro";
+  if(n.gender==="c") return n.pron||"—";
+  return "";
+}
+
+function renderNodes(){
+  const layer=document.getElementById("nodeLayer");
+  const t=tree();
+  document.getElementById("empty").style.display = t.nodes.length?"none":"flex";
+  layer.innerHTML="";
+  t.nodes.forEach(n=>{
+    const txt=on(n.color);
+    const el=document.createElement("div");
+    el.className="node"+(selNodes.has(n.id)?" selected":"");
+    el.dataset.id=n.id;
+    el.style.left=n.x+"px"; el.style.top=n.y+"px";
+    el.style.transform="scale("+n.scale+")";
+    el.style.borderColor=n.color;
+    const av = n.photo
+      ? `<div class="avatar"><img src="${n.photo}" alt=""></div>`
+      : `<div class="avatar" style="color:${txt}">${esc(initials(n.name))}</div>`;
+    const nameHTML = (n.show&&n.show.name!==false) ? `<div class="node-name" style="font-size:${nameFontSize(n.name)}px">${esc(n.name||"Senza nome")}</div>` : `<div class="node-name"></div>`;
+    el.innerHTML=`
+      <div class="node-hd" style="background:${n.color};color:${txt}">
+        ${av}${nameHTML}
+        <button class="node-edit" title="Modifica" style="color:${txt}">✎</button>
+      </div>
+      <div class="node-body">${nodeBodyHTML(n)}</div>
+      <div class="rsz" title="Trascina per ridimensionare"></div>`;
+    el.querySelector(".node-edit").addEventListener("click",ev=>{ ev.stopPropagation(); openForm(n.id); });
+    el.addEventListener("dblclick",ev=>{ ev.stopPropagation(); openForm(n.id); });
+    layer.appendChild(el);
+  });
+}
+
+function nodeCenter(n){
+  const el=document.querySelector(`.node[data-id="${n.id}"]`);
+  const w=(el?el.offsetWidth:190)*n.scale, h=(el?el.offsetHeight:90)*n.scale;
+  return { x:n.x+w/2, y:n.y+h/2 };
+}
+
+const SVGNS="http://www.w3.org/2000/svg";
+function renderEdges(){
+  const svg=document.getElementById("edges");
+  const labels=document.getElementById("labelLayer");
+  const t=tree();
+  svg.innerHTML=""; labels.innerHTML="";
+  const defs=document.createElementNS(SVGNS,"defs"); svg.appendChild(defs);
+
+  t.edges.forEach(e=>{
+    const a=t.nodes.find(n=>n.id===e.from), b=t.nodes.find(n=>n.id===e.to);
+    if(!a||!b) return;
+    const ca=nodeCenter(a), cb=nodeCenter(b);
+    const conf=REL[e.type]||REL.other;
+    const sel = selEdge===e.id;
+
+    // gradient from a.color -> b.color along the segment
+    const gid="g_"+e.id;
+    const grad=document.createElementNS(SVGNS,"linearGradient");
+    grad.setAttribute("id",gid);
+    grad.setAttribute("gradientUnits","userSpaceOnUse");
+    grad.setAttribute("x1",ca.x); grad.setAttribute("y1",ca.y);
+    grad.setAttribute("x2",cb.x); grad.setAttribute("y2",cb.y);
+    const s1=document.createElementNS(SVGNS,"stop"); s1.setAttribute("offset","0%"); s1.setAttribute("stop-color",a.color);
+    const s2=document.createElementNS(SVGNS,"stop"); s2.setAttribute("offset","100%"); s2.setAttribute("stop-color",b.color);
+    grad.appendChild(s1); grad.appendChild(s2); defs.appendChild(grad);
+
+    // visible line
+    const ln=document.createElementNS(SVGNS,"line");
+    ln.setAttribute("x1",ca.x); ln.setAttribute("y1",ca.y);
+    ln.setAttribute("x2",cb.x); ln.setAttribute("y2",cb.y);
+    ln.setAttribute("stroke",`url(#${gid})`);
+    ln.setAttribute("stroke-width", sel ? conf.width+2 : conf.width);
+    ln.setAttribute("stroke-linecap","round");
+    if(conf.dash!=="none") ln.setAttribute("stroke-dasharray",conf.dash);
+    if(sel) ln.setAttribute("filter","drop-shadow(0 0 3px rgba(202,162,74,.9))");
+    svg.appendChild(ln);
+
+    // invisible thick hit line
+    const hit=document.createElementNS(SVGNS,"line");
+    hit.setAttribute("x1",ca.x); hit.setAttribute("y1",ca.y);
+    hit.setAttribute("x2",cb.x); hit.setAttribute("y2",cb.y);
+    hit.setAttribute("stroke","transparent"); hit.setAttribute("stroke-width",18);
+    hit.setAttribute("class","hit");
+    hit.addEventListener("mousedown",ev=>ev.stopPropagation());
+    hit.addEventListener("click",ev=>{ ev.stopPropagation(); selectEdge(e.id); });
+    svg.appendChild(hit);
+
+    // label
+    const lab=document.createElement("div");
+    lab.className="elabel";
+    lab.style.left=((ca.x+cb.x)/2)+"px";
+    lab.style.top=((ca.y+cb.y)/2)+"px";
+    const labelText = e.type==="other" ? (e.label||"legame") : conf.label;
+    lab.innerHTML=`${esc(labelText)}<span class="x">✕</span>`;
+    lab.addEventListener("mousedown",ev=>ev.stopPropagation());
+    lab.addEventListener("click",ev=>{ ev.stopPropagation();
+      if(selEdge===e.id){ deleteEdge(e.id); } else { selectEdge(e.id); }
+    });
+    labels.appendChild(lab);
+  });
+}
+
+/* ============================================================
+   LINK BUILDER MODAL
+============================================================ */
+let linkRows=[], lkSeq=0;
+
+function sideCaps(type){
+  if(type==="parent")  return ["Genitori","Figli"];
+  if(type==="partner") return ["Persona / e","Partner"];
+  if(type==="sibling") return ["Fratelli / Sorelle","…e con (opz.)"];
+  return ["Da","A (opz.)"];
+}
+
+function openLinkModal(){
+  const t=tree();
+  if(!t.nodes.length){ toast("Aggiungi prima qualche personaggio"); return; }
+  // pre-fill the first row with whatever is selected on the canvas
+  linkRows=[ {id:++lkSeq, type:"parent", label:"", from:[...selNodes].filter(id=>t.nodes.find(n=>n.id===id)), to:[]} ];
+  renderLinkRows();
+  document.getElementById("linkOverlay").classList.add("show");
+}
+function closeLinkModal(){ document.getElementById("linkOverlay").classList.remove("show"); }
+function addLinkRow(){ linkRows.push({id:++lkSeq, type:"parent", label:"", from:[], to:[]}); renderLinkRows();
+  const m=document.getElementById("linkModal"); m.scrollTop=m.scrollHeight; }
+function removeLinkRow(id){ linkRows=linkRows.filter(r=>r.id!==id); if(!linkRows.length) addLinkRow(); else renderLinkRows(); }
+
+function msToggle(rowId, side, id){
+  const r=linkRows.find(x=>x.id===rowId); if(!r) return;
+  if(r[side].includes(id)) r[side]=r[side].filter(x=>x!==id);
+  else r[side].push(id);
+  renderLinkRows();
+}
+function lkSetType(rowId, sel){
+  const r=linkRows.find(x=>x.id===rowId); if(!r) return; r.type=sel.value; renderLinkRows();
+}
+function lkSetLabel(rowId, inp){ const r=linkRows.find(x=>x.id===rowId); if(r) r.label=inp.value; }
+
+// box listing every character as a clickable toggle (no dropdown)
+function msHTML(row, side){
+  const t=tree();
+  const ids=row[side];
+  if(!t.nodes.length) return `<div class="ms-grid"><span class="ms-empty">Nessun personaggio</span></div>`;
+  const chips=t.nodes.map(n=>{
+    const on=ids.includes(n.id);
+    return `<button type="button" class="pick${on?" on":""}" onclick="msToggle(${row.id},'${side}','${n.id}')"><span class="dot" style="background:${n.color}"></span>${esc(n.name||"Senza nome")}</button>`;
+  }).join("");
+  return `<div class="ms-grid">${chips}</div>`;
+}
+
+function renderLinkRows(){
+  const wrap=document.getElementById("lkRows");
+  wrap.innerHTML=linkRows.map((r,i)=>{
+    const [capA,capB]=sideCaps(r.type);
+    const dir=r.type==="parent"?"↓":"↔";
+    const hint=r.type==="parent"
+      ? `<div class="lk-hint">Ogni «genitore» verrà collegato a ogni «figlio».</div>`
+      : `<div class="lk-hint">Lascia vuoto il secondo riquadro per collegare tra loro tutti quelli del primo.</div>`;
+    const labelField = r.type==="other"
+      ? `<input type="text" class="lk-label" placeholder="Scrivi il tipo di legame (es. rivale, mentore, amante…)" value="${esc(r.label||"")}" oninput="lkSetLabel(${r.id},this)">`
+      : "";
+    return `<div class="lk-card">
+      <div class="lk-top">
+        <span class="lk-num">Legame ${i+1}</span>
+        <select class="lk-type" onchange="lkSetType(${r.id},this)">
+          <option value="parent" ${r.type==="parent"?"selected":""}>Genitore → Figlio</option>
+          <option value="partner" ${r.type==="partner"?"selected":""}>Partner / Coniuge</option>
+          <option value="sibling" ${r.type==="sibling"?"selected":""}>Fratello / Sorella</option>
+          <option value="other" ${r.type==="other"?"selected":""}>Altro (scrivi tu)</option>
+        </select>
+        ${linkRows.length>1?`<button class="lk-del" title="Rimuovi questo legame" onclick="removeLinkRow(${r.id})">✕</button>`:""}
+      </div>
+      ${labelField}
+      <div class="lk-cap">${capA}</div>
+      ${msHTML(r,"from")}
+      <div class="lk-arrow">${dir}</div>
+      <div class="lk-cap">${capB}</div>
+      ${msHTML(r,"to")}
+      ${hint}
+    </div>`;
+  }).join("");
+}
+
+function edgeExists(from,to,type,bidir,label){
+  return tree().edges.some(e=>
+    (e.type===type) && (type!=="other" || (e.label||"")===(label||"")) &&
+    ((e.from===from&&e.to===to) || (bidir && e.from===to&&e.to===from))
+  );
+}
+
+function commitLinks(){
+  const t=tree(); let added=0, incomplete=0;
+  linkRows.forEach(r=>{
+    const lbl = r.type==="other" ? (r.label||"").trim() : "";
+    if(r.type==="parent"){
+      if(!r.from.length || !r.to.length){ if(r.from.length||r.to.length) incomplete++; return; }
+      r.from.forEach(f=>r.to.forEach(c=>{
+        if(f!==c && !edgeExists(f,c,"parent",false)){ t.edges.push({id:uid(),type:"parent",from:f,to:c}); added++; }
+      }));
+    } else {
+      let pairs=[];
+      if(r.to.length){ r.from.forEach(f=>r.to.forEach(b=>{ if(f!==b) pairs.push([f,b]); })); }
+      else { for(let i=0;i<r.from.length;i++) for(let j=i+1;j<r.from.length;j++) pairs.push([r.from[i],r.from[j]]); }
+      if(!pairs.length){ if(r.from.length) incomplete++; return; }
+      pairs.forEach(([a,b])=>{
+        if(!edgeExists(a,b,r.type,true,lbl)){
+          const edge={id:uid(),type:r.type,from:a,to:b};
+          if(r.type==="other" && lbl) edge.label=lbl;
+          t.edges.push(edge); added++;
+        }
+      });
+    }
+  });
+  if(added){ save(); clearSelection(); renderEdges(); closeLinkModal(); toast(`Creati ${added} legam${added>1?"i":"e"}`); }
+  else if(incomplete){ toast("Completa i personaggi: servono entrambi i lati del legame"); }
+  else { toast("Quei legami esistono già o non c'è nulla da creare"); }
+}
+
+function deleteEdge(id){
+  const t=tree(); t.edges=t.edges.filter(e=>e.id!==id);
+  if(selEdge===id) selEdge=null;
+  save(); renderEdges();
+}
+
+/* ============================================================
+   CHARACTER FORM
+============================================================ */
+let editingId=null;
+let formPhoto=null, formColor=DEFAULT_COLOR, formGender="m";
+
+function buildSwatches(){
+  const wrap=document.getElementById("swatches"); wrap.innerHTML="";
+  PRESETS.forEach(c=>{
+    const s=document.createElement("div"); s.className="sw"; s.dataset.c=c; s.style.background=c;
+    s.addEventListener("click",()=>setFormColor(c,"preset"));
+    wrap.appendChild(s);
+  });
+  const ci=document.getElementById("colorInput"), hi=document.getElementById("hexInput");
+  ci.value = /^#[0-9a-fA-F]{6}$/.test(formColor)?formColor:"#000000";
+  hi.value = formColor;
+  markSelectedSwatch();
+}
+function setFormColor(c, origin){
+  formColor=c;
+  if(origin!=="picker") document.getElementById("colorInput").value=c;
+  if(origin!=="hex")    document.getElementById("hexInput").value=c;
+  markSelectedSwatch();
+}
+function markSelectedSwatch(){
+  const fc=(formColor||"").toLowerCase();
+  document.querySelectorAll("#swatches .sw").forEach(s=>s.classList.toggle("sel", (s.dataset.c||"").toLowerCase()===fc));
+  const isPreset=PRESETS.some(c=>c.toLowerCase()===fc);
+  document.getElementById("customColor").classList.toggle("active", !isPreset);
+}
+// listeners attached once (elements are static in the form)
+document.getElementById("colorInput").addEventListener("input", e=>setFormColor(e.target.value,"picker"));
+document.getElementById("hexInput").addEventListener("input", e=>{
+  let v=e.target.value.trim(); if(v && v[0]!=="#") v="#"+v;
+  if(/^#[0-9a-fA-F]{6}$/.test(v)) setFormColor(v,"hex");
+});
+function setGender(g){
+  formGender=g;
+  document.querySelectorAll("#pronOpts .opt").forEach(o=>o.classList.toggle("sel",o.dataset.g===g));
+  document.getElementById("fPronCustom").style.display = g==="c"?"block":"none";
+}
+document.querySelectorAll("#pronOpts .opt").forEach(o=>o.addEventListener("click",()=>setGender(o.dataset.g)));
+
+function onRaceChange(){
+  // selecting from dropdown clears custom toggle
+  document.getElementById("fRaceCustom").style.display="none";
+  document.getElementById("raceCustomToggle").classList.remove("sel");
+}
+function toggleRaceCustom(){
+  const inp=document.getElementById("fRaceCustom");
+  const on = inp.style.display==="none";
+  inp.style.display = on?"block":"none";
+  document.getElementById("raceCustomToggle").classList.toggle("sel",on);
+  if(on){ document.getElementById("fRace").value=""; inp.focus(); }
+}
+function onPhoto(ev){
+  const f=ev.target.files[0]; if(!f) return;
+  if(f.size>2*1024*1024){ toast("⚠ Immagine troppo grande (max 2 MB)"); ev.target.value=""; return; }
+  const r=new FileReader();
+  r.onload=()=>{ formPhoto=r.result; refreshPhotoPreview(); };
+  r.readAsDataURL(f);
+}
+function clearPhoto(){ formPhoto=null; document.getElementById("fPhoto").value=""; refreshPhotoPreview(); }
+function refreshPhotoPreview(){
+  const p=document.getElementById("photoPrev");
+  p.innerHTML = formPhoto ? `<img src="${formPhoto}" alt="">` : "👤";
+  document.getElementById("photoRemove").style.display = formPhoto?"block":"none";
+}
+
+function openForm(id){
+  editingId=id||null;
+  document.getElementById("mTitle").textContent = id?"Modifica personaggio":"Nuovo personaggio";
+  document.getElementById("delBtn").style.display = id?"block":"none";
+  const n = id ? tree().nodes.find(x=>x.id===id) : null;
+
+  document.getElementById("fName").value = n?n.name||"":"";
+  document.getElementById("fRole").value = n?n.role||"":"";
+  document.getElementById("fBirth").value= n?n.birth||"":"";
+  document.getElementById("fDeath").value= n?n.death||"":"";
+  document.getElementById("fNotes").value= n?n.notes||"":"";
+  document.getElementById("fSize").value = n?n.scale||1:1;
+  document.getElementById("sizeVal").textContent = Math.round((n?n.scale||1:1)*100)+"%";
+
+  // race
+  const raceSel=document.getElementById("fRace");
+  const raceCustom=document.getElementById("fRaceCustom");
+  raceCustom.style.display="none"; document.getElementById("raceCustomToggle").classList.remove("sel");
+  const opts=[...raceSel.options].map(o=>o.value);
+  if(n && n.race && !opts.includes(n.race)){
+    raceSel.value=""; raceCustom.value=n.race; raceCustom.style.display="block"; document.getElementById("raceCustomToggle").classList.add("sel");
+  } else { raceSel.value = n?n.race||"":""; raceCustom.value=""; }
+
+  formGender = n?n.gender||"m":"m"; setGender(formGender);
+  document.getElementById("fPronCustom").value = n&&n.gender==="c"?n.pron||"":"";
+
+  formColor = n?n.color||DEFAULT_COLOR:DEFAULT_COLOR; buildSwatches();
+  formPhoto = n?n.photo||null:null; refreshPhotoPreview();
+
+  const show = n ? Object.assign(defaultShow(), n.show||{}) : defaultShow();
+  document.querySelectorAll("#showGrid input").forEach(cb=>{ cb.checked = !!show[cb.dataset.k]; });
+
+  document.getElementById("overlay").classList.add("show");
+  setTimeout(()=>document.getElementById("fName").focus(),40);
+}
+function closeForm(){ document.getElementById("overlay").classList.remove("show"); editingId=null; }
+
+function saveForm(){
+  const t=tree();
+  const raceCustom=document.getElementById("fRaceCustom");
+  const race = raceCustom.style.display!=="none" && raceCustom.value.trim()
+             ? raceCustom.value.trim() : document.getElementById("fRace").value;
+  const show={};
+  document.querySelectorAll("#showGrid input").forEach(cb=>{ show[cb.dataset.k]=cb.checked; });
+  const data={
+    name: document.getElementById("fName").value.trim(),
+    role: document.getElementById("fRole").value.trim(),
+    race: race,
+    gender: formGender,
+    pron: formGender==="c"?document.getElementById("fPronCustom").value.trim():"",
+    birth: document.getElementById("fBirth").value.trim(),
+    death: document.getElementById("fDeath").value.trim(),
+    notes: document.getElementById("fNotes").value.trim(),
+    color: formColor,
+    photo: formPhoto,
+    scale: parseFloat(document.getElementById("fSize").value)||1,
+    show: show,
+  };
+  if(!data.name && !data.role){ toast("Dai almeno un nome al personaggio"); return; }
+
+  if(editingId){
+    const n=t.nodes.find(x=>x.id===editingId); Object.assign(n,data);
+  } else {
+    const c=viewportCenterWorld();
+    t.nodes.push(Object.assign({id:uid(), x:c.x-95+(Math.random()*40-20), y:c.y-50+(Math.random()*40-20)}, data));
+  }
+  save(); closeForm(); renderSidebar(); renderNodes(); renderEdges();
+}
+function deleteCurrent(){
+  if(!editingId) return;
+  if(!confirm("Eliminare questo personaggio e tutti i suoi collegamenti?")) return;
+  const t=tree();
+  t.nodes=t.nodes.filter(n=>n.id!==editingId);
+  t.edges=t.edges.filter(e=>e.from!==editingId && e.to!==editingId);
+  selNodes.delete(editingId);
+  save(); closeForm(); renderAll();
+}
+
+/* ============================================================
+   TREE MANAGEMENT
+============================================================ */
+function newTree(){
+  const name=prompt("Nome del nuovo albero:", "Albero "+(state.trees.length+1));
+  if(name===null) return;
+  const t=blankTree(name.trim()||("Albero "+(state.trees.length+1)));
+  state.trees.push(t); currentId=t.id; clearSelection(); save(); renderAll();
+}
+function renameTree(id){
+  const t=state.trees.find(x=>x.id===id);
+  const name=prompt("Rinomina albero:", t.name);
+  if(name===null) return;
+  t.name=name.trim()||t.name; save(); renderSidebar();
+}
+function deleteTree(id){
+  if(state.trees.length===1){ toast("Deve restare almeno un albero"); return; }
+  const t=state.trees.find(x=>x.id===id);
+  if(!confirm(`Eliminare l'albero "${t.name}" e tutti i suoi personaggi?`)) return;
+  state.trees=state.trees.filter(x=>x.id!==id);
+  if(currentId===id) currentId=state.trees[0].id;
+  clearSelection(); save(); renderAll();
+}
+
+/* ============================================================
+   TOAST
+============================================================ */
+let toastTimer=null;
+function toast(msg, ms){
+  const t=document.getElementById("toast");
+  t.textContent=msg; t.classList.add("show");
+  clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove("show"), ms||2200);
+}
+
+/* ============================================================
+   INIT
+============================================================ */
+window.addEventListener("beforeunload", save);
+renderAll();
+</script>
+</body>
+</html>
