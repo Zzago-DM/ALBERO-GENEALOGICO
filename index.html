@@ -61,6 +61,21 @@
   .schip:has(input:checked){border-color:var(--gold);background:#ecdcb0;font-weight:600}
   .schip input{accent-color:var(--gold);width:15px;height:15px;cursor:pointer}
 
+  /* class picker */
+  .cls-box{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+  .cls-chip{display:inline-flex;align-items:center;gap:6px;background:#ecdcb0;border:1.5px solid var(--gold);border-radius:999px;padding:5px 6px 5px 11px;font-size:12.5px;font-weight:600;color:var(--text)}
+  .cls-chip .x{background:none;border:none;cursor:pointer;color:var(--muted);font-size:11px;padding:0 2px;line-height:1}
+  .cls-chip .x:hover{color:var(--danger)}
+  .cls-empty{font-size:12.5px;color:var(--muted);font-style:italic}
+  .cls-add{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:9px;border:1.5px dashed var(--line);background:var(--surface-3);color:var(--text);font-size:19px;line-height:1;cursor:pointer;font-family:inherit}
+  .cls-add:hover{border-color:var(--gold);background:#ecdcb0}
+  .cls-picker{margin-top:9px;border:1.5px solid var(--line);border-radius:11px;padding:9px;background:var(--surface-3);flex-wrap:wrap;gap:6px}
+  .cls-opt{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 11px;font-size:12.5px;font-weight:600;color:var(--text);cursor:pointer;font-family:inherit}
+  .cls-opt:hover{border-color:var(--gold)}
+  .cls-opt.on{background:#ecdcb0;border-color:var(--gold)}
+  .cls-opt.on::after{content:"✓";margin-left:4px;color:#7a6526;font-weight:800}
+  .cls-opt.custom{border-style:dashed;color:#5a4f38}
+
   .side-foot{padding:12px 14px;border-top:1px solid var(--ink-3);display:flex;flex-direction:column;gap:8px}
   .saved-pill{display:flex;align-items:center;gap:7px;font-size:11.5px;color:var(--on-ink-muted);justify-content:center;height:16px;transition:opacity .3s}
   .saved-pill .chk{color:#7ec98a}
@@ -115,6 +130,7 @@
   .row{display:flex;gap:7px;font-size:12px;line-height:1.3}
   .row .k{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.4px;min-width:46px;padding-top:1px;font-weight:600}
   .row .v{color:var(--text);flex:1;word-break:break-word}
+  .row .v.dash{color:var(--muted);opacity:.55}
   .row.note .v{font-style:italic;color:#4a5066}
   .rsz{position:absolute;right:0;bottom:0;width:18px;height:18px;cursor:nwse-resize;
     background:linear-gradient(135deg,transparent 50%, #c9c2b2 50% 60%, transparent 60% 72%, #c9c2b2 72% 82%, transparent 82%);opacity:0}
@@ -153,6 +169,15 @@
   .lk-label:focus{outline:none;background:#fff}
   .lk-add{width:100%;border:1.5px dashed var(--line);background:none;border-radius:11px;padding:12px;font-size:13.5px;font-weight:600;color:var(--text);cursor:pointer;font-family:inherit}
   .lk-add:hover{background:var(--surface-3)}
+
+  /* ---------- Sync ---------- */
+  .sync-row{display:flex;gap:8px}
+  .sync-row .btn{flex:1;padding:8px 10px;font-size:13px}
+  .sync-status{font-size:11px;color:var(--on-ink-muted);text-align:center;line-height:1.35;word-break:break-word;padding:2px}
+  .sync-cfg{background:none;border:1px solid var(--ink-3);color:var(--on-ink-muted);border-radius:8px;padding:7px;font-size:12px;cursor:pointer;font-family:inherit}
+  .sync-cfg:hover{background:var(--ink-2);color:var(--on-ink)}
+  .sync-warn{background:#f1e2bd;border:1.5px solid #d9b85f;color:#5a4426;border-radius:11px;padding:11px 13px;font-size:12.5px;line-height:1.55;margin-bottom:16px}
+  .m-bd code{background:#0000000f;padding:1px 5px;border-radius:5px;font-size:12px;font-family:ui-monospace,monospace}
 
   #zoombar{position:absolute;right:20px;bottom:20px;z-index:20;display:flex;align-items:center;gap:2px;
     background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);padding:4px}
@@ -250,7 +275,14 @@
     </div>
 
     <div class="side-foot">
-      <div class="saved-pill" id="savedPill"><span class="chk">✓</span> Salvato automaticamente</div>
+      <div class="side-label" style="margin:0 0 4px">Sincronizzazione</div>
+      <div class="sync-row">
+        <button class="btn btn-paper" onclick="ghPull()">⬇ Carica</button>
+        <button class="btn btn-gold" onclick="ghPush()">⬆ Salva</button>
+      </div>
+      <div class="sync-status" id="syncStatus">Sincronizzazione non configurata</div>
+      <button class="sync-cfg" onclick="openSyncModal()">⚙ Configura GitHub</button>
+      <div class="saved-pill" id="savedPill"><span class="chk">✓</span> Salvato sul dispositivo</div>
     </div>
   </aside>
 
@@ -293,6 +325,11 @@
         <div class="field">
           <label>Nome</label>
           <input type="text" id="fName" placeholder="Es. Aelwyn Stormcrest" autocomplete="off">
+        </div>
+        <div class="field">
+          <label>Classi</label>
+          <div class="cls-box" id="clsBox"></div>
+          <div class="cls-picker" id="clsPicker" style="display:none"></div>
         </div>
         <div class="field">
           <label>Ruolo / Titolo</label>
@@ -375,6 +412,7 @@
           <label>Cosa mostrare sulla scheda</label>
           <div class="show-grid" id="showGrid">
             <label class="schip"><input type="checkbox" data-k="name" checked> Nome</label>
+            <label class="schip"><input type="checkbox" data-k="classes" checked> Classi</label>
             <label class="schip"><input type="checkbox" data-k="role" checked> Ruolo</label>
             <label class="schip"><input type="checkbox" data-k="race" checked> Razza</label>
             <label class="schip"><input type="checkbox" data-k="years" checked> Anni</label>
@@ -417,6 +455,36 @@
     </div>
   </div>
 
+  <!-- SYNC MODAL -->
+  <div id="syncOverlay" class="overlay">
+    <div id="syncModal" class="modal">
+      <div class="m-hd">
+        <h2>Sincronizza con GitHub</h2>
+        <button class="close" onclick="closeSyncModal()">×</button>
+      </div>
+      <div class="m-bd">
+        <div class="sync-warn">⚠ Il token resta salvato <b>solo in questo browser</b> e non viene mai caricato online. Per sicurezza usa un token «fine-grained» limitato a un solo repository, con permesso <b>Contents: Read and write</b>.</div>
+        <div class="two">
+          <div class="field"><label>Utente (owner)</label><input type="text" id="syOwner" placeholder="tuonome" autocomplete="off"></div>
+          <div class="field"><label>Repository</label><input type="text" id="syRepo" placeholder="alberi-dati" autocomplete="off"></div>
+        </div>
+        <div class="two">
+          <div class="field"><label>Branch</label><input type="text" id="syBranch" placeholder="main" autocomplete="off"></div>
+          <div class="field"><label>File dei dati</label><input type="text" id="syPath" placeholder="data.json" autocomplete="off"></div>
+        </div>
+        <div class="field"><label>Token di accesso (Personal Access Token)</label><input type="password" id="syToken" placeholder="github_pat_…" autocomplete="off"></div>
+        <label class="schip" style="display:inline-flex;width:auto"><input type="checkbox" id="syAuto"> Sincronizza in automatico (carica all'apertura, salva dopo le modifiche)</label>
+        <p class="lk-help" style="margin-top:14px">Per creare il token: su GitHub apri <b>Settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token</b>. In «Repository access» scegli solo il repository dei dati; in «Permissions» imposta <b>Contents: Read and write</b>; genera e copia il token (inizia con <code>github_pat_</code>).</p>
+      </div>
+      <div class="m-ft">
+        <button class="btn-del" onclick="clearSyncCfg()">Disconnetti</button>
+        <div class="spacer"></div>
+        <button class="btn-cancel" onclick="closeSyncModal()">Chiudi</button>
+        <button class="btn-primary" onclick="saveSyncCfg()">Salva impostazioni</button>
+      </div>
+    </div>
+  </div>
+
   <div id="toast"></div>
 
 <script>
@@ -446,7 +514,8 @@ function load(){
   }catch(e){ console.warn("load failed", e); }
   return { trees:[ blankTree("Albero 1") ], currentId:null };
 }
-function defaultShow(){ return {name:true, role:true, race:true, years:true, pronouns:false, notes:false}; }
+function defaultShow(){ return {name:true, classes:true, role:true, race:true, years:true, pronouns:false, notes:false}; }
+const DND_CLASSES=["Artefice","Barbaro","Bardo","Chierico","Druido","Guerriero","Ladro","Mago","Monaco","Paladino","Ranger","Stregone","Warlock"];
 function blankTree(name){ return { id:uid(), name, nodes:[], edges:[], view:{panX:0,panY:0,zoom:1} }; }
 function normalize(s){
   s.trees = (s.trees||[]).map(t=>({
@@ -456,20 +525,25 @@ function normalize(s){
   s.trees.forEach(t=>t.nodes.forEach(n=>{
     n.scale = n.scale||1; n.color = n.color||DEFAULT_COLOR; n.x = n.x||0; n.y = n.y||0;
     n.show = Object.assign(defaultShow(), n.show||{});
+    n.classes = Array.isArray(n.classes) ? n.classes : [];
   }));
   s.trees.forEach(t=>t.edges.forEach(e=>{ if(e.type==="generic") e.type="other"; }));
   return s;
 }
 
 let saveTimer=null, fsTimer=null;
-function save(){
+function saveLocalOnly(){
   try{
     localStorage.setItem(STORE_KEY, JSON.stringify(persistState()));
     flashSaved();
   }catch(e){
     console.error(e);
-    toast("⚠ Spazio di salvataggio pieno — usa «Salva su file» e rimuovi qualche foto.", 4000);
+    toast("⚠ Spazio di salvataggio pieno — rimuovi qualche foto o sincronizza su GitHub.", 4000);
   }
+}
+function save(){
+  saveLocalOnly();
+  if(typeof autoSyncOn==="function" && autoSyncOn()) scheduleGhPush();
 }
 function persistState(){ return { trees:state.trees, currentId }; }
 function flashSaved(){
@@ -477,7 +551,7 @@ function flashSaved(){
   p.innerHTML = '<span class="chk">✓</span> Salvato';
   p.style.opacity="1";
   clearTimeout(saveTimer);
-  saveTimer=setTimeout(()=>{ p.innerHTML='<span class="chk">✓</span> Salvato automaticamente'; p.style.opacity="0.7"; },1200);
+  saveTimer=setTimeout(()=>{ p.innerHTML='<span class="chk">✓</span> Salvato sul dispositivo'; p.style.opacity="0.7"; },1200);
 }
 
 function tree(){ return state.trees.find(t=>t.id===currentId); }
@@ -676,12 +750,14 @@ stage.addEventListener("wheel", e=>{
 window.addEventListener("keydown", e=>{
   const charOpen = document.getElementById("overlay").classList.contains("show");
   const linkOpen = document.getElementById("linkOverlay").classList.contains("show");
+  const syncOpen = document.getElementById("syncOverlay").classList.contains("show");
   if(e.key==="Escape"){
     if(charOpen){ closeForm(); return; }
     if(linkOpen){ closeLinkModal(); return; }
+    if(syncOpen){ closeSyncModal(); return; }
     clearSelection(); return;
   }
-  if(charOpen || linkOpen) return;
+  if(charOpen || linkOpen || syncOpen) return;
   if((e.key==="Delete"||e.key==="Backspace") && selEdge){
     e.preventDefault(); deleteEdge(selEdge);
   }
@@ -743,15 +819,17 @@ function renderSidebar(){
 
 function nodeBodyHTML(n){
   const d=n.show||defaultShow(); let rows="";
-  const add=(k,v)=>{ if(v) rows+=`<div class="row"><span class="k">${k}</span><span class="v">${esc(v)}</span></div>`; };
-  if(d.role) add("Ruolo", n.role);
-  if(d.race) add("Razza", n.race);
-  if(d.pronouns) add("Pronomi", pronounText(n));
+  const ph='<span class="v dash">—</span>';
+  const row=(k,v)=>`<div class="row"><span class="k">${k}</span>${v?`<span class="v">${esc(v)}</span>`:ph}</div>`;
+  if(d.classes) rows+=row("Classi", (n.classes&&n.classes.length)?n.classes.join(" · "):"");
+  if(d.role) rows+=row("Ruolo", n.role);
+  if(d.race) rows+=row("Razza", n.race);
+  if(d.pronouns) rows+=row("Pronomi", pronounText(n));
   if(d.years){
-    const y = n.birth || n.death ? `${n.birth?("★ "+esc(n.birth)):""}${n.death?(" † "+esc(n.death)):""}`.trim() : "";
-    if(y) rows+=`<div class="row"><span class="k">Anni</span><span class="v">${y}</span></div>`;
+    const y = (n.birth || n.death) ? `${n.birth?("★ "+esc(n.birth)):""}${n.death?(" † "+esc(n.death)):""}`.trim() : "";
+    rows+=`<div class="row"><span class="k">Anni</span>${y?`<span class="v">${y}</span>`:ph}</div>`;
   }
-  if(d.notes && n.notes) rows+=`<div class="row note"><span class="v">${esc(n.notes)}</span></div>`;
+  if(d.notes) rows+= n.notes ? `<div class="row note"><span class="v">${esc(n.notes)}</span></div>` : `<div class="row"><span class="k">Note</span>${ph}</div>`;
   return rows;
 }
 function pronounText(n){
@@ -987,6 +1065,39 @@ function deleteEdge(id){
 ============================================================ */
 let editingId=null;
 let formPhoto=null, formColor=DEFAULT_COLOR, formGender="m";
+let formClasses=[];
+
+/* ----- D&D class picker (multi-select with "+" ) ----- */
+function renderClasses(){
+  const box=document.getElementById("clsBox");
+  let html=formClasses.map((c,i)=>`<span class="cls-chip">${esc(c)}<button type="button" class="x" title="Rimuovi" onclick="removeClass(${i})">✕</button></span>`).join("");
+  if(!formClasses.length) html=`<span class="cls-empty">Nessuna classe</span>`;
+  html+=`<button type="button" class="cls-add" title="Aggiungi classe" onclick="toggleClsPicker()">+</button>`;
+  box.innerHTML=html;
+  renderClsPicker();
+}
+function removeClass(i){ formClasses.splice(i,1); renderClasses(); }
+function toggleClass(name){
+  const i=formClasses.indexOf(name);
+  if(i>=0) formClasses.splice(i,1); else formClasses.push(name);
+  renderClasses();
+}
+function addCustomClass(){
+  const v=prompt("Scrivi il nome della classe personalizzata:");
+  if(v && v.trim()){ const t=v.trim(); if(!formClasses.includes(t)) formClasses.push(t); renderClasses(); }
+}
+function toggleClsPicker(){
+  const p=document.getElementById("clsPicker");
+  p.style.display = (p.style.display==="none"||!p.style.display) ? "flex" : "none";
+  renderClsPicker();
+}
+function renderClsPicker(){
+  const p=document.getElementById("clsPicker");
+  if(p.style.display==="none"||!p.style.display) return;
+  p.innerHTML = DND_CLASSES.map(c=>`<button type="button" class="cls-opt${formClasses.includes(c)?" on":""}" onclick="toggleClass('${c}')">${c}</button>`).join("")
+    + `<button type="button" class="cls-opt custom" onclick="addCustomClass()">＋ personalizzata</button>`;
+}
+
 
 function buildSwatches(){
   const wrap=document.getElementById("swatches"); wrap.innerHTML="";
@@ -1080,6 +1191,10 @@ function openForm(id){
   formColor = n?n.color||DEFAULT_COLOR:DEFAULT_COLOR; buildSwatches();
   formPhoto = n?n.photo||null:null; refreshPhotoPreview();
 
+  formClasses = (n && Array.isArray(n.classes)) ? n.classes.slice() : [];
+  document.getElementById("clsPicker").style.display="none";
+  renderClasses();
+
   const show = n ? Object.assign(defaultShow(), n.show||{}) : defaultShow();
   document.querySelectorAll("#showGrid input").forEach(cb=>{ cb.checked = !!show[cb.dataset.k]; });
 
@@ -1097,6 +1212,7 @@ function saveForm(){
   document.querySelectorAll("#showGrid input").forEach(cb=>{ show[cb.dataset.k]=cb.checked; });
   const data={
     name: document.getElementById("fName").value.trim(),
+    classes: formClasses.slice(),
     role: document.getElementById("fRole").value.trim(),
     race: race,
     gender: formGender,
@@ -1109,7 +1225,7 @@ function saveForm(){
     scale: parseFloat(document.getElementById("fSize").value)||1,
     show: show,
   };
-  if(!data.name && !data.role){ toast("Dai almeno un nome al personaggio"); return; }
+  if(!data.name && !data.role && !data.classes.length){ toast("Dai almeno un nome al personaggio"); return; }
 
   if(editingId){
     const n=t.nodes.find(x=>x.id===editingId); Object.assign(n,data);
@@ -1164,10 +1280,104 @@ function toast(msg, ms){
 }
 
 /* ============================================================
+   GITHUB SYNC  (read/write a data file in a repo via the API)
+============================================================ */
+const SYNC_KEY="alberi_sync_v1";
+let ghShaCache=null, ghPushTimer=null;
+
+function syncCfg(){ try{ return JSON.parse(localStorage.getItem(SYNC_KEY))||{}; }catch(e){ return {}; } }
+function autoSyncOn(){ const c=syncCfg(); return !!(c.auto && c.token && c.owner && c.repo); }
+function ghHeaders(c){ return {"Authorization":"Bearer "+c.token,"Accept":"application/vnd.github+json","X-GitHub-Api-Version":"2022-11-28","Content-Type":"application/json"}; }
+function ghUrl(c){
+  const p=(c.path||"data.json").split("/").map(encodeURIComponent).join("/");
+  return `https://api.github.com/repos/${encodeURIComponent(c.owner)}/${encodeURIComponent(c.repo)}/contents/${p}`;
+}
+function b64enc(str){ const b=new TextEncoder().encode(str); let s=""; b.forEach(x=>s+=String.fromCharCode(x)); return btoa(s); }
+function b64dec(b64){ const bin=atob((b64||"").replace(/\s/g,"")); const arr=Uint8Array.from(bin,c=>c.charCodeAt(0)); return new TextDecoder().decode(arr); }
+
+function setSyncStatus(msg){ const el=document.getElementById("syncStatus"); if(el) el.textContent=msg; }
+function refreshSyncUI(){
+  const c=syncCfg();
+  setSyncStatus(c.owner&&c.repo&&c.token ? `☁ ${c.owner}/${c.repo}${c.auto?" · auto":""}` : "Sincronizzazione non configurata");
+}
+
+function openSyncModal(){
+  const c=syncCfg();
+  document.getElementById("syOwner").value=c.owner||"";
+  document.getElementById("syRepo").value=c.repo||"";
+  document.getElementById("syBranch").value=c.branch||"main";
+  document.getElementById("syPath").value=c.path||"data.json";
+  document.getElementById("syToken").value=c.token||"";
+  document.getElementById("syAuto").checked=!!c.auto;
+  document.getElementById("syncOverlay").classList.add("show");
+}
+function closeSyncModal(){ document.getElementById("syncOverlay").classList.remove("show"); }
+function saveSyncCfg(){
+  const c={
+    owner:document.getElementById("syOwner").value.trim(),
+    repo:document.getElementById("syRepo").value.trim(),
+    branch:document.getElementById("syBranch").value.trim()||"main",
+    path:document.getElementById("syPath").value.trim()||"data.json",
+    token:document.getElementById("syToken").value.trim(),
+    auto:document.getElementById("syAuto").checked,
+  };
+  if(!c.owner||!c.repo||!c.token){ toast("Compila utente, repository e token"); return; }
+  localStorage.setItem(SYNC_KEY, JSON.stringify(c));
+  ghShaCache=null; refreshSyncUI(); closeSyncModal(); toast("Impostazioni salvate");
+}
+function clearSyncCfg(){
+  if(!confirm("Disconnettere la sincronizzazione e rimuovere il token da questo dispositivo?")) return;
+  localStorage.removeItem(SYNC_KEY); ghShaCache=null; refreshSyncUI(); closeSyncModal(); toast("Sincronizzazione disconnessa");
+}
+
+async function ghGet(c){
+  const res=await fetch(ghUrl(c)+"?ref="+encodeURIComponent(c.branch), {headers:ghHeaders(c)});
+  if(res.status===404) return null;
+  if(!res.ok){ const e=await res.json().catch(()=>({})); throw new Error(e.message||("HTTP "+res.status)); }
+  return res.json();
+}
+async function ghPush(){
+  const c=syncCfg(); if(!c.owner||!c.repo||!c.token){ openSyncModal(); return; }
+  setSyncStatus("Invio a GitHub…");
+  try{
+    let sha=ghShaCache;
+    if(!sha){ const cur=await ghGet(c); sha=cur&&cur.sha; }
+    const body={ message:"Aggiorna dati alberi — "+new Date().toLocaleString(),
+                 content:b64enc(JSON.stringify(persistState(),null,2)), branch:c.branch };
+    if(sha) body.sha=sha;
+    let res=await fetch(ghUrl(c), {method:"PUT", headers:ghHeaders(c), body:JSON.stringify(body)});
+    if(res.status===409){ const cur=await ghGet(c); if(cur&&cur.sha){ body.sha=cur.sha; res=await fetch(ghUrl(c), {method:"PUT", headers:ghHeaders(c), body:JSON.stringify(body)}); } }
+    if(!res.ok){ const e=await res.json().catch(()=>({})); throw new Error(e.message||("HTTP "+res.status)); }
+    const d=await res.json(); ghShaCache=d.content&&d.content.sha;
+    setSyncStatus("Salvato su GitHub ✓"); toast("⬆ Inviato a GitHub"); refreshSyncUI();
+  }catch(err){ setSyncStatus("Errore invio"); toast("⚠ GitHub: "+err.message, 3500); }
+}
+async function ghPull(silent){
+  const c=syncCfg(); if(!c.owner||!c.repo||!c.token){ if(!silent) openSyncModal(); return; }
+  setSyncStatus("Caricamento da GitHub…");
+  try{
+    const cur=await ghGet(c);
+    if(!cur){ setSyncStatus("Nessun file su GitHub"); if(!silent) toast("Nessun dato online: fai prima «Salva»"); return; }
+    let raw=cur.content?b64dec(cur.content):null;
+    if(!raw && cur.download_url){ const r=await fetch(cur.download_url); raw=await r.text(); }
+    const s=JSON.parse(raw);
+    if(!s||!s.trees) throw new Error("dati non validi");
+    if(!silent && !confirm("Caricare i dati da GitHub? Sostituiranno quelli presenti su questo dispositivo.")){ refreshSyncUI(); return; }
+    state=normalize(s);
+    currentId=state.currentId&&state.trees.find(t=>t.id===state.currentId)?state.currentId:(state.trees[0]?state.trees[0].id:null);
+    ghShaCache=cur.sha; saveLocalOnly(); renderAll(); refreshSyncUI();
+    setSyncStatus("Aggiornato da GitHub ✓"); if(!silent) toast("⬇ Caricato da GitHub");
+  }catch(err){ setSyncStatus("Errore caricamento"); if(!silent) toast("⚠ GitHub: "+err.message, 3500); }
+}
+function scheduleGhPush(){ clearTimeout(ghPushTimer); ghPushTimer=setTimeout(()=>{ if(autoSyncOn()) ghPush(); }, 4000); }
+
+/* ============================================================
    INIT
 ============================================================ */
 window.addEventListener("beforeunload", save);
 renderAll();
+refreshSyncUI();
+if(autoSyncOn()) ghPull(true);
 </script>
 </body>
 </html>
