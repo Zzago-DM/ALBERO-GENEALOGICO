@@ -92,7 +92,7 @@
   .btn-row .btn{flex:1}
 
   /* ---------- Canvas ---------- */
-  #stage{position:relative;flex:1;height:100vh;overflow:hidden;
+  #stage{position:relative;flex:1;height:100vh;overflow:hidden;touch-action:none;
     background:var(--parch);
     background-image:radial-gradient(var(--grid) 1.3px, transparent 1.4px);
     background-size:28px 28px;
@@ -246,9 +246,60 @@
   ::-webkit-scrollbar{width:10px;height:10px}
   ::-webkit-scrollbar-thumb{background:#0000002e;border-radius:6px}
   #sidebar ::-webkit-scrollbar-thumb{background:#ffffff24}
+
+  /* ---------- Device mode chooser ---------- */
+  .mode-cards{display:flex;gap:14px;justify-content:center}
+  .mode-card{flex:1;border:1.5px solid var(--line);background:var(--surface-3);border-radius:14px;padding:22px 10px;font-size:15px;font-weight:700;color:var(--text);cursor:pointer;font-family:var(--display);display:flex;flex-direction:column;align-items:center;gap:8px}
+  .mode-card:hover{border-color:var(--gold);background:#ecdcb0}
+  .mode-card .mc-ic{font-size:40px;line-height:1}
+
+  /* ---------- Mobile top bar + drawer (hidden on desktop) ---------- */
+  #topbar{display:none;align-items:center;gap:8px;position:fixed;left:0;top:0;right:0;height:54px;z-index:45;
+    background:var(--ink);color:var(--on-ink);padding:0 10px;border-bottom:1px solid #0d0f1c}
+  #topbar .tb-title{flex:1;font-family:var(--display);font-size:18px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #topbar .tb-title .crest{color:var(--gold)}
+  #topbar .tb-actions{display:flex;gap:6px}
+  .tb-btn{width:42px;height:42px;border:none;background:transparent;color:var(--on-ink);border-radius:10px;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+  .tb-btn:hover{background:var(--ink-2)}
+  #drawerBackdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:58}
+
+  body.mode-mobile #topbar{display:flex}
+  body.mode-mobile.drawer-open #drawerBackdrop{display:block}
+  body.mode-mobile #sidebar{position:fixed;left:0;top:0;height:100vh;width:min(84vw,300px);z-index:60;
+    transform:translateX(-100%);transition:transform .25s ease;box-shadow:0 0 40px rgba(0,0,0,.5)}
+  body.mode-mobile.drawer-open #sidebar{transform:none}
+  body.mode-mobile #stage{margin-top:54px;height:calc(100vh - 54px);width:100%;flex:none}
+  body.mode-mobile .fab-add{display:none}
+  /* touch-friendly: always show edit + resize affordances */
+  body.mode-mobile .node-edit{opacity:1;width:26px;height:26px;font-size:14px}
+  body.mode-mobile .rsz{opacity:.85;width:24px;height:24px}
+  body.mode-mobile #zoombar{padding:6px}
+  body.mode-mobile #zoombar button{width:44px;height:44px;font-size:22px}
+  body.mode-mobile #zoombar .zlabel{min-width:56px;font-size:14px}
+  /* full-screen dialogs on phones */
+  body.mode-mobile .overlay{padding:0;align-items:stretch}
+  body.mode-mobile #modeOverlay{align-items:center;padding:18px}
+  body.mode-mobile .modal{width:100%;max-width:100%;height:100%;max-height:100%;border-radius:0}
+  body.mode-mobile #modeOverlay .modal{height:auto;max-height:92vh;border-radius:18px}
+  body.mode-mobile .m-hd h2{font-size:19px}
+  body.mode-mobile .btn-primary,body.mode-mobile .btn-cancel{padding:13px 20px;font-size:15px}
+  body.mode-mobile .pick,body.mode-mobile .cls-opt{padding:8px 13px;font-size:13.5px}
+  body.mode-mobile .schip{padding:11px 10px}
+
 </style>
 </head>
 <body>
+
+  <!-- MOBILE TOP BAR -->
+  <div id="topbar">
+    <button class="tb-btn" title="Menù" onclick="toggleDrawer()">☰</button>
+    <div class="tb-title"><span class="crest">❦</span> Alberi</div>
+    <div class="tb-actions">
+      <button class="tb-btn" title="Aggiungi personaggio" onclick="openForm()">＋</button>
+      <button class="tb-btn" title="Crea legame" onclick="openLinkModal()">🔗</button>
+    </div>
+  </div>
+  <div id="drawerBackdrop" onclick="closeDrawer()"></div>
 
   <!-- SIDEBAR -->
   <aside id="sidebar">
@@ -282,6 +333,7 @@
       </div>
       <div class="sync-status" id="syncStatus">Sincronizzazione non configurata</div>
       <button class="sync-cfg" onclick="openSyncModal()">⚙ Configura GitHub</button>
+      <button class="sync-cfg" onclick="openModeModal(true)"><span id="modeBtnLabel">🖥️ Computer</span> · cambia</button>
       <div class="saved-pill" id="savedPill"><span class="chk">✓</span> Salvato sul dispositivo</div>
     </div>
   </aside>
@@ -485,6 +537,21 @@
     </div>
   </div>
 
+  <!-- DEVICE MODE CHOOSER -->
+  <div id="modeOverlay" class="overlay">
+    <div class="modal" style="width:420px;text-align:center">
+      <div class="m-bd" style="padding:28px 24px 24px">
+        <div style="font-family:var(--display);font-size:23px;margin-bottom:6px">Come vuoi usare l'app?</div>
+        <p style="color:var(--muted);font-size:13.5px;margin:0 0 22px;line-height:1.5">Scegli il formato. Potrai cambiarlo quando vuoi dal menù. I tuoi dati restano identici.</p>
+        <div class="mode-cards">
+          <button class="mode-card" onclick="setMode('desktop', true)"><div class="mc-ic">🖥️</div><div>Computer</div></button>
+          <button class="mode-card" onclick="setMode('mobile', true)"><div class="mc-ic">📱</div><div>Telefono</div></button>
+        </div>
+        <button id="modeCancel" class="btn-cancel" onclick="closeModeModal()" style="display:none;margin-top:20px">Annulla</button>
+      </div>
+    </div>
+  </div>
+
   <div id="toast"></div>
 
 <script>
@@ -653,6 +720,14 @@ function zoomAtClient(cx, cy, factor){
   v.panX = fx - wx*v.zoom; v.panY = fy - wy*v.zoom;
   applyTransform(); saveSoon();
 }
+function zoomToClient(cx, cy, targetZoom){
+  const r = stage.getBoundingClientRect(); const v=view();
+  const fx=cx-r.left, fy=cy-r.top;
+  const wx=(fx-v.panX)/v.zoom, wy=(fy-v.panY)/v.zoom;
+  v.zoom = Math.min(3, Math.max(0.2, targetZoom));
+  v.panX = fx - wx*v.zoom; v.panY = fy - wy*v.zoom;
+  applyTransform(); saveSoon();
+}
 function zoomBy(factor){
   const r = stage.getBoundingClientRect();
   zoomAtClient(r.left + r.width/2, r.top + r.height/2, factor);
@@ -681,33 +756,32 @@ function saveSoon(){ clearTimeout(saveSoonTimer); saveSoonTimer=setTimeout(save,
 /* ============================================================
    GLOBAL POINTER (pan / drag / resize)
 ============================================================ */
-let drag=null;
-stage.addEventListener("mousedown", e=>{
-  if(e.button!==0) return;
-  const nodeEl = e.target.closest(".node");
-  const handle = e.target.closest(".rsz");
-  const editBtn = e.target.closest(".node-edit");
-  if(editBtn){ return; } // handled by its own click
+let drag=null, pinch=null;
+
+function pointerStart(target, cx, cy){
+  if(target.closest(".node-edit")) return false; // let its click fire
+  if(target.closest(".elabel")) return false;    // let edge label click fire
+  const nodeEl = target.closest(".node");
+  const handle = target.closest(".rsz");
   if(handle && nodeEl){
     const n = tree().nodes.find(x=>x.id===nodeEl.dataset.id);
-    drag={type:"resize", id:n.id, sx:e.clientX, sy:e.clientY, origScale:n.scale, moved:false};
-    e.preventDefault(); return;
+    drag={type:"resize", id:n.id, sx:cx, sy:cy, origScale:n.scale, moved:false};
+    return true;
   }
   if(nodeEl){
     const n = tree().nodes.find(x=>x.id===nodeEl.dataset.id);
-    drag={type:"node", id:n.id, sx:e.clientX, sy:e.clientY, ox:n.x, oy:n.y, moved:false};
+    drag={type:"node", id:n.id, sx:cx, sy:cy, ox:n.x, oy:n.y, moved:false};
     nodeEl.classList.add("dragging");
-    e.preventDefault(); return;
+    return true;
   }
-  // empty area -> pan
   const v=view();
-  drag={type:"pan", sx:e.clientX, sy:e.clientY, opx:v.panX, opy:v.panY, moved:false};
+  drag={type:"pan", sx:cx, sy:cy, opx:v.panX, opy:v.panY, moved:false};
   stage.classList.add("panning");
-});
-
-window.addEventListener("mousemove", e=>{
+  return true;
+}
+function pointerMove(cx, cy){
   if(!drag) return;
-  const dx=e.clientX-drag.sx, dy=e.clientY-drag.sy;
+  const dx=cx-drag.sx, dy=cy-drag.sy;
   if(Math.hypot(dx,dy)>4) drag.moved=true;
   if(drag.type==="pan"){
     const v=view(); v.panX=drag.opx+dx; v.panY=drag.opy+dy; applyTransform();
@@ -724,9 +798,8 @@ window.addEventListener("mousemove", e=>{
     if(el) el.style.transform="scale("+n.scale+")";
     renderEdges();
   }
-});
-
-window.addEventListener("mouseup", e=>{
+}
+function pointerEnd(){
   if(!drag) return;
   const d=drag; drag=null;
   stage.classList.remove("panning");
@@ -734,7 +807,38 @@ window.addEventListener("mouseup", e=>{
   if(d.type==="pan"){ if(!d.moved){ clearSelection(); } else save(); }
   else if(d.type==="node"){ if(!d.moved){ toggleNode(d.id); } else save(); }
   else if(d.type==="resize"){ save(); }
-});
+}
+
+/* mouse */
+stage.addEventListener("mousedown", e=>{ if(e.button!==0) return; if(pointerStart(e.target, e.clientX, e.clientY)) e.preventDefault(); });
+window.addEventListener("mousemove", e=>{ if(drag) pointerMove(e.clientX, e.clientY); });
+window.addEventListener("mouseup", ()=>pointerEnd());
+
+/* touch: one finger = drag/pan, two fingers = pinch-zoom */
+function tDist(a,b){ return Math.hypot(b.clientX-a.clientX, b.clientY-a.clientY); }
+function tMid(a,b){ return {x:(a.clientX+b.clientX)/2, y:(a.clientY+b.clientY)/2}; }
+stage.addEventListener("touchstart", e=>{
+  if(e.touches.length>=2){
+    drag=null; document.querySelectorAll(".node.dragging").forEach(el=>el.classList.remove("dragging"));
+    pinch={ d:tDist(e.touches[0],e.touches[1])||1, zoom:view().zoom };
+    e.preventDefault(); return;
+  }
+  const t=e.touches[0];
+  if(pointerStart(t.target||e.target, t.clientX, t.clientY)) e.preventDefault();
+}, {passive:false});
+stage.addEventListener("touchmove", e=>{
+  if(pinch && e.touches.length>=2){
+    const nd=tDist(e.touches[0],e.touches[1]); const m=tMid(e.touches[0],e.touches[1]);
+    zoomToClient(m.x, m.y, pinch.zoom * (nd/pinch.d));
+    e.preventDefault(); return;
+  }
+  if(drag && e.touches.length===1){ const t=e.touches[0]; pointerMove(t.clientX, t.clientY); e.preventDefault(); }
+}, {passive:false});
+stage.addEventListener("touchend", e=>{
+  if(pinch && e.touches.length<2){ pinch=null; save(); }
+  if(drag && e.touches.length===0){ pointerEnd(); }
+}, {passive:false});
+stage.addEventListener("touchcancel", ()=>{ pinch=null; pointerEnd(); });
 
 // wheel: pan + ctrl-zoom + shift-horizontal
 stage.addEventListener("wheel", e=>{
@@ -808,7 +912,7 @@ function renderSidebar(){
       <button class="mini" title="Elimina">🗑</button>`;
     row.addEventListener("click", ev=>{
       if(ev.target.closest(".mini")) return;
-      currentId=t.id; clearSelection(); save(); renderAll();
+      currentId=t.id; clearSelection(); save(); renderAll(); closeDrawer();
     });
     const btns=row.querySelectorAll(".mini");
     btns[0].addEventListener("click",()=>renameTree(t.id));
@@ -1372,12 +1476,45 @@ async function ghPull(silent){
 function scheduleGhPush(){ clearTimeout(ghPushTimer); ghPushTimer=setTimeout(()=>{ if(autoSyncOn()) ghPush(); }, 4000); }
 
 /* ============================================================
+   DEVICE MODE  (computer / telefono)  + drawer
+============================================================ */
+const MODE_KEY="alberi_mode_v1";
+function applyMode(mode){
+  const mobile = mode==="mobile";
+  document.body.classList.toggle("mode-mobile", mobile);
+  document.body.classList.toggle("mode-desktop", !mobile);
+  const lbl=document.getElementById("modeBtnLabel");
+  if(lbl) lbl.textContent = mobile ? "📱 Telefono" : "🖥️ Computer";
+  closeDrawer();
+  applyTransform(); renderNodes(); renderEdges();
+}
+function setMode(mode, closeChooser){
+  localStorage.setItem(MODE_KEY, mode);
+  applyMode(mode);
+  if(closeChooser) document.getElementById("modeOverlay").classList.remove("show");
+}
+function openModeModal(canCancel){
+  document.getElementById("modeCancel").style.display = canCancel ? "inline-block" : "none";
+  document.getElementById("modeOverlay").classList.add("show");
+}
+function closeModeModal(){
+  document.getElementById("modeOverlay").classList.remove("show");
+  if(!localStorage.getItem(MODE_KEY)) setMode("desktop", false);
+}
+function toggleDrawer(){ document.body.classList.toggle("drawer-open"); }
+function closeDrawer(){ document.body.classList.remove("drawer-open"); }
+
+/* ============================================================
    INIT
 ============================================================ */
 window.addEventListener("beforeunload", save);
 renderAll();
 refreshSyncUI();
 if(autoSyncOn()) ghPull(true);
+
+const savedMode = localStorage.getItem(MODE_KEY);
+if(savedMode){ applyMode(savedMode); }
+else { applyMode("desktop"); openModeModal(false); }
 </script>
 </body>
 </html>
