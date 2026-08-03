@@ -821,6 +821,7 @@ stage.addEventListener("touchstart", e=>{
   const t=e.touches[0];
   const target=document.elementFromPoint(t.clientX,t.clientY);
   if(!target) return;
+  if(target.closest("button, a, input, select, textarea, label, .zlabel")) return; // let normal buttons/controls handle their own taps
   if(target.closest(".node-edit, .hit, .elabel")) return; // let their own click handlers fire
   const nodeEl=target.closest(".node");
   const handle=target.closest(".rsz");
