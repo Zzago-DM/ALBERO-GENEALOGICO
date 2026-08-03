@@ -246,9 +246,46 @@
   ::-webkit-scrollbar{width:10px;height:10px}
   ::-webkit-scrollbar-thumb{background:#0000002e;border-radius:6px}
   #sidebar ::-webkit-scrollbar-thumb{background:#ffffff24}
+
+  /* ---------- Mobile layout ---------- */
+  #mobileTopbar{display:none;position:fixed;top:0;left:0;right:0;height:52px;z-index:40;
+    background:var(--ink);color:var(--on-ink);align-items:center;gap:12px;padding:0 8px 0 4px;
+    border-bottom:1px solid var(--ink-3);box-shadow:0 2px 12px rgba(0,0,0,.35)}
+  #mobileTopbar button{background:none;border:none;color:var(--on-ink);font-size:22px;cursor:pointer;padding:6px 10px;line-height:1;border-radius:8px}
+  #mobileTopbar button:active{background:var(--ink-2)}
+  #mobileTopbar .mt-title{font-family:var(--display);font-size:16.5px;font-weight:600;display:flex;align-items:center;gap:7px}
+  #drawerScrim{display:none;position:fixed;inset:0;background:rgba(8,6,3,.5);z-index:29}
+  #drawerScrim.show{display:block}
+
+  body.mode-mobile #mobileTopbar{display:flex}
+  body.mode-mobile #sidebar{position:fixed;top:0;left:0;height:100vh;z-index:30;
+    transform:translateX(-100%);transition:transform .22s ease;box-shadow:0 0 40px rgba(0,0,0,.55)}
+  body.mode-mobile #sidebar.open{transform:translateX(0)}
+  body.mode-mobile #stage{margin-top:52px;height:calc(100vh - 52px)}
+  body.mode-mobile .fab-add{top:14px;left:14px;right:14px;flex-direction:column;align-items:flex-start}
+  body.mode-mobile .fab-add .btn{width:100%}
+  body.mode-mobile #zoombar{right:14px;bottom:16px}
+  body.mode-mobile .overlay{padding:0;align-items:flex-end}
+  body.mode-mobile .modal{width:100%;max-width:100%;height:92vh;max-height:92vh;border-radius:18px 18px 0 0}
+  #stage{touch-action:none}
+
+  .device-choice{display:flex;gap:14px;margin-top:6px}
+  .device-opt{flex:1;display:flex;flex-direction:column;align-items:center;gap:10px;padding:26px 14px;
+    border:1.5px solid var(--line);border-radius:14px;background:var(--surface-3);cursor:pointer;font-family:inherit}
+  .device-opt:hover{border-color:var(--gold);background:#ecdcb0}
+  .dev-ic{font-size:34px}
+  .dev-lbl{font-size:14.5px;font-weight:700;color:var(--text)}
+  body.mode-mobile .device-choice{flex-direction:column}
 </style>
 </head>
 <body>
+
+  <!-- MOBILE TOPBAR -->
+  <div id="mobileTopbar">
+    <button id="hamburgerBtn" title="Menu" onclick="toggleDrawer()">☰</button>
+    <span class="mt-title"><span class="crest" style="color:var(--gold)">❦</span> Alberi Genealogici</span>
+  </div>
+  <div id="drawerScrim" onclick="closeDrawer()"></div>
 
   <!-- SIDEBAR -->
   <aside id="sidebar">
@@ -282,6 +319,7 @@
       </div>
       <div class="sync-status" id="syncStatus">Sincronizzazione non configurata</div>
       <button class="sync-cfg" onclick="openSyncModal()">⚙ Configura GitHub</button>
+      <button class="sync-cfg" onclick="openDeviceModal()">📱 Cambia modalità dispositivo</button>
       <div class="saved-pill" id="savedPill"><span class="chk">✓</span> Salvato sul dispositivo</div>
     </div>
   </aside>
@@ -476,6 +514,29 @@
         <div class="spacer"></div>
         <button class="btn-cancel" onclick="closeSyncModal()">Chiudi</button>
         <button class="btn-primary" onclick="saveSyncCfg()">Salva impostazioni</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- DEVICE MODE MODAL -->
+  <div id="deviceOverlay" class="overlay">
+    <div id="deviceModal" class="modal" style="width:420px">
+      <div class="m-hd">
+        <h2>Che dispositivo stai usando?</h2>
+        <button class="close" id="deviceCloseBtn" onclick="closeDeviceModal()">×</button>
+      </div>
+      <div class="m-bd">
+        <p class="lk-help">Scegli come vuoi visualizzare l'app. Puoi cambiare idea in qualsiasi momento da «Cambia modalità dispositivo» nella barra laterale.</p>
+        <div class="device-choice">
+          <button type="button" class="device-opt" onclick="chooseDevice('desktop')">
+            <span class="dev-ic">🖥️</span>
+            <span class="dev-lbl">Computer</span>
+          </button>
+          <button type="button" class="device-opt" onclick="chooseDevice('mobile')">
+            <span class="dev-ic">📱</span>
+            <span class="dev-lbl">Telefono</span>
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -812,6 +873,7 @@ function renderSidebar(){
     row.addEventListener("click", ev=>{
       if(ev.target.closest(".mini")) return;
       currentId=t.id; clearSelection(); save(); renderAll();
+      if(document.body.classList.contains("mode-mobile")) closeDrawer();
     });
     const btns=row.querySelectorAll(".mini");
     btns[0].addEventListener("click",()=>renameTree(t.id));
@@ -1295,6 +1357,42 @@ function deleteTree(id){
 }
 
 /* ============================================================
+   DEVICE MODE (Computer / Telefono) + MOBILE DRAWER
+============================================================ */
+const DEVICE_KEY="alberi_device_mode_v1";
+
+function applyDeviceMode(mode){
+  document.body.classList.toggle("mode-mobile", mode==="mobile");
+  if(mode!=="mobile") closeDrawer();
+}
+function chooseDevice(mode){
+  localStorage.setItem(DEVICE_KEY, mode);
+  applyDeviceMode(mode);
+  closeDeviceModal(true);
+}
+function openDeviceModal(){
+  const forced = !localStorage.getItem(DEVICE_KEY);
+  document.getElementById("deviceCloseBtn").style.display = forced?"none":"";
+  document.getElementById("deviceOverlay").classList.add("show");
+}
+function closeDeviceModal(afterChoice){
+  if(!afterChoice && !localStorage.getItem(DEVICE_KEY)) return; // must choose the first time
+  document.getElementById("deviceOverlay").classList.remove("show");
+}
+function toggleDrawer(){
+  document.getElementById("sidebar").classList.toggle("open");
+  document.getElementById("drawerScrim").classList.toggle("show");
+}
+function openDrawer(){
+  document.getElementById("sidebar").classList.add("open");
+  document.getElementById("drawerScrim").classList.add("show");
+}
+function closeDrawer(){
+  document.getElementById("sidebar").classList.remove("open");
+  document.getElementById("drawerScrim").classList.remove("show");
+}
+
+/* ============================================================
    TOAST
 ============================================================ */
 let toastTimer=null;
@@ -1403,6 +1501,9 @@ window.addEventListener("beforeunload", save);
 renderAll();
 refreshSyncUI();
 if(autoSyncOn()) ghPull(true);
+
+const savedDevice = localStorage.getItem(DEVICE_KEY);
+if(savedDevice){ applyDeviceMode(savedDevice); } else { openDeviceModal(); }
 </script>
 </body>
 </html>
