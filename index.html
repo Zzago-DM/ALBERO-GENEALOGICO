@@ -276,6 +276,9 @@
   .dev-ic{font-size:34px}
   .dev-lbl{font-size:14.5px;font-weight:700;color:var(--text)}
   body.mode-mobile .device-choice{flex-direction:column}
+  body.mode-mobile .node-edit{opacity:1}
+  body.mode-mobile .rsz{opacity:.8}
+  body.mode-mobile .tree-row .mini{opacity:1}
 </style>
 </head>
 <body>
@@ -799,6 +802,90 @@ window.addEventListener("mouseup", e=>{
   else if(d.type==="node"){ if(!d.moved){ toggleNode(d.id); } else save(); }
   else if(d.type==="resize"){ save(); }
 });
+
+/* ============================================================
+   TOUCH (mobile: one-finger pan/drag, two-finger pinch-zoom)
+============================================================ */
+let touchDrag=null, pinch=null;
+function tDist(t0,t1){ return Math.hypot(t1.clientX-t0.clientX, t1.clientY-t0.clientY); }
+function tMid(t0,t1){ return { x:(t0.clientX+t1.clientX)/2, y:(t0.clientY+t1.clientY)/2 }; }
+
+stage.addEventListener("touchstart", e=>{
+  if(e.touches.length===2){
+    touchDrag=null;
+    const [t0,t1]=e.touches, v=view();
+    pinch={ dist:tDist(t0,t1), zoom:v.zoom, panX:v.panX, panY:v.panY, mid:tMid(t0,t1) };
+    return;
+  }
+  if(e.touches.length!==1) return;
+  const t=e.touches[0];
+  const target=document.elementFromPoint(t.clientX,t.clientY);
+  if(!target) return;
+  if(target.closest(".node-edit, .hit, .elabel")) return; // let their own click handlers fire
+  const nodeEl=target.closest(".node");
+  const handle=target.closest(".rsz");
+  if(handle && nodeEl){
+    const n=tree().nodes.find(x=>x.id===nodeEl.dataset.id);
+    touchDrag={type:"resize", id:n.id, sx:t.clientX, sy:t.clientY, origScale:n.scale, moved:false};
+    return;
+  }
+  if(nodeEl){
+    const n=tree().nodes.find(x=>x.id===nodeEl.dataset.id);
+    touchDrag={type:"node", id:n.id, sx:t.clientX, sy:t.clientY, ox:n.x, oy:n.y, moved:false};
+    nodeEl.classList.add("dragging");
+    return;
+  }
+  const v=view();
+  touchDrag={type:"pan", sx:t.clientX, sy:t.clientY, opx:v.panX, opy:v.panY, moved:false};
+}, {passive:true});
+
+stage.addEventListener("touchmove", e=>{
+  if(pinch && e.touches.length===2){
+    e.preventDefault();
+    const [t0,t1]=e.touches;
+    const factor=tDist(t0,t1)/(pinch.dist||1);
+    const v=view(), r=stage.getBoundingClientRect();
+    const fx=pinch.mid.x-r.left, fy=pinch.mid.y-r.top;
+    const wx=(fx-pinch.panX)/pinch.zoom, wy=(fy-pinch.panY)/pinch.zoom;
+    v.zoom=Math.min(3, Math.max(0.2, pinch.zoom*factor));
+    v.panX=fx-wx*v.zoom; v.panY=fy-wy*v.zoom;
+    applyTransform();
+    return;
+  }
+  if(!touchDrag || e.touches.length!==1) return;
+  e.preventDefault();
+  const t=e.touches[0];
+  const dx=t.clientX-touchDrag.sx, dy=t.clientY-touchDrag.sy;
+  if(Math.hypot(dx,dy)>4) touchDrag.moved=true;
+  if(touchDrag.type==="pan"){
+    const v=view(); v.panX=touchDrag.opx+dx; v.panY=touchDrag.opy+dy; applyTransform();
+  } else if(touchDrag.type==="node"){
+    const v=view(); const n=tree().nodes.find(x=>x.id===touchDrag.id);
+    if(!n) return;
+    n.x=touchDrag.ox+dx/v.zoom; n.y=touchDrag.oy+dy/v.zoom;
+    const el=document.querySelector(`.node[data-id="${n.id}"]`);
+    if(el){ el.style.left=n.x+"px"; el.style.top=n.y+"px"; }
+    renderEdges();
+  } else if(touchDrag.type==="resize"){
+    const n=tree().nodes.find(x=>x.id===touchDrag.id);
+    if(!n) return;
+    n.scale=Math.min(2.4, Math.max(0.5, touchDrag.origScale + dx/170));
+    const el=document.querySelector(`.node[data-id="${n.id}"]`);
+    if(el) el.style.transform="scale("+n.scale+")";
+    renderEdges();
+  }
+}, {passive:false});
+
+stage.addEventListener("touchend", e=>{
+  if(pinch){ if(e.touches.length<2){ save(); pinch=null; } return; }
+  if(!touchDrag) return;
+  const d=touchDrag; touchDrag=null;
+  document.querySelectorAll(".node.dragging").forEach(el=>el.classList.remove("dragging"));
+  if(d.type==="pan"){ if(!d.moved){ clearSelection(); } else save(); }
+  else if(d.type==="node"){ if(!d.moved){ toggleNode(d.id); } else save(); }
+  else if(d.type==="resize"){ save(); }
+});
+stage.addEventListener("touchcancel", ()=>{ touchDrag=null; pinch=null; });
 
 // wheel: pan + ctrl-zoom + shift-horizontal
 stage.addEventListener("wheel", e=>{
