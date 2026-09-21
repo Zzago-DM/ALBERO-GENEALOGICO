@@ -120,7 +120,18 @@
         "panY": 0,
         "zoom": 1
       }
+    },
+    {
+      "id": "050ce71b-d79c-42dc-a82e-332a30526afb",
+      "name": "EIRÍKR LOKI FIGLIO DI ODINO/LAUFEY",
+      "nodes": [],
+      "edges": [],
+      "view": {
+        "panX": 0,
+        "panY": 0,
+        "zoom": 1
+      }
     }
   ],
-  "currentId": "31f74334-6c1b-4724-a363-45540caf08f7"
+  "currentId": "050ce71b-d79c-42dc-a82e-332a30526afb"
 }
