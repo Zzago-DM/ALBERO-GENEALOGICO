@@ -1,0 +1,16 @@
+{
+  "trees": [
+    {
+      "id": "2c6b5321-7114-4a1e-8b5d-0a7a75efc6c1",
+      "name": "Albero 1",
+      "nodes": [],
+      "edges": [],
+      "view": {
+        "panX": 0,
+        "panY": 1,
+        "zoom": 1
+      }
+    }
+  ],
+  "currentId": "2c6b5321-7114-4a1e-8b5d-0a7a75efc6c1"
+}
