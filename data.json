@@ -28,6 +28,31 @@
             "pronouns": false,
             "notes": false
           }
+        },
+        {
+          "id": "2bcb8ce2-9254-4b47-a23a-32940844e3c6",
+          "x": 335.28712342814407,
+          "y": 251.4490956062038,
+          "name": "sariy",
+          "classes": [],
+          "role": "",
+          "race": "",
+          "pronouns": [],
+          "birth": "",
+          "death": "",
+          "notes": "",
+          "color": "#3f6b4a",
+          "photo": null,
+          "scale": 1,
+          "show": {
+            "name": true,
+            "classes": true,
+            "role": true,
+            "race": true,
+            "years": true,
+            "pronouns": false,
+            "notes": false
+          }
         }
       ],
       "edges": [],
