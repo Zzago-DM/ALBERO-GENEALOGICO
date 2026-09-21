@@ -2,38 +2,13 @@
   "trees": [
     {
       "id": "2c6b5321-7114-4a1e-8b5d-0a7a75efc6c1",
-      "name": "Sariy",
+      "name": "Albero 1",
       "nodes": [
         {
           "id": "f7f39948-0715-461c-9218-2283b1d5a33d",
-          "x": 104.24196377560861,
-          "y": 335.68838668386815,
+          "x": 393.86862895127126,
+          "y": 321.8578998636821,
           "name": "arturo",
-          "classes": [],
-          "role": "",
-          "race": "",
-          "pronouns": [],
-          "birth": "",
-          "death": "",
-          "notes": "",
-          "color": "#3f6b4a",
-          "photo": null,
-          "scale": 1,
-          "show": {
-            "name": true,
-            "classes": true,
-            "role": true,
-            "race": true,
-            "years": true,
-            "pronouns": false,
-            "notes": false
-          }
-        },
-        {
-          "id": "e5e41dd2-fc42-4992-b292-1644e763ac7e",
-          "x": -19.860073582955536,
-          "y": 487.09820258507693,
-          "name": "sariy",
           "classes": [],
           "role": "",
           "race": "",
@@ -57,9 +32,9 @@
       ],
       "edges": [],
       "view": {
-        "panX": 62.98078925148738,
-        "panY": 20.230428887973062,
-        "zoom": 0.7335029373167332
+        "panX": 9.195227238920552,
+        "panY": 170.3989731533566,
+        "zoom": 0.44020614109404543
       }
     }
   ],
