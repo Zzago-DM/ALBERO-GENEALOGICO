@@ -120,6 +120,33 @@
             "pronouns": true,
             "notes": false
           }
+        },
+        {
+          "id": "131b6a66-fba1-4f0d-82b1-a3f4b95cbb11",
+          "x": 839.3630300701868,
+          "y": 326.1359283817604,
+          "name": "GEA",
+          "classes": [
+            "Paladino della vendetta"
+          ],
+          "role": "lama dei morti",
+          "race": "Tiefling",
+          "pronouns": [],
+          "birth": "",
+          "death": "",
+          "notes": "",
+          "color": "#3a7d76",
+          "photo": null,
+          "scale": 1,
+          "show": {
+            "name": true,
+            "classes": true,
+            "role": true,
+            "race": true,
+            "years": false,
+            "pronouns": true,
+            "notes": false
+          }
         }
       ],
       "edges": [
