@@ -464,6 +464,21 @@
       "story": {
         "chapters": []
       }
+    },
+    {
+      "id": "a9852ea5-26ed-4d26-9922-9e9b9db4d426",
+      "name": "NEI'MORA",
+      "nodes": [],
+      "edges": [],
+      "view": {
+        "panX": 0,
+        "panY": 0,
+        "zoom": 1
+      },
+      "cover": "#8ce2f3",
+      "story": {
+        "chapters": []
+      }
     }
   ],
   "currentId": "22cec225-80c1-47af-bb3c-1e17d9f749cf"
