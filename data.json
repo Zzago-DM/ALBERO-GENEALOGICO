@@ -257,6 +257,33 @@
             "pronouns": false,
             "notes": false
           }
+        },
+        {
+          "id": "22c61c7c-a99f-4b3a-8dac-9bb50cea5877",
+          "x": 470.52437832127606,
+          "y": 121.07100008668544,
+          "name": "MYSTRA",
+          "classes": [
+            "Dea"
+          ],
+          "role": "Dea della trama",
+          "race": "Dea",
+          "pronouns": [],
+          "birth": "",
+          "death": "",
+          "notes": "",
+          "color": "#5a4f8a",
+          "photo": null,
+          "scale": 1,
+          "show": {
+            "name": true,
+            "classes": true,
+            "role": true,
+            "race": true,
+            "years": false,
+            "pronouns": false,
+            "notes": false
+          }
         }
       ],
       "edges": [
