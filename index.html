@@ -323,8 +323,11 @@
   .shelf-row{display:flex;align-items:flex-end;gap:6px;padding:0 6px;position:relative;z-index:1}
   .shelf-row:hover{z-index:3}
   .plank{height:18px;margin:0 -18px;position:relative;z-index:2;
-    background:linear-gradient(180deg,#8a5e36 0,#6d4726 30%,#4e3119 100%);
-    box-shadow:0 10px 14px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.15)}
+    background:
+      linear-gradient(180deg,rgba(255,228,185,.28) 0,rgba(255,228,185,.08) 3px,rgba(0,0,0,0) 35%,rgba(0,0,0,.42) 100%),
+      var(--wood-h,#6d4726);
+    background-size:auto,600px 600px;
+    box-shadow:0 10px 14px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,235,200,.2)}
 
   .book{--c:#6b1f1f;--ink:#e9cc7e;position:relative;width:var(--w);height:var(--h);flex:none;border:none;padding:0;margin:0;cursor:pointer;
     border-radius:3px 3px 2px 2px;color:var(--ink);font:inherit;font-family:var(--display);-webkit-appearance:none;appearance:none;
@@ -517,7 +520,7 @@
   .lib-rays{background:repeating-linear-gradient(104deg,transparent 0 70px,rgba(225,245,195,.035) 70px 130px,transparent 130px 230px);
     -webkit-mask-image:linear-gradient(180deg,#000,transparent 75%);mask-image:linear-gradient(180deg,#000,transparent 75%)}
   .ff{position:absolute;width:5px;height:5px;border-radius:50%;background:#f8f2b0;
-    box-shadow:0 0 8px 3px rgba(240,232,130,.6),0 0 22px 8px rgba(180,230,120,.22);
+    box-shadow:0 0 6px 2px rgba(225,235,130,.55),0 0 16px 5px rgba(170,220,110,.18);
     animation:ffMove var(--d) ease-in-out infinite alternate, ffBlink var(--b) ease-in-out infinite;animation-delay:var(--dl),var(--dl)}
   @keyframes ffMove{to{transform:translate(var(--dx),var(--dy))}}
   @keyframes ffBlink{0%,100%{opacity:.12}50%{opacity:1}}
@@ -529,14 +532,19 @@
 
   .bookcase{border-radius:50% 50% 10px 10px / 70px 70px 10px 10px;
     background:
-      repeating-linear-gradient(90deg,rgba(255,255,255,.025) 0 1px,transparent 1px 7px),
-      radial-gradient(ellipse 120% 40% at 50% 100%, rgba(60,90,40,.35), transparent 70%),
-      linear-gradient(180deg,#6a4628,#4e321a 35%,#33200f);
-    box-shadow:0 34px 70px rgba(0,0,0,.7), 0 0 90px rgba(120,180,110,.08), inset 0 0 0 1px rgba(0,0,0,.5), inset 0 2px 0 rgba(255,255,255,.07)}
+      linear-gradient(90deg,rgba(0,0,0,.45),rgba(0,0,0,0) 3%,rgba(255,225,180,.05) 50%,rgba(0,0,0,0) 97%,rgba(0,0,0,.45)),
+      linear-gradient(180deg,rgba(255,228,190,.10),rgba(0,0,0,0) 30%,rgba(0,0,0,.32)),
+      var(--wood-v,#4e321a);
+    background-size:auto,auto,520px 520px;
+    box-shadow:0 34px 70px rgba(0,0,0,.7), inset 0 0 0 1px rgba(0,0,0,.55), inset 0 2px 0 rgba(255,230,190,.12), inset 0 -3px 6px rgba(0,0,0,.4)}
   .bc-crown{padding:30px 0 16px}
   .bc-inner{border-radius:50% 50% 3px 3px / 30px 30px 3px 3px;
-    background:radial-gradient(ellipse 80% 50% at 50% 0%, rgba(150,200,130,.07), transparent 70%),linear-gradient(180deg,#140f08,#1d140b 30%,#170f08);
-    box-shadow:inset 0 10px 26px rgba(0,0,0,.8), inset 0 0 0 1px rgba(0,0,0,.6), inset 0 0 0 4px rgba(214,173,82,.07)}
+    background:
+      repeating-linear-gradient(90deg,rgba(0,0,0,.55) 0 2px,rgba(255,220,170,.04) 2px 3px,transparent 3px 124px),
+      linear-gradient(180deg,rgba(12,7,3,.78),rgba(12,7,3,.66) 40%,rgba(12,7,3,.74)),
+      var(--wood-v,#1d140b);
+    background-size:auto,auto,520px 520px;
+    box-shadow:inset 0 12px 28px rgba(0,0,0,.85), inset 0 0 0 1px rgba(0,0,0,.6), inset 8px 0 18px rgba(0,0,0,.5), inset -8px 0 18px rgba(0,0,0,.5)}
   .plaque{position:relative;background:linear-gradient(180deg,#efe2bd,#d9c48f 60%,#c2a86b);color:#4a3215;
     font-variant:small-caps;text-transform:none;letter-spacing:3px;font-size:17px;padding:5px 30px 7px;border-radius:2px;
     box-shadow:0 3px 6px rgba(0,0,0,.5), inset 0 0 0 1px rgba(120,90,40,.35)}
@@ -547,8 +555,9 @@
 
   .plank::before{content:"";position:absolute;left:0;right:0;top:-5px;height:10px;opacity:.95;display:none;
     background:
-      radial-gradient(circle at 6px 10px,#3d6a2c 5px,transparent 5.6px) 0 0/12px 10px repeat-x,
-      radial-gradient(circle at 4px 10px,#58893a 3.6px,transparent 4.2px) 5px 2px/17px 10px repeat-x}
+      radial-gradient(circle at 6px 10px,#3a5a26 5px,transparent 5.6px) 0 0/11px 10px repeat-x,
+      radial-gradient(circle at 4px 10px,#4f7232 3.6px,transparent 4.2px) 5px 2px/15px 10px repeat-x,
+      radial-gradient(circle at 3px 10px,#6a8a42 2.4px,transparent 2.9px) 2px 3px/9px 10px repeat-x}
   .shelf:first-child .plank::before{display:block;
     -webkit-mask-image:linear-gradient(90deg,transparent 0 72%,#000 86%);mask-image:linear-gradient(90deg,transparent 0 72%,#000 86%)}
   .shelf:last-child .plank::before{display:block;
@@ -556,10 +565,10 @@
   .shelf:only-child .plank::before{
     -webkit-mask-image:linear-gradient(90deg,#000 0 14%,transparent 30% 72%,#000 86%);mask-image:linear-gradient(90deg,#000 0 14%,transparent 30% 72%,#000 86%)}
   .shelf-row:hover{z-index:8}
-  .bookend{width:34px;height:30px;border-radius:55% 65% 18% 22% / 70% 75% 25% 25%;margin-left:4px;position:relative;
-    background:radial-gradient(ellipse at 35% 30%,#8b9086,#5e645b 55%,#383c36);box-shadow:inset -3px -3px 6px rgba(0,0,0,.35),0 2px 3px rgba(0,0,0,.5)}
-  .bookend::before{content:"";position:absolute;left:3px;right:6px;top:-2px;height:11px;border-radius:60% 70% 40% 50%;
-    background:radial-gradient(circle at 30% 60%,#5f9140,#3a6428 75%)}
+  .bookend{width:34px;height:28px;border-radius:55% 65% 18% 22% / 70% 75% 25% 25%;margin-left:4px;position:relative;
+    background:radial-gradient(ellipse at 35% 28%,#9a9d94,#62665d 50%,#34372f);box-shadow:inset -3px -4px 7px rgba(0,0,0,.4),0 2px 3px rgba(0,0,0,.55)}
+  .bookend::before{content:"";position:absolute;left:4px;right:9px;top:-1px;height:8px;border-radius:60% 70% 40% 50%;
+    background:radial-gradient(circle at 30% 60%,#55723a,#33502a 75%);opacity:.9}
   .book-add{border-color:rgba(160,200,120,.45);background:rgba(120,170,90,.06);color:#c9d99a}
   .book-add:hover{background:rgba(120,170,90,.15);border-color:#b6cf84}
   .shelf-shrooms{flex:none;align-self:flex-end;margin-left:auto;margin-right:6px;pointer-events:none}
@@ -1923,9 +1932,7 @@ function toggleManage(){ managing=!managing; renderLibrary(); }
 ============================================================ */
 function rng(seed){ let s=(seed>>>0)||1; return ()=>{ s^=s<<13; s>>>=0; s^=s>>>17; s^=s<<5; s>>>=0; return s/4294967296; }; }
 function pick(r,arr){ return arr[Math.floor(r()*arr.length)]; }
-const IVY_GREENS=["#2f5a2a","#3c6b30","#4b7a35","#2a4a26","#5a8a3c","#356b45","#46703a"];
-const FAIRY_PETALS=["#f6e7f0","#e8c9f2","#cfe3ff","#fff6d8","#f7c6d4","#d9f0ff"];
-
+function f1(n){ return Math.round(n*10)/10; }
 function resample(pts, step){
   const out=[]; let carry=0;
   for(let i=0;i<pts.length-1;i++){
@@ -1936,202 +1943,253 @@ function resample(pts, step){
   }
   return out;
 }
-function f1(n){ return Math.round(n*10)/10; }
 
-function blossom(x,y,r,col,glow,rot){
-  let s=`<g transform="translate(${f1(x)},${f1(y)}) rotate(${Math.round(rot)})"${glow?' filter="url(#fglow)"':""}>`;
-  for(let i=0;i<5;i++) s+=`<ellipse cy="${f1(-r*0.85)}" rx="${f1(r*0.52)}" ry="${f1(r*0.88)}" fill="${col}" transform="rotate(${i*72})"/>`;
-  return s+`<circle r="${f1(r*0.36)}" fill="#e8b93a"/></g>`;
-}
-function berries(x,y,k,r){
-  let s="";
-  for(let i=0;i<6;i++){ const a=r()*6.28, d=r()*3*k; s+=`<circle cx="${f1(x+Math.cos(a)*d)}" cy="${f1(y+Math.sin(a)*d)}" r="${f1(2.3*k)}" fill="${i%3?"#2a1230":"#3d1a44"}"/>`; }
-  return s+`<circle cx="${f1(x-1*k)}" cy="${f1(y-1.2*k)}" r="${f1(0.8*k)}" fill="#ffffff55"/>`;
+/* ---------- colori naturali (foglie con sfumature, non tinta unita) ---------- */
+function ivyFill(r){ const v=r(); return v<0.42?"url(#lfIvyDark)":v<0.8?"url(#lfIvyMid)":v<0.94?"url(#lfIvyYoung)":"url(#lfIvyOld)"; }
+function ivyShape(r,small){ const v=r(); return small ? (v<0.75?"ivy3":"ivyHeart") : (v<0.5?"ivy3":v<0.75?"ivy5":"ivyHeart"); }
+
+/* fogliolina seghettata del rovo */
+function serratedLeafPath(){
+  const n=24, Lp=[], Rp=[];
+  for(let i=0;i<=n;i++){
+    const t=i/n, w=0.36*Math.sin(Math.PI*Math.pow(t,0.72));
+    const tooth=(i%2===1 && w>0.06) ? 0.045 : 0;
+    Lp.push([-(w+tooth), -t+(tooth?0.02:0)]); Rp.push([w+tooth, -t+(tooth?0.02:0)]);
+  }
+  const fmt=p=>p[0].toFixed(3)+","+p[1].toFixed(3);
+  return "M"+Lp.map(fmt).join(" L")+" L"+Rp.reverse().map(fmt).join(" L")+"Z";
 }
 
-/* un rampicante lungo una linea: type "ivy" (edera) o "bramble" (rovo) */
+function stemPath(P, w0, w1, col, hi){
+  let s=""; const N=8, len=P.length;
+  for(let j=0;j<N;j++){
+    const a=Math.floor(j*len/N), b=Math.min(len-1, Math.floor((j+1)*len/N)+1);
+    const seg=P.slice(a,b+1); if(seg.length<2) continue;
+    const w=w0+(w1-w0)*(j/(N-1)), d="M"+seg.map(p=>f1(p.x)+" "+f1(p.y)).join(" L");
+    s+=`<path d="${d}" fill="none" stroke="${col}" stroke-width="${f1(w)}" stroke-linecap="round" stroke-linejoin="round"/>`;
+    if(hi && w>1.8) s+=`<path d="${d}" fill="none" stroke="${hi}" stroke-opacity=".4" stroke-width="${f1(w*0.3)}" stroke-linecap="round" transform="translate(${f1(-w*0.2)},${f1(-w*0.2)})"/>`;
+  }
+  return s;
+}
+
+function bramFlower(x,y,r,rot){
+  let s=`<g transform="translate(${f1(x)},${f1(y)}) rotate(${Math.round(rot)})">`;
+  for(let i=0;i<5;i++) s+=`<path d="M0,0 C${f1(-r*0.55)},${f1(-r*0.35)} ${f1(-r*0.6)},${f1(-r*1.05)} 0,${f1(-r*1.1)} C${f1(r*0.6)},${f1(-r*1.05)} ${f1(r*0.55)},${f1(-r*0.35)} 0,0Z" fill="url(#lfPetal)" transform="rotate(${i*72+(i%2?4:-3)})"/>`;
+  for(let i=0;i<14;i++){ const a=i/14*6.283; s+=`<circle cx="${f1(Math.cos(a)*r*0.32)}" cy="${f1(Math.sin(a)*r*0.32)}" r="${f1(r*0.06)}" fill="#e2d6a0"/>`; }
+  return s+`<circle r="${f1(r*0.22)}" fill="#a9b26a"/></g>`;
+}
+function blackberry(x,y,k,r){
+  const ripe=r()<0.6; let s="";
+  const pts=[[0,0],[-1.6,-1],[1.6,-1],[0,-2],[-1.7,1],[1.7,1],[0,2],[-0.9,-2.8],[0.9,-2.8],[0,3.4],[-2.4,0],[2.4,0]];
+  pts.forEach(([dx,dy],i)=>{ const c=ripe?(i%3?"#1d0d1c":"#2c1530"):(i%3?"#8a2424":"#a8382e");
+    s+=`<circle cx="${f1(x+dx*k)}" cy="${f1(y+dy*k)}" r="${f1(1.25*k)}" fill="${c}"/>`; });
+  return s+`<circle cx="${f1(x-0.8*k)}" cy="${f1(y-1.4*k)}" r="${f1(0.5*k)}" fill="#ffffff70"/>`;
+}
+
+/* un rampicante: type "ivy" (edera) o "bramble" (rovo) */
 function vineSVG(pts, o){
   const r=rng(o.seed), k=o.k||1, step=3;
   const S=resample(pts, step); if(S.length<3) return "";
   const ph=r()*6.28, amp=(o.amp||6)*k, wl=(o.wl||90)*k;
   const P=S.map((p,i)=>{
-    const s=i*step, nx=-p.ty, ny=p.tx;
-    const fade = o.tendril ? Math.min(1, i/12) : 1;
-    const w=fade*(amp*Math.sin(s/wl*6.283+ph) + amp*0.35*Math.sin(s/(wl*0.37)*6.283+ph*1.7));
+    const s=i*step, nx=-p.ty, ny=p.tx, fade=o.tendril?Math.min(1,i/12):1;
+    const w=fade*(amp*Math.sin(s/wl*6.283+ph)+amp*0.35*Math.sin(s/(wl*0.37)*6.283+ph*1.7));
     return {x:p.x+nx*w, y:p.y+ny*w, nx, ny, tx:p.tx, ty:p.ty};
   });
-  const bram=o.type==="bramble";
-  const stem=bram?"#4a2b1f":"#3b4a25", sw=(bram?3:2.8)*k*(o.thin||1);
-  const d="M"+P.map(p=>f1(p.x)+" "+f1(p.y)).join(" L");
-  let out=`<path d="${d}" fill="none" stroke="${stem}" stroke-width="${f1(sw)}" stroke-linecap="round" stroke-linejoin="round"/>`;
-  if(o.tendril){ // punta più sottile
-    const tail=P.slice(Math.floor(P.length*0.6));
-    out+=`<path d="M${tail.map(p=>f1(p.x)+" "+f1(p.y)).join(" L")}" fill="none" stroke="${bram?"#6a3b2a":"#4d6030"}" stroke-width="${f1(sw*0.6)}" stroke-linecap="round"/>`;
-  }
-  let leaves="", extras="", side=1;
+  const bram=o.type==="bramble", th=o.thin||1;
+  const stem = bram ? stemPath(P,3.4*k*th,1.4*k*th,"#5a2a26","#b0706a")
+             : o.tendril ? stemPath(P,1.6*k*th,0.6*k,"#55602f",null)
+             : stemPath(P,4.2*k*th,1.2*k*th,"#4e3f2c","#8f7a58");
+  let back="", front="", extras="", side=1;
   if(bram){
-    for(let i=2;i<P.length-1;i+=3){ // spine
-      const p=P[i], sd=(i/3)%2?1:-1, b=1.8*k;
-      const tip=[p.x+p.nx*sd*5.5*k+p.tx*2.2*k, p.y+p.ny*sd*5.5*k+p.ty*2.2*k];
-      extras+=`<path d="M${f1(p.x-p.tx*b)} ${f1(p.y-p.ty*b)} L${f1(tip[0])} ${f1(tip[1])} L${f1(p.x+p.tx*b)} ${f1(p.y+p.ty*b)}Z" fill="#3a1f15"/>`;
+    for(let i=2;i<P.length-1;i+=3){ // spine piegate all'indietro
+      const p=P[i], sd=(i/3)%2?1:-1, b=1.4*k;
+      const tip=[p.x+p.nx*sd*4.2*k-p.tx*2.4*k, p.y+p.ny*sd*4.2*k-p.ty*2.4*k];
+      extras+=`<path d="M${f1(p.x-p.tx*b)} ${f1(p.y-p.ty*b)} L${f1(tip[0])} ${f1(tip[1])} L${f1(p.x+p.tx*b)} ${f1(p.y+p.ty*b)}Z" fill="#7a3a2c"/>`;
     }
   }
-  const every=Math.max(3, Math.round((o.leafEvery||(bram?30:12))*k/step));
+  const every=Math.max(3, Math.round((o.leafEvery||(bram?34:13))*k/step));
+  const fp=o.flowers==null ? (bram?0.07:0) : o.flowers;
   for(let i=Math.floor(every*r()); i<P.length; i+=every+Math.floor(r()*every*0.6)){
     const p=P[i]; side=-side;
     if(o.tendril && i<4) continue;
-    const ang=Math.atan2(p.ny*side+p.ty*0.35, p.nx*side+p.tx*0.35)*180/Math.PI + 90 + (r()-0.5)*30;
-    const sz=(bram?13:(o.small?12:17))*k*(0.75+r()*0.6);
-    const bx=p.x+p.nx*side*3*k, by=p.y+p.ny*side*3*k;
-    leaves+=`<line x1="${f1(p.x)}" y1="${f1(p.y)}" x2="${f1(bx)}" y2="${f1(by)}" stroke="${stem}" stroke-width="${f1(1.1*k)}"/>`;
-    const col=bram?pick(r,["#3e5a2c","#4a6a32","#36502a"]):pick(r,IVY_GREENS);
-    leaves+=`<use href="#${bram?"brLeaf":"ivyLeaf"}" fill="${col}" transform="translate(${f1(bx)},${f1(by)}) rotate(${Math.round(ang)}) scale(${f1(sz)})"/>`;
-    if(!bram && r()<0.5) leaves+=`<use href="#ivyVein" transform="translate(${f1(bx)},${f1(by)}) rotate(${Math.round(ang)}) scale(${f1(sz)})"/>`;
-    const fp=o.flowers==null ? (bram?0.22:0.13) : o.flowers;
+    const ang=Math.atan2(p.ny*side+p.ty*0.35, p.nx*side+p.tx*0.35)*180/Math.PI+90+(r()-0.5)*34;
+    const rad=(ang-90)*Math.PI/180, pl=(bram?7:5)*k;
+    const bx=p.x+Math.cos(rad)*pl, by=p.y+Math.sin(rad)*pl;
+    let leaf=`<line x1="${f1(p.x)}" y1="${f1(p.y)}" x2="${f1(bx)}" y2="${f1(by)}" stroke="${bram?"#5a3a28":"#5c5a30"}" stroke-width="${f1(0.9*k)}"/>`;
+    if(bram){
+      const fill=r()<0.85?"url(#lfBramble)":"url(#lfBrambleRed)";
+      [[0,13],[-48,10],[48,10]].forEach(([da,sz])=>{
+        const s2=sz*k*(0.8+r()*0.4);
+        leaf+=`<use href="#brLeaf" fill="${fill}" transform="translate(${f1(bx)},${f1(by)}) rotate(${Math.round(ang+da)}) scale(${f1(s2*(0.85+r()*0.15))},${f1(s2)})"/>`+
+              `<use href="#brVein" transform="translate(${f1(bx)},${f1(by)}) rotate(${Math.round(ang+da)}) scale(${f1(s2)})"/>`;
+      });
+    } else {
+      const sz=(o.small?11:16)*k*(0.75+r()*0.6), sx=sz*(0.82+r()*0.18), shp=ivyShape(r,o.small);
+      const tr=`translate(${f1(bx)},${f1(by)}) rotate(${Math.round(ang)}) scale(${f1(sx)},${f1(sz)})`;
+      leaf+=`<use href="#${shp}" fill="${ivyFill(r)}" transform="${tr}"/><use href="#ivyVein" transform="${tr}"/>`;
+    }
+    if(r()<0.38) back+=leaf; else front+=leaf;
     if(r()<fp){
-      const fx=p.x-p.nx*side*4*k, fy=p.y-p.ny*side*4*k;
-      if(bram && r()<0.45) extras+=berries(fx,fy,k,r);
-      else extras+=blossom(fx,fy,(bram?6.2:4.4)*k*(0.8+r()*0.5), bram?pick(r,["#f6dde2","#f3e9ef","#efc8d2"]):pick(r,FAIRY_PETALS), !bram && r()<0.55, r()*72);
+      const fx=p.x-p.nx*side*5*k, fy=p.y-p.ny*side*5*k;
+      extras+= r()<0.5 ? bramFlower(fx,fy,6*k*(0.85+r()*0.3),r()*72) : blackberry(fx,fy,k,r);
     }
   }
-  return out+leaves+extras;
+  return back+stem+extras+front;
 }
 
 function grassTuft(x,y,h,k,r){
-  let s="";
-  const n=3+Math.floor(r()*4);
+  let s=""; const n=4+Math.floor(r()*5);
   for(let i=0;i<n;i++){
-    const lean=(r()-0.5)*h*0.9, hh=h*(0.6+r()*0.5), xx=x+(r()-0.5)*8*k;
-    s+=`<path d="M${f1(xx)} ${f1(y)} Q${f1(xx+lean*0.2)} ${f1(y-hh*0.6)} ${f1(xx+lean)} ${f1(y-hh)}" fill="none" stroke="${pick(r,["#3f6a2e","#4f7d36","#335a28","#5d8c3e"])}" stroke-width="${f1(1.7*k)}" stroke-linecap="round"/>`;
+    const lean=(r()-0.5)*h*0.9, hh=h*(0.55+r()*0.55), xx=x+(r()-0.5)*9*k, w=(0.9+r()*0.8)*k;
+    const col=r()<0.18?pick(r,["#8a8650","#9a8f5a","#7a7444"]):pick(r,["#3f6a2e","#4f7d36","#36592a","#5a8040","#46703a"]);
+    s+=`<path d="M${f1(xx-w)} ${f1(y)} Q${f1(xx+lean*0.25-w*0.5)} ${f1(y-hh*0.6)} ${f1(xx+lean)} ${f1(y-hh)} Q${f1(xx+lean*0.25+w*0.5)} ${f1(y-hh*0.6)} ${f1(xx+w)} ${f1(y)}Z" fill="${col}"/>`;
   }
   return s;
 }
-function mushroom(x,y,sz,kind){
-  const w=sz, h=sz*0.9;
-  if(kind==="fairy"){
-    return `<g filter="url(#fglow)"><rect x="${f1(x-w*0.12)}" y="${f1(y-h)}" width="${f1(w*0.24)}" height="${f1(h)}" rx="${f1(w*0.1)}" fill="#cfeee4"/>
-      <path d="M${f1(x-w*0.5)} ${f1(y-h*0.9)} Q${f1(x)} ${f1(y-h*1.75)} ${f1(x+w*0.5)} ${f1(y-h*0.9)} Z" fill="#7fe0cf"/></g>`;
-  }
-  let s=`<rect x="${f1(x-w*0.13)}" y="${f1(y-h)}" width="${f1(w*0.26)}" height="${f1(h)}" rx="${f1(w*0.1)}" fill="#efe6d2"/>
-    <path d="M${f1(x-w*0.55)} ${f1(y-h*0.85)} Q${f1(x)} ${f1(y-h*1.85)} ${f1(x+w*0.55)} ${f1(y-h*0.85)} Z" fill="#b8322a"/>`;
-  [[-0.25,-1.15],[0.12,-1.32],[0.3,-1.02],[-0.05,-1.0]].forEach(([dx,dy])=>{ s+=`<circle cx="${f1(x+dx*w)}" cy="${f1(y+dy*h)}" r="${f1(w*0.06)}" fill="#fff4e4"/>`; });
-  return s;
-}
-function flowerStem(x,y,h,k,r){
-  const lean=(r()-0.5)*10*k, tx=x+lean, ty=y-h;
-  return `<path d="M${f1(x)} ${f1(y)} Q${f1(x+lean*0.3)} ${f1(y-h*0.5)} ${f1(tx)} ${f1(ty)}" fill="none" stroke="#3f6a2e" stroke-width="${f1(1.4*k)}"/>`
-    + blossom(tx,ty,3.8*k*(0.8+r()*0.4), pick(r,FAIRY_PETALS), r()<0.6, r()*72);
-}
-function groundCluster(x,y,k,r,dir,big){
-  let s="";
-  const n=big?12:4;
-  if(big){
-    s+=fern(x-dir*10*k, y, 78*k, -dir, k, r)+fern(x+dir*14*k, y, 64*k, dir, k, r)+fern(x+dir*2*k, y, 92*k, -dir*0.4, k, r);
-  }
-  for(let i=0;i<n;i++){ s+=grassTuft(x+dir*i*7*k+(r()-0.5)*6*k, y, (big?34:16)*k*(0.6+r()*0.6), k, r); }
-  if(big){
-    for(let i=0;i<5;i++) s+=flowerStem(x+dir*(i*13-6)*k, y, (22+r()*30)*k, k, r);
-    s+=mushroom(x+dir*10*k, y, 26*k, "amanita");
-    s+=mushroom(x+dir*34*k, y, 15*k, "amanita");
-    s+=mushroom(x+dir*54*k, y, 12*k, "fairy");
-    s+=mushroom(x+dir*64*k, y, 8*k, "fairy");
-    s+=mushroom(x-dir*14*k, y, 10*k, "fairy");
-  } else if(r()<0.6){
-    s+=flowerStem(x, y, (10+r()*10)*k, k, r);
-  }
-  return s;
-}
-
 function fern(x,y,L,dir,k,r){
-  const tx=x+dir*L*0.6, ty=y-L, cx=x+dir*L*0.02, cy=y-L*0.8, n=26;
+  const tx=x+dir*L*0.62, ty=y-L*0.92, cx=x+dir*L*0.04, cy=y-L*0.85, n=30;
   const Q=t=>[(1-t)*(1-t)*x+2*(1-t)*t*cx+t*t*tx, (1-t)*(1-t)*y+2*(1-t)*t*cy+t*t*ty];
-  let pts=[]; for(let i=0;i<=n;i++) pts.push(Q(i/n));
-  let s=`<path d="M${pts.map(p=>f1(p[0])+" "+f1(p[1])).join(" L")}" fill="none" stroke="#3d6a2c" stroke-width="${f1(1.6*k)}" stroke-linecap="round"/>`;
+  const pts=[]; for(let i=0;i<=n;i++) pts.push(Q(i/n));
+  let s=`<path d="M${pts.map(p=>f1(p[0])+" "+f1(p[1])).join(" L")}" fill="none" stroke="#4a5e2a" stroke-width="${f1(1.4*k)}" stroke-linecap="round"/>`;
   for(let i=3;i<n;i++){
     const t=i/n, [px,py]=pts[i], [qx,qy]=pts[i+1]||pts[i];
-    const a=Math.atan2(qy-py,qx-px)*180/Math.PI, sz=10*k*(1-t*0.75)*(L/60);
-    const col=i%2?"#4f8a3a":"#3f7330";
-    s+=`<use href="#brLeaf" fill="${col}" transform="translate(${f1(px)},${f1(py)}) rotate(${Math.round(a+90-55)}) scale(${f1(sz)})"/>`;
-    s+=`<use href="#brLeaf" fill="${col}" transform="translate(${f1(px)},${f1(py)}) rotate(${Math.round(a+90+55)}) scale(${f1(sz)})"/>`;
+    const a=Math.atan2(qy-py,qx-px)*180/Math.PI, sz=12*k*(1-t*0.8)*(L/70);
+    [-62,62].forEach(da=>{ s+=`<use href="#fernPinna" fill="url(#lfFern)" transform="translate(${f1(px)},${f1(py)}) rotate(${Math.round(a+90+da)}) scale(${f1(sz*0.42)},${f1(sz)})"/>`; });
   }
   return s;
 }
-function clump(x,y,R,n,k,r,flowers){
+function anemone(x,y,h,k,r){
+  const lean=(r()-0.5)*8*k, tx=x+lean, ty=y-h;
+  let s=`<path d="M${f1(x)} ${f1(y)} Q${f1(x+lean*0.3)} ${f1(y-h*0.5)} ${f1(tx)} ${f1(ty)}" fill="none" stroke="#5a6a3a" stroke-width="${f1(0.9*k)}"/>`;
+  s+=`<g transform="translate(${f1(tx)},${f1(ty)}) rotate(${Math.round(r()*60)}) scale(1,0.8)">`;
+  for(let i=0;i<6;i++) s+=`<ellipse cy="${f1(-2.6*k)}" rx="${f1(1.3*k)}" ry="${f1(2.4*k)}" fill="url(#lfPetal)" transform="rotate(${i*60})"/>`;
+  return s+`<circle r="${f1(1*k)}" fill="#d8c86a"/></g>`;
+}
+function moss(x,y,w,h,r){
+  const n=10, pts=[];
+  for(let i=0;i<=n;i++){ const t=i/n, a=Math.PI*(1-t); pts.push([x+w/2+Math.cos(a)*w/2, y-Math.sin(a)*h*(0.65+r()*0.45)]); }
+  return `<path d="M${f1(x)} ${f1(y)} ${pts.map(p=>"L"+f1(p[0])+" "+f1(p[1])).join(" ")} Z" fill="url(#lfMoss)" filter="url(#mossTex)"/>`;
+}
+function stone(x,y,w,h){
+  return `<path d="M${f1(x)} ${f1(y)} C${f1(x)} ${f1(y-h*0.8)} ${f1(x+w*0.3)} ${f1(y-h)} ${f1(x+w*0.55)} ${f1(y-h)} C${f1(x+w*0.85)} ${f1(y-h)} ${f1(x+w)} ${f1(y-h*0.6)} ${f1(x+w)} ${f1(y)}Z" fill="url(#lfStone)" filter="url(#stoneTex)"/>`;
+}
+function fallenLeaf(x,y,sz,rot,col){
+  return `<use href="#ivyHeart" fill="${col}" transform="translate(${f1(x)},${f1(y)}) rotate(${Math.round(rot)}) scale(${f1(sz)},${f1(sz*0.45)})"/>`;
+}
+function groundCorner(x,y,k,r){
+  let s="";
+  s+=moss(x-30*k,y,150*k,16*k,r);
+  s+=fern(x-14*k,y,84*k,-1,k,r)+fern(x+6*k,y,104*k,-0.35,k,r)+fern(x+24*k,y,76*k,1,k,r)+fern(x+52*k,y,58*k,1,k,r);
+  s+=stone(x+60*k,y+1,34*k,20*k)+stone(x+86*k,y+1,20*k,12*k);
+  for(let i=0;i<10;i++) s+=grassTuft(x+(i*13-18)*k+(r()-0.5)*6*k, y, (22+r()*22)*k, k, r);
+  s+=anemone(x+40*k,y,(26+r()*10)*k,k,r)+anemone(x+104*k,y,(18+r()*8)*k,k,r);
+  s+=fallenLeaf(x+118*k,y-1,9*k,20,"#7a5a2a")+fallenLeaf(x+70*k,y-1,8*k,-30,"#8a6a32")+fallenLeaf(x+142*k,y,7*k,70,"#6a4a26");
+  s+=moss(x+100*k,y,70*k,7*k,r);
+  return s;
+}
+function clump(x,y,R,n,k,r){
   let s="";
   for(let i=0;i<n;i++){
-    const a=r()*6.283, d=Math.sqrt(r())*R*k;
-    s+=`<use href="#ivyLeaf" fill="${pick(r,IVY_GREENS)}" transform="translate(${f1(x+Math.cos(a)*d)},${f1(y+Math.sin(a)*d)}) rotate(${Math.round(r()*360)}) scale(${f1((13+r()*9)*k)})"/>`;
-  }
-  for(let i=0;i<(flowers||0);i++){
-    const a=r()*6.283, d=r()*R*0.8*k;
-    s+=blossom(x+Math.cos(a)*d, y+Math.sin(a)*d, (4.5+r()*3)*k, pick(r,FAIRY_PETALS), r()<0.7, r()*72);
+    const a=r()*6.283, d=Math.sqrt(r())*R*k, sz=(12+r()*8)*k;
+    const tr=`translate(${f1(x+Math.cos(a)*d)},${f1(y+Math.sin(a)*d)}) rotate(${Math.round(r()*360)}) scale(${f1(sz*(0.82+r()*0.18))},${f1(sz)})`;
+    s+=`<use href="#${ivyShape(r,false)}" fill="${ivyFill(r)}" transform="${tr}"/><use href="#ivyVein" transform="${tr}"/>`;
   }
   return s;
 }
 
 const SVG_DEFS=`<defs>
-  <filter id="fglow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="2.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-  <path id="ivyLeaf" d="M0,0 C-.15,-.1 -.5,-.15 -.55,-.4 C-.45,-.45 -.3,-.42 -.25,-.5 C-.3,-.75 -.1,-.95 0,-1 C.1,-.95 .3,-.75 .25,-.5 C.3,-.42 .45,-.45 .55,-.4 C.5,-.15 .15,-.1 0,0Z"/>
-  <path id="ivyVein" d="M0,-.05 L0,-.8 M0,-.35 L-.3,-.42 M0,-.35 L.3,-.42" fill="none" stroke="#9fc07a" stroke-opacity=".45" stroke-width=".05"/>
-  <path id="brLeaf" d="M0,0 C-.38,-.22 -.4,-.72 0,-1.05 C.4,-.72 .38,-.22 0,0Z"/>
+  <radialGradient id="lfIvyDark" cx=".5" cy=".55" r=".65"><stop offset="0" stop-color="#4f7240"/><stop offset=".6" stop-color="#2f4a26"/><stop offset="1" stop-color="#1c2d16"/></radialGradient>
+  <radialGradient id="lfIvyMid" cx=".5" cy=".55" r=".65"><stop offset="0" stop-color="#6a8e4c"/><stop offset=".6" stop-color="#436733"/><stop offset="1" stop-color="#29411f"/></radialGradient>
+  <radialGradient id="lfIvyYoung" cx=".5" cy=".55" r=".65"><stop offset="0" stop-color="#9cb86c"/><stop offset=".6" stop-color="#6f964a"/><stop offset="1" stop-color="#4a6d33"/></radialGradient>
+  <radialGradient id="lfIvyOld" cx=".5" cy=".55" r=".65"><stop offset="0" stop-color="#8e7c40"/><stop offset=".6" stop-color="#6a5a2c"/><stop offset="1" stop-color="#4a3c1e"/></radialGradient>
+  <linearGradient id="lfBramble" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2e4622"/><stop offset=".5" stop-color="#557a3c"/><stop offset="1" stop-color="#2e4622"/></linearGradient>
+  <linearGradient id="lfBrambleRed" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#4a2a1c"/><stop offset=".5" stop-color="#7a4a2c"/><stop offset="1" stop-color="#4a2a1c"/></linearGradient>
+  <linearGradient id="lfFern" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#2f4d22"/><stop offset="1" stop-color="#6a9446"/></linearGradient>
+  <radialGradient id="lfPetal" cx=".5" cy=".9" r=".9"><stop offset="0" stop-color="#f0d8dc"/><stop offset=".5" stop-color="#f4eeee"/><stop offset="1" stop-color="#e8e2e0"/></radialGradient>
+  <linearGradient id="lfMoss" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5f8a3a"/><stop offset="1" stop-color="#2f4a1f"/></linearGradient>
+  <radialGradient id="lfStone" cx=".38" cy=".3" r=".8"><stop offset="0" stop-color="#8f938a"/><stop offset=".6" stop-color="#5e625a"/><stop offset="1" stop-color="#363a33"/></radialGradient>
+  <filter id="mossTex" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" seed="7" result="n"/>
+    <feColorMatrix in="n" type="matrix" values="0 0 0 0 0.62  0 0 0 0 0.78  0 0 0 0 0.36  0 0 0 2.4 -1.1" result="sp"/>
+    <feComposite in="sp" in2="SourceGraphic" operator="in" result="spots"/>
+    <feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="spots"/></feMerge>
+  </filter>
+  <filter id="stoneTex" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+    <feTurbulence type="fractalNoise" baseFrequency="1.4" numOctaves="2" seed="3" result="n"/>
+    <feColorMatrix in="n" type="matrix" values="0 0 0 0 0.1  0 0 0 0 0.1  0 0 0 0 0.08  0 0 0 1.6 -0.75" result="sp"/>
+    <feComposite in="sp" in2="SourceGraphic" operator="in" result="spots"/>
+    <feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="spots"/></feMerge>
+  </filter>
+  <path id="ivy3" d="M0,0 C-.15,-.1 -.5,-.15 -.55,-.4 C-.45,-.45 -.3,-.42 -.25,-.5 C-.3,-.75 -.1,-.95 0,-1 C.1,-.95 .3,-.75 .25,-.5 C.3,-.42 .45,-.45 .55,-.4 C.5,-.15 .15,-.1 0,0Z"/>
+  <path id="ivy5" d="M0,0 C-.12,-.06 -.36,-.02 -.5,-.12 C-.62,-.2 -.66,-.3 -.6,-.38 C-.5,-.36 -.42,-.36 -.36,-.42 C-.46,-.56 -.42,-.66 -.3,-.68 C-.22,-.62 -.16,-.62 -.12,-.66 C-.1,-.84 -.04,-.96 0,-1 C.04,-.96 .1,-.84 .12,-.66 C.16,-.62 .22,-.62 .3,-.68 C.42,-.66 .46,-.56 .36,-.42 C.42,-.36 .5,-.36 .6,-.38 C.66,-.3 .62,-.2 .5,-.12 C.36,-.02 .12,-.06 0,0Z"/>
+  <path id="ivyHeart" d="M0,-.02 C-.1,.04 -.42,.02 -.46,-.22 C-.5,-.48 -.26,-.78 0,-1 C.26,-.78 .5,-.48 .46,-.22 C.42,.02 .1,.04 0,-.02Z"/>
+  <path id="ivyVein" d="M0,-.04 L0,-.86 M0,-.28 L-.4,-.36 M0,-.28 L.4,-.36 M0,-.46 L-.2,-.62 M0,-.46 L.2,-.62" fill="none" stroke="#d2e0b0" stroke-opacity=".42" stroke-width=".035" stroke-linecap="round"/>
+  <path id="brLeaf" d="${serratedLeafPath()}"/>
+  <path id="brVein" d="M0,0 L0,-.92 M0,-.25 L-.22,-.4 M0,-.25 L.22,-.4 M0,-.45 L-.2,-.6 M0,-.45 L.2,-.6 M0,-.65 L-.14,-.78 M0,-.65 L.14,-.78" fill="none" stroke="#c0d4a0" stroke-opacity=".35" stroke-width=".03"/>
+  <path id="fernPinna" d="M0,0 C-.5,-.15 -.55,-.7 0,-1 C.55,-.7 .5,-.15 0,0Z"/>
 </defs>`;
-
-function shroomsSVG(k){
-  ensureSvgDefs();
-  const r=rng(77), w=Math.round(58*k), h=Math.round(40*k), y=h;
-  return `<svg class="shelf-shrooms" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" aria-hidden="true">
-    ${grassTuft(8*k,y,14*k,k,r)}${grassTuft(46*k,y,12*k,k,r)}
-    ${mushroom(16*k,y,20*k,"amanita")}${mushroom(34*k,y,12*k,"amanita")}${mushroom(47*k,y,9*k,"fairy")}</svg>`;
-}
 
 function ensureSvgDefs(){
   if(document.getElementById("libSvgDefs")) return;
   document.body.insertAdjacentHTML("beforeend", `<svg id="libSvgDefs" width="0" height="0" style="position:absolute" aria-hidden="true">${SVG_DEFS}</svg>`);
 }
+
+/* ---------- legno vero: venature generate (si ripetono senza giunture) ---------- */
+function woodURI(fx,fy,seed,ramp){
+  const svg=`<svg xmlns='http://www.w3.org/2000/svg' width='600' height='600'><filter id='f' x='0' y='0' width='100%' height='100%' color-interpolation-filters='sRGB'>`+
+    `<feTurbulence type='fractalNoise' baseFrequency='${fx} ${fy}' numOctaves='5' seed='${seed}' stitchTiles='stitch'/>`+
+    `<feColorMatrix type='matrix' values='1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 0 0 1'/>`+
+    `<feComponentTransfer><feFuncR type='table' tableValues='${ramp[0]}'/><feFuncG type='table' tableValues='${ramp[1]}'/><feFuncB type='table' tableValues='${ramp[2]}'/></feComponentTransfer>`+
+    `</filter><rect width='100%' height='100%' filter='url(#f)'/></svg>`;
+  return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
+}
+function applyWoodTextures(){
+  const walnut=["0.20 0.34 0.27 0.42 0.31 0.38 0.26","0.12 0.21 0.16 0.27 0.19 0.24 0.15","0.06 0.11 0.08 0.15 0.10 0.13 0.08"];
+  const root=document.documentElement.style;
+  root.setProperty("--wood-v", woodURI(0.11,0.0045,4,walnut));
+  root.setProperty("--wood-h", woodURI(0.004,0.13,9,walnut));
+}
+
 function decorateLibrary(){
   ensureSvgDefs();
   const bc=document.querySelector("#library .bookcase"); if(!bc) return;
   const old=bc.querySelector(".overgrowth"); if(old) old.remove();
   const W=bc.offsetWidth, H=bc.offsetHeight; if(!W||!H) return;
-  const mob=isMobile(), k=mob?0.72:1, M=70;
+  const mob=isMobile(), k=mob?0.72:1, M=90;
   const ry=mob?44:70, cx=W/2;
   const archY=x=>{ const u=(x-cx)/cx; return ry - ry*Math.sqrt(Math.max(0,1-u*u)); };
   const arch=(x0,x1,inset)=>{ const pts=[], n=40; for(let i=0;i<=n;i++){ const x=x0+(x1-x0)*i/n; pts.push([x, archY(x)+inset]); } return pts; };
-  const side=mob?7:11;
-  const topL=archY(side)+8, topR=archY(W-side)+8;
-  let g="";
-  const L=side, R=W-side;
+  const side=mob?7:11, L=side, R=W-side;
+  const topR=archY(R)+8;
   const bcR=bc.getBoundingClientRect();
+  let g="";
 
   /* ---- ANGOLO IN ALTO A DESTRA: edera e rovi che scendono dall'arco ---- */
+  g+=vineSVG([[R-2,H*0.3],[R-2,topR],...arch(R,W*0.68,6)], {type:"bramble",amp:9,wl:120,seed:5,k});
   g+=vineSVG([[R,H*0.5],[R,topR],...arch(R,W*0.6,8)], {type:"ivy",amp:7,wl:96,seed:23,k});
-  g+=vineSVG([[R+4,H*0.38],[R+4,topR+4],...arch(R,W*0.7,3)], {type:"ivy",amp:9,wl:74,seed:29,k});
-  g+=vineSVG([[R-3,H*0.32],[R-3,topR],...arch(R,W*0.66,6)], {type:"bramble",amp:9,wl:120,seed:5,k});
-  g+=vineSVG(arch(W*0.97,W*0.76,12), {type:"bramble",amp:7,wl:90,seed:71,k});
-  [[R+2,170],[R-6,125],[R-14,85],[W-62*k,52],[W-98*k,38],[W*0.83,30],[W*0.75,22]].forEach(([x,len],i)=>{
+  g+=vineSVG([[R+4,H*0.38],[R+4,topR+4],...arch(R,W*0.72,3)], {type:"ivy",amp:9,wl:74,seed:29,k});
+  g+=vineSVG(arch(W*0.97,W*0.78,13), {type:"bramble",amp:7,wl:90,seed:71,k,thin:0.8});
+  [[R+2,170],[R-6,125],[R-14,85],[W-62*k,52],[W-98*k,38],[W*0.83,30]].forEach(([x,len],i)=>{
     const y0=archY(x)+10;
-    g+=vineSVG([[x,y0],[x+(i%2?3:-3)*k,y0+len*k]], {type:"ivy",amp:2.4,wl:40,seed:100+i,k,tendril:true,small:true,leafEvery:11,flowers:0.2,thin:0.8});
+    g+=vineSVG([[x,y0],[x+(i%2?3:-3)*k,y0+len*k]], {type:"ivy",amp:2.4,wl:40,seed:100+i,k,tendril:true,small:true,leafEvery:12,thin:0.8});
   });
-  [[R,topR+6,40,34,5],[W*0.87,archY(W*0.87)+6,26,18,3],[W*0.76,archY(W*0.76)+5,16,9,1],[R,H*0.27,22,14,2]]
-    .forEach(([x,y,Rr,n,fl],i)=>{ g+=clump(x,y,Rr,n,k,rng(500+i),fl); });
+  [[R,topR+6,40,30],[W*0.87,archY(W*0.87)+6,24,14],[R,H*0.27,20,10]].forEach(([x,y,Rr,n],i)=>{ g+=clump(x,y,Rr,n,k,rng(500+i)); });
 
   /* ---- ANGOLO IN BASSO A SINISTRA: sottobosco che si arrampica ---- */
-  g+=vineSVG([[L,H-4],[L,H*0.4]], {type:"ivy",amp:7,wl:110,seed:11,k});
-  g+=vineSVG([[L-4,H-2],[L-4,H*0.55]], {type:"ivy",amp:9,wl:70,seed:17,k});
   g+=vineSVG([[L+3,H-6],[L+3,H*0.5]], {type:"bramble",amp:9,wl:120,seed:41,k});
-  g+=vineSVG([[L,H-10],[W*0.3,H-10]], {type:"ivy",amp:4,wl:80,seed:19,k,small:true,leafEvery:13});
-  g+=vineSVG([[L,H-8],[W*0.2,H-8]], {type:"bramble",amp:6,wl:90,seed:43,k});
+  g+=vineSVG([[L,H-4],[L,H*0.4]], {type:"ivy",amp:7,wl:110,seed:11,k});
+  g+=vineSVG([[L-4,H-2],[L-4,H*0.56]], {type:"ivy",amp:9,wl:70,seed:17,k});
+  g+=vineSVG([[L,H-8],[W*0.2,H-8]], {type:"bramble",amp:6,wl:90,seed:43,k,thin:0.85});
+  g+=vineSVG([[L,H-10],[W*0.3,H-10]], {type:"ivy",amp:4,wl:80,seed:19,k,small:true,leafEvery:12});
   const planks=bc.querySelectorAll(".plank");
   if(planks.length){
-    const pr=planks[planks.length-1].getBoundingClientRect(), y=pr.top-bcR.top+pr.height*0.45, len=W*0.2;
-    g+=vineSVG([[L,y],[L+len,y]], {type:"ivy",amp:3.5,wl:70,seed:307,k,small:true,leafEvery:14});
+    const pr=planks[planks.length-1].getBoundingClientRect(), y=pr.top-bcR.top+pr.height*0.45;
+    g+=vineSVG([[L,y],[L+W*0.2,y]], {type:"ivy",amp:3.5,wl:70,seed:307,k,small:true,leafEvery:13,thin:0.8});
   }
-  [[L,H-12,40,34,5],[L,H*0.6,22,14,2],[W*0.15,H-10,20,12,2]]
-    .forEach(([x,y,Rr,n,fl],i)=>{ g+=clump(x,y,Rr,n,k,rng(600+i),fl); });
+  [[L,H-12,36,26],[L,H*0.6,20,10]].forEach(([x,y,Rr,n],i)=>{ g+=clump(x,y,Rr,n,k,rng(600+i)); });
 
-  const r=rng(9), gy=H+4;
-  let ground=groundCluster(-6*k,gy,k,r,1,true)+groundCluster(W*0.1,gy,k*0.8,r,1,true);
-  for(let x=W*0.17, step=(mob?20:26); x<W*0.36; x+=step, step*=1.25) ground+=groundCluster(x,gy,k*0.8,r,1,false);
+  const ground=groundCorner(-8*k, H+4, k, rng(9));
   const svg=`<svg class="overgrowth" style="left:${-M}px;top:${-M}px" width="${W+M*2}" height="${H+M*2}" viewBox="${-M} ${-M} ${W+M*2} ${H+M*2}" aria-hidden="true"><g>${g}</g><g>${ground}</g></svg>`;
   bc.insertAdjacentHTML("beforeend", svg);
 
@@ -2139,9 +2197,8 @@ function decorateLibrary(){
   if(fl && !fl.dataset.done){
     fl.dataset.done="1";
     fl.innerHTML=`<svg viewBox="0 0 280 34" aria-hidden="true">
-      ${vineSVG([[140,18],[14,18]],{type:"ivy",amp:5,wl:70,seed:61,k:0.85,small:true,leafEvery:16,flowers:0.2})}
-      ${vineSVG([[140,18],[266,18]],{type:"ivy",amp:5,wl:70,seed:62,k:0.85,small:true,leafEvery:16,flowers:0.2})}
-      ${blossom(140,18,6.5,"#f6e7f0",true,0)}</svg>`;
+      ${vineSVG([[140,18],[14,18]],{type:"ivy",amp:5,wl:70,seed:61,k:0.8,small:true,leafEvery:15,thin:0.6})}
+      ${vineSVG([[140,18],[266,18]],{type:"ivy",amp:5,wl:70,seed:62,k:0.8,small:true,leafEvery:15,thin:0.6})}</svg>`;
   }
   spawnFireflies();
 }
@@ -2524,6 +2581,7 @@ function scheduleGhPush(){ clearTimeout(ghPushTimer); ghPushTimer=setTimeout(()=
    INIT
 ============================================================ */
 window.addEventListener("beforeunload", save);
+applyWoodTextures();
 const savedDevice = localStorage.getItem(DEVICE_KEY);
 if(savedDevice) applyDeviceMode(savedDevice);
 renderAll();
