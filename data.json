@@ -123,8 +123,8 @@
         },
         {
           "id": "131b6a66-fba1-4f0d-82b1-a3f4b95cbb11",
-          "x": 172.1205704180337,
-          "y": 356.6190864369349,
+          "x": 122.49860013037173,
+          "y": 362.98087749945563,
           "name": "GEA",
           "classes": [
             "Paladino della vendetta"
@@ -136,6 +136,35 @@
           "death": "",
           "notes": "",
           "color": "#3a7d76",
+          "photo": null,
+          "scale": 1,
+          "show": {
+            "name": true,
+            "classes": true,
+            "role": true,
+            "race": true,
+            "years": false,
+            "pronouns": true,
+            "notes": false
+          }
+        },
+        {
+          "id": "97548225-9386-4730-a906-4e007b74c320",
+          "x": 389.7830997386707,
+          "y": 372.2023634601862,
+          "name": "KRONO",
+          "classes": [
+            "Artefice"
+          ],
+          "role": "",
+          "race": "Mezzo Tiefling",
+          "pronouns": [
+            "he/him"
+          ],
+          "birth": "",
+          "death": "",
+          "notes": "",
+          "color": "#4a6a8a",
           "photo": null,
           "scale": 1,
           "show": {
