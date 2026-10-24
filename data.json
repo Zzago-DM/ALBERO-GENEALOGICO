@@ -434,7 +434,22 @@
       "story": {
         "chapters": []
       }
+    },
+    {
+      "id": "22cec225-80c1-47af-bb3c-1e17d9f749cf",
+      "name": "MORIGAN & XELIN",
+      "nodes": [],
+      "edges": [],
+      "view": {
+        "panX": 0,
+        "panY": 0,
+        "zoom": 1
+      },
+      "cover": "#8a6a2a",
+      "story": {
+        "chapters": []
+      }
     }
   ],
-  "currentId": "ce880fc1-fb1b-4407-b369-4a24799b5474"
+  "currentId": "22cec225-80c1-47af-bb3c-1e17d9f749cf"
 }
