@@ -514,7 +514,11 @@
     transition:opacity 1.4s ease .3s}
   #intro.show{display:block}
   #intro.opening::before{opacity:0}
-  #intro.skip{opacity:0}
+  #intro.skip::before{display:none}
+  #intro.rest{pointer-events:none;cursor:default}
+  #intro.rest::before{display:none}
+  #intro.still *{transition:none!important}
+  body:not(.view-library) #intro{display:none!important}
   #intro svg{display:block;overflow:visible}
   .in-side{position:absolute;top:-6vh;will-change:transform;transition:transform 2.3s cubic-bezier(.55,.02,.22,1)}
   .in-l{left:-4vw;transform-origin:0% 50%}
@@ -522,11 +526,18 @@
   .in-side.back{filter:brightness(.62) saturate(.85)}
   .in-side.front{filter:brightness(.36) saturate(.7)}
   .in-top{position:absolute;left:0;top:0;will-change:transform;filter:brightness(.5);transition:transform 2.1s cubic-bezier(.55,.02,.22,1) .1s}
-  #intro.opening .in-l.back{transform:translateX(-78%) rotate(-7deg);transition-delay:.18s}
-  #intro.opening .in-r.back{transform:translateX(78%) rotate(7deg);transition-delay:.18s}
-  #intro.opening .in-l.front{transform:translateX(-102%) rotate(-11deg) scale(1.18)}
-  #intro.opening .in-r.front{transform:translateX(102%) rotate(11deg) scale(1.18)}
+  /* a fine animazione i rami restano ai bordi (--back/--front calcolati in base allo schermo) */
+  #intro.opening .in-l.back{transform:translateX(var(--back,-78%)) rotate(-2deg);transition-delay:.18s}
+  #intro.opening .in-r.back{transform:translateX(calc(-1 * var(--back,-78%))) rotate(2deg);transition-delay:.18s}
+  #intro.opening .in-l.front{transform:translateX(var(--front,-100%)) rotate(-3deg) scale(1.06)}
+  #intro.opening .in-r.front{transform:translateX(calc(-1 * var(--front,-100%))) rotate(3deg) scale(1.06)}
   #intro.opening .in-top{transform:translateY(-105%)}
+  /* leggero ondeggiare delle fronde quando sono ferme ai lati */
+  #intro.rest .in-side svg{animation:sway 7s ease-in-out infinite alternate}
+  #intro.rest .in-side.front svg{animation-duration:9s;animation-delay:-3s}
+  #intro.rest .in-l svg{transform-origin:0% 50%}
+  #intro.rest .in-r svg{transform-origin:100% 50%}
+  @keyframes sway{from{transform:rotate(-.7deg)}to{transform:rotate(.7deg)}}
   .lib-stage{display:flex;flex-direction:column;align-items:center;width:100%;flex:none;transform-origin:50% 40vh;
     transition:transform 2.6s cubic-bezier(.3,.55,.2,1)}
   #library.approach .lib-stage{transform:scale(.84) translateY(3vh);transition:none}
@@ -610,7 +621,7 @@
   body.mode-mobile .plaque{font-size:14.5px;padding:4px 22px 6px}
   body.mode-mobile .bc-inner{border-radius:50% 50% 3px 3px / 20px 20px 3px 3px}
 
-  @media (prefers-reduced-motion: reduce){ #intro{display:none!important} .book,.ba-book,.ba-cover,#bookAnim{transition:none!important} .ff{animation:none!important;opacity:.6} }
+  @media (prefers-reduced-motion: reduce){ #intro .in-side svg{animation:none!important} .book,.ba-book,.ba-cover,#bookAnim{transition:none!important} .ff{animation:none!important;opacity:.6} }
 </style>
 </head>
 <body class="view-library">
@@ -2485,7 +2496,7 @@ function deleteChap(id){
 }
 
 let libResizeTimer=null;
-window.addEventListener("resize", ()=>{ clearTimeout(libResizeTimer); libResizeTimer=setTimeout(()=>{ if(uiView==="library") renderLibrary(); }, 150); });
+window.addEventListener("resize", ()=>{ clearTimeout(libResizeTimer); libResizeTimer=setTimeout(()=>{ if(uiView==="library") renderLibrary(); if(typeof introRestVars==="function") introRestVars(); }, 150); });
 
 /* ============================================================
    DEVICE MODE (Computer / Telefono) + MOBILE DRAWER
@@ -2496,6 +2507,7 @@ function applyDeviceMode(mode){
   document.body.classList.toggle("mode-mobile", mode==="mobile");
   if(mode!=="mobile") closeDrawer();
   if(uiView==="library") renderLibrary();
+  introRestVars();
 }
 function chooseDevice(mode){
   localStorage.setItem(DEVICE_KEY, mode);
@@ -2671,19 +2683,36 @@ function buildIntro(){
     top+=vineSVG([[x,-10],[x+(r()-0.5)*20,TH*(0.35+r()*0.6)]],{type:"ivy",amp:4,wl:60,seed:900+Math.round(x),k:k*0.9,tendril:true,leafEvery:9,noVein:true,flowers:0});
   }
   for(let i=0;i<Math.round(vw/60);i++) top+=clump(r()*vw, r()*TH*0.25, 30, 8, k, r, true);
+  box.dataset.w=W;
   box.innerHTML =
     side("in-side in-l back",11,false,false) + side("in-side in-r back",22,false,true) +
     `<div class="in-top"><svg width="${vw}" height="${TH}" viewBox="0 0 ${vw} ${TH}">${top}</svg></div>` +
     side("in-side in-l front",33,true,false) + side("in-side in-r front",44,true,true);
 }
 
+/* quanto fogliame resta visibile ai lati: lo spazio libero accanto alla libreria (sul telefono solo un bordino) */
+function introRestVars(){
+  const box=document.getElementById("intro"); if(!box || !box.dataset.w) return;
+  const vw=window.innerWidth, mob=isMobile();
+  const bc=document.querySelector("#library .bookcase");
+  const bcW=(bc && bc.offsetWidth) || vw*0.8;
+  const W=parseFloat(box.dataset.w), off=0.04*vw;
+  const free=(vw-bcW)/2;
+  // le punte delle fronde sporgono oltre il bordo del livello, quindi lo teniamo un po' più indietro
+  const vis = mob ? -14 : Math.max(20, Math.min(vw*0.22, free-40));
+  const visF = mob ? vis-16 : vis*0.55;
+  box.style.setProperty("--back",  Math.round(-(W-off-vis))+"px");
+  box.style.setProperty("--front", Math.round(-(W-off-visF))+"px");
+}
+
 function playIntro(){
   introPending=false;
   const reduce=window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if(reduce) return;
   ensureSvgDefs();
   const box=document.getElementById("intro"), lib=document.getElementById("library");
   buildIntro();
+  introRestVars();
+  if(reduce){ box.className="show still opening rest"; return; }   // niente movimento: rami già ai lati
   box.className="show";
   lib.classList.add("approach");
   void box.offsetWidth;                       // fa partire le transizioni dallo stato iniziale
@@ -2697,17 +2726,24 @@ function playIntro(){
 function endIntro(){
   clearTimeout(introTimer);
   const box=document.getElementById("intro");
-  box.className=""; box.innerHTML="";
+  box.classList.remove("skip");
+  box.classList.add("opening","rest");        // i rami restano ai lati e non bloccano più i clic
   document.getElementById("library").classList.remove("approach");
 }
 function skipIntro(){
   const box=document.getElementById("intro");
-  if(!box.classList.contains("show") || box.classList.contains("skip")) return;
+  if(!box.classList.contains("show") || box.classList.contains("rest") || box.classList.contains("skip")) return;
   box.classList.add("skip");
-  clearTimeout(introTimer); introTimer=setTimeout(endIntro, 380);
+  // porta velocemente i rami (e la libreria) dalla posizione attuale a quella finale
+  const els=[...box.querySelectorAll(".in-side,.in-top"), document.getElementById("libStage")];
+  els.forEach(el=>{ const cur=getComputedStyle(el).transform; el.style.transition="none"; el.style.transform=cur; });
+  void box.offsetWidth;
+  els.forEach(el=>{ el.style.transition="transform .45s ease-out"; el.style.transform=""; });
+  setTimeout(()=>els.forEach(el=>{ el.style.transition=""; }), 500);
+  clearTimeout(introTimer); introTimer=setTimeout(endIntro, 460);
 }
 document.getElementById("intro").addEventListener("pointerdown", skipIntro);
-window.addEventListener("keydown", e=>{ if(document.getElementById("intro").classList.contains("show")) skipIntro(); }, true);
+window.addEventListener("keydown", e=>{ const b=document.getElementById("intro"); if(b.classList.contains("show") && !b.classList.contains("rest")) skipIntro(); }, true);
 
 /* ============================================================
    INIT
