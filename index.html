@@ -279,14 +279,240 @@
   body.mode-mobile .node-edit{opacity:1}
   body.mode-mobile .rsz{opacity:.8}
   body.mode-mobile .tree-row .mini{opacity:1}
+
+  /* ---------- Views (biblioteca / albero / storia) ---------- */
+  #library,#storyView{position:fixed;inset:0;z-index:45;display:none}
+  body.view-library #library{display:flex}
+  body.view-story #storyView{display:flex}
+
+  .lib-back{width:100%;margin-top:14px;padding:8px 10px;font-size:13px}
+  .story-fab{position:absolute;right:20px;top:18px;z-index:20;box-shadow:var(--shadow)}
+  body.mode-mobile .story-fab{display:none}
+  #mobileTopbar .mt-title{flex:1;min-width:0}
+  #mobileTopbar .mt-title .nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .mt-actions{display:flex;align-items:center;gap:4px;flex:none}
+  #mobileTopbar .mt-story{font-size:13.5px;font-weight:700;background:var(--gold);color:#1e2235;padding:8px 12px;border-radius:9px}
+
+  /* ---------- Biblioteca ---------- */
+  #library{flex-direction:column;align-items:center;overflow-y:auto;color:var(--on-ink);padding:34px 24px 44px;
+    background:
+      radial-gradient(ellipse at 50% -10%, rgba(214,173,82,.16), transparent 55%),
+      radial-gradient(ellipse at 50% 120%, rgba(0,0,0,.7), transparent 60%),
+      #17120b}
+  .lib-head{text-align:center;margin-bottom:24px}
+  .lib-head h1{font-family:var(--display);font-weight:600;font-size:34px;margin:0;letter-spacing:.5px;color:#f0e2c0}
+  .lib-head h1 .crest{color:var(--gold)}
+  .lib-head p{margin:7px 0 0;color:var(--on-ink-muted);font-size:12px;letter-spacing:1.6px;text-transform:uppercase}
+
+  .bookcase{width:100%;max-width:1000px;flex:none;padding:0 20px 20px;border-radius:8px;position:relative;
+    background:
+      repeating-linear-gradient(90deg,rgba(255,255,255,.03) 0 1px,transparent 1px 7px),
+      linear-gradient(180deg,#7a5230,#5b3a1e 30%,#3b2410);
+    box-shadow:0 34px 70px rgba(0,0,0,.65), inset 0 0 0 1px rgba(0,0,0,.45), inset 0 2px 0 rgba(255,255,255,.08)}
+  .bc-crown{display:flex;justify-content:center;padding:14px 0 13px}
+  .plaque{font-family:var(--display);font-size:14px;letter-spacing:4px;text-transform:uppercase;color:#3b2a10;font-weight:700;
+    background:linear-gradient(180deg,#ecd08a,#b8923f 55%,#8e6b26);padding:6px 24px;border-radius:4px;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.5), 0 2px 5px rgba(0,0,0,.55)}
+  .bc-inner{background:linear-gradient(180deg,#1a1109,#24170c 30%,#1d130a);border-radius:3px;padding:0 18px;
+    box-shadow:inset 0 10px 24px rgba(0,0,0,.75), inset 0 0 0 1px rgba(0,0,0,.6)}
+  .shelf{position:relative;padding-top:30px}
+  .shelf-row{display:flex;align-items:flex-end;gap:6px;padding:0 6px;position:relative;z-index:1}
+  .shelf-row:hover{z-index:3}
+  .plank{height:18px;margin:0 -18px;position:relative;z-index:2;
+    background:linear-gradient(180deg,#8a5e36 0,#6d4726 30%,#4e3119 100%);
+    box-shadow:0 10px 14px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.15)}
+
+  .book{--c:#6b1f1f;--ink:#e9cc7e;position:relative;width:var(--w);height:var(--h);flex:none;border:none;padding:0;margin:0;cursor:pointer;
+    border-radius:3px 3px 2px 2px;color:var(--ink);font:inherit;font-family:var(--display);-webkit-appearance:none;appearance:none;
+    background:
+      linear-gradient(90deg,rgba(0,0,0,.45) 0,rgba(0,0,0,.05) 14%,rgba(255,255,255,.15) 30%,rgba(255,255,255,.02) 48%,rgba(0,0,0,.12) 75%,rgba(0,0,0,.5) 100%),
+      var(--c);
+    box-shadow:2px 0 3px rgba(0,0,0,.45), inset 0 -2px 0 rgba(0,0,0,.25);
+    display:flex;flex-direction:column;align-items:center;
+    transition:transform .22s ease, box-shadow .22s ease}
+  .book:hover,.book:focus-visible{transform:translateY(-12px);box-shadow:2px 12px 16px rgba(0,0,0,.55);outline:none}
+  .book.pulled{transform:translateY(-34px)!important}
+  .bk-band{width:100%;height:9px;margin-top:14px;flex:none;border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);opacity:.7}
+  .bk-band.bot{margin:0 0 14px}
+  .bk-title-wrap{flex:1;min-height:0;width:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:10px 0}
+  .bk-title{writing-mode:vertical-rl;transform:rotate(180deg);text-align:center;font-weight:600;letter-spacing:1.2px;
+    text-transform:uppercase;line-height:1.12;overflow:hidden;text-shadow:0 1px 1px rgba(0,0,0,.35)}
+  .bk-orn{font-size:13px;margin-bottom:8px;opacity:.85;flex:none}
+  .bk-edit{position:absolute;top:-10px;right:-10px;width:26px;height:26px;border-radius:50%;background:var(--gold);color:#1e2235;
+    display:none;align-items:center;justify-content:center;font-size:13px;box-shadow:0 3px 8px rgba(0,0,0,.5);font-family:var(--ui);z-index:2}
+  #library.managing .bk-edit{display:flex}
+  #library.managing .book{outline:1.5px dashed rgba(214,173,82,.55);outline-offset:3px}
+  .bk-tip{position:absolute;bottom:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(4px);
+    background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:9px;padding:7px 12px;
+    font-family:var(--display);font-size:14px;white-space:nowrap;box-shadow:var(--shadow);opacity:0;pointer-events:none;
+    transition:opacity .15s, transform .15s;z-index:5;line-height:1.3;text-align:center}
+  .bk-tip small{display:block;font-family:var(--ui);font-size:11px;color:var(--muted);margin-top:2px}
+  .book:hover .bk-tip{opacity:1;transform:translateX(-50%)}
+  body.mode-mobile .bk-tip{display:none}
+
+  .book-add{flex:none;border:2px dashed rgba(214,173,82,.45);border-radius:4px;background:rgba(214,173,82,.05);color:var(--gold);
+    cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;font-family:var(--display);
+    transition:background .15s,border-color .15s;padding:0}
+  .book-add:hover{background:rgba(214,173,82,.14);border-color:var(--gold)}
+  .book-add .pl{font-size:26px;line-height:1}
+  .book-add .lbl{writing-mode:vertical-rl;transform:rotate(180deg);font-size:13px;letter-spacing:1.6px;text-transform:uppercase}
+  .bookend{flex:none;width:14px;height:110px;border-radius:3px 3px 0 0;margin-left:2px;
+    background:linear-gradient(90deg,#1e1e1e,#4d4a45 45%,#1a1a1a);box-shadow:2px 0 5px rgba(0,0,0,.6)}
+  .decor-stack{margin-left:auto;display:flex;flex-direction:column;align-items:center;pointer-events:none;opacity:.8;flex:none}
+  .decor-stack i{display:block;height:20px;border-radius:2px;border-left:3px solid rgba(214,173,82,.35);
+    background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(0,0,0,.35)),var(--c);box-shadow:0 1px 0 rgba(0,0,0,.55)}
+
+  .lib-hint{font-family:var(--display);font-style:italic;color:var(--on-ink-muted);font-size:15px;margin:20px 0 0;text-align:center}
+  .lib-bar{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:16px;max-width:1000px;width:100%}
+  .lib-bar .btn{padding:9px 14px;font-size:13px}
+  .lib-bar .btn.on{background:var(--gold);color:#1e2235;border-color:var(--gold)}
+  .lib-status{width:100%;text-align:center;font-size:11.5px;color:var(--on-ink-muted);margin-top:10px}
+
+  body.mode-mobile #library{padding:22px 10px 34px}
+  body.mode-mobile .lib-head h1{font-size:25px}
+  body.mode-mobile .lib-head{margin-bottom:18px}
+  body.mode-mobile .bookcase{padding:0 10px 12px}
+  body.mode-mobile .bc-inner{padding:0 10px}
+  body.mode-mobile .plank{margin:0 -10px;height:14px}
+  body.mode-mobile .shelf{padding-top:22px}
+  body.mode-mobile .shelf-row{gap:4px;padding:0 4px}
+  body.mode-mobile .bk-band{margin-top:11px;height:8px}
+  body.mode-mobile .bk-band.bot{margin:0 0 11px}
+  body.mode-mobile .lib-bar .btn{flex:1 1 40%}
+
+  /* ---------- Animazione di apertura del libro ---------- */
+  #bookAnim{position:fixed;inset:0;z-index:48;display:none;align-items:center;justify-content:center;pointer-events:none;
+    background:rgba(10,7,3,0);transition:background .35s, opacity .35s}
+  #bookAnim.show{display:flex}
+  #bookAnim.in{background:rgba(10,7,3,.55)}
+  #bookAnim.fade{opacity:0}
+  .ba-book{position:relative;width:min(300px,62vw);aspect-ratio:3/4.2;perspective:1800px;transform:scale(.5) translateY(40px);opacity:0;
+    transition:transform .4s cubic-bezier(.2,.8,.3,1), opacity .25s}
+  #bookAnim.in .ba-book{transform:none;opacity:1}
+  .ba-pages{position:absolute;inset:5px 6px 5px 0;border-radius:2px 6px 6px 2px;
+    background:repeating-linear-gradient(180deg,transparent 0 22px,rgba(122,110,84,.18) 22px 23px),linear-gradient(90deg,#d8c79f,#f1e6cb 12%,#efe3c5);
+    box-shadow:0 24px 60px rgba(0,0,0,.6)}
+  .ba-cover{position:absolute;inset:0;transform-origin:left center;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.55,.05,.3,1)}
+  #bookAnim.open .ba-cover{transform:rotateY(-165deg)}
+  .ba-front,.ba-back{position:absolute;inset:0;border-radius:3px 8px 8px 3px;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+  .ba-front,.bk-preview{
+    background:linear-gradient(90deg,rgba(0,0,0,.5),rgba(255,255,255,.1) 6%,rgba(0,0,0,0) 13%,rgba(0,0,0,.18)),var(--c);
+    color:var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-family:var(--display)}
+  .ba-front{gap:16px;padding:34px 30px;box-shadow:0 24px 60px rgba(0,0,0,.6)}
+  .ba-front::before,.bk-preview::before{content:"";position:absolute;inset:12px;border:1.5px solid var(--ink);opacity:.55;border-radius:3px;pointer-events:none}
+  .ba-front .t{font-size:24px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;line-height:1.2;word-break:break-word}
+  .ba-front .o{font-size:30px}
+  .ba-back{transform:rotateY(180deg);background:linear-gradient(90deg,#c7b183,#e6d6b0)}
+
+  /* ---------- Modale libro ---------- */
+  .bk-preview{position:relative;width:126px;height:170px;margin:0 auto 20px;border-radius:3px 7px 7px 3px;gap:9px;padding:20px 16px;
+    box-shadow:0 12px 26px rgba(0,0,0,.4)}
+  .bk-preview .pv-t{font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;line-height:1.2;word-break:break-word}
+  .bk-preview .pv-o{font-size:18px}
+
+  /* ---------- Storia ---------- */
+  #storyView{flex-direction:column;background:#17120b;color:var(--text)}
+  .st-bar{flex:none;display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--ink);color:var(--on-ink);
+    border-bottom:1px solid var(--ink-3);box-shadow:0 2px 12px rgba(0,0,0,.4);position:relative;z-index:2}
+  .st-title{flex:1;min-width:0;font-family:var(--display);font-size:18px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .st-title small{display:block;font-family:var(--ui);font-size:10.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--on-ink-muted);font-weight:600}
+  .seg{display:flex;background:var(--ink-2);border:1px solid var(--ink-3);border-radius:10px;padding:3px;flex:none}
+  .seg button{background:none;border:none;color:var(--on-ink-muted);padding:7px 15px;border-radius:7px;font-size:13px;font-weight:600;cursor:pointer}
+  .seg button.on{background:var(--gold);color:#1e2235}
+  .st-btn{background:var(--ink-2);border:1px solid var(--ink-3);color:var(--on-ink);border-radius:9px;padding:8px 12px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;flex:none}
+  .st-btn:hover{background:var(--ink-3)}
+  .st-body{flex:1;min-height:0;overflow-y:auto;
+    background:radial-gradient(ellipse at 50% 0%, rgba(214,173,82,.08), transparent 50%),#17120b}
+
+  .st-read{max-width:760px;margin:34px auto 70px;padding:56px 64px 60px;border-radius:4px;color:#2c2417;
+    background:radial-gradient(ellipse at 50% 0%, rgba(255,255,255,.35), transparent 60%),linear-gradient(180deg,#f2e8cf,#e9dcbc);
+    box-shadow:0 24px 60px rgba(0,0,0,.6), inset 0 0 70px rgba(120,90,40,.2)}
+  .rd-cover{text-align:center;margin-bottom:30px}
+  .rd-cover .k{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);font-weight:700}
+  .rd-cover h1{font-family:var(--display);font-size:36px;font-weight:600;margin:10px 0 0;line-height:1.15}
+  .orn{color:var(--gold);font-size:22px;text-align:center;margin:12px 0}
+  .orn.small{font-size:15px;margin:6px 0 20px;letter-spacing:4px}
+  .toc{border:1px solid var(--line);border-radius:10px;padding:14px 20px;margin:0 auto 34px;max-width:460px;background:rgba(255,255,255,.28)}
+  .toc .h{font-size:11px;letter-spacing:2.4px;text-transform:uppercase;color:var(--muted);font-weight:700;text-align:center;margin-bottom:8px}
+  .toc a{display:flex;gap:10px;padding:6px 0;color:var(--text);text-decoration:none;font-family:var(--display);font-size:16.5px;cursor:pointer;border-bottom:1px dotted var(--line)}
+  .toc a:last-child{border-bottom:none}
+  .toc a .n{color:#8a6a2a;min-width:38px;font-weight:600}
+  .toc a:hover{color:#7a5a1e}
+  .chap{margin-top:46px;scroll-margin-top:24px}
+  .chap-k{text-align:center;font-size:11.5px;letter-spacing:3px;text-transform:uppercase;color:#8a6a2a;font-weight:700}
+  .chap h2{font-family:var(--display);font-size:29px;font-weight:600;text-align:center;margin:8px 0 2px;line-height:1.2}
+  .chap-edit{display:block;margin:2px auto 0;background:none;border:none;color:var(--muted);font-size:12px;cursor:pointer;text-decoration:underline;font-family:var(--ui)}
+  .chap-edit:hover{color:var(--text)}
+  .prose{font-family:var(--display);font-size:18.5px;line-height:1.75;text-align:justify;hyphens:auto;-webkit-hyphens:auto}
+  .prose p{margin:0 0 .25em;text-indent:1.6em}
+  .prose p.first,.prose p.ni{text-indent:0}
+  .prose p.first{display:flow-root}
+  .prose p.first::first-letter{float:left;font-size:3.5em;line-height:.82;padding:7px 9px 0 0;color:#7d3a36;font-weight:600}
+  .prose p.empty{text-indent:0;color:var(--muted);font-style:italic;text-align:center}
+  .prose p.empty::first-letter{all:unset}
+  .prose .scene{text-align:center;color:var(--gold);margin:18px 0;letter-spacing:10px;text-indent:0}
+  .rd-end{text-align:center;margin-top:54px;color:var(--gold);font-size:24px}
+  .rd-empty{text-align:center;padding:30px 10px 10px;color:var(--muted);font-family:var(--display);font-size:18px;line-height:1.6}
+
+  .st-write{display:flex;gap:22px;max-width:1180px;margin:0 auto;padding:26px 22px 50px;align-items:flex-start}
+  .ch-list{width:260px;flex:none;background:var(--surface);border-radius:14px;padding:14px;box-shadow:var(--shadow);position:sticky;top:0}
+  .ch-list .h{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:#5a4f38;font-weight:700;margin:2px 4px 10px}
+  .ch-item{display:flex;align-items:center;gap:6px;padding:8px 6px 8px 10px;border-radius:9px;cursor:pointer;border:1.5px solid transparent;margin-bottom:4px}
+  .ch-item:hover{background:var(--surface-3)}
+  .ch-item.on{background:#ecdcb0;border-color:var(--gold)}
+  .ch-item .n{font-family:var(--display);color:#8a6a2a;font-weight:700;min-width:30px;font-size:13px}
+  .ch-item .t{flex:1;min-width:0;font-family:var(--display);font-size:14.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .ch-item .mv{background:none;border:none;cursor:pointer;color:var(--muted);font-size:11px;padding:3px 5px;border-radius:5px;opacity:0}
+  .ch-item:hover .mv{opacity:1}
+  .ch-item .mv:disabled{visibility:hidden}
+  .ch-item .mv:hover{background:#0000000f;color:var(--text)}
+  .ch-none{font-size:13px;color:var(--muted);font-style:italic;padding:4px 6px 8px}
+  .ch-add{width:100%;margin-top:6px;border:1.5px dashed var(--line);background:none;border-radius:10px;padding:10px;font-size:13.5px;font-weight:600;color:var(--text);cursor:pointer}
+  .ch-add:hover{background:var(--surface-3)}
+  .editor{flex:1;min-width:0;border-radius:6px;padding:30px 42px 22px;box-shadow:0 20px 50px rgba(0,0,0,.55);
+    background:linear-gradient(180deg,#f3e9d1,#ebdfc2)}
+  .ed-k{font-size:11px;letter-spacing:2.6px;text-transform:uppercase;color:#8a6a2a;font-weight:700}
+  .ed-title{width:100%;border:none;border-bottom:1.5px solid var(--line);background:transparent;font-family:var(--display);font-size:28px;font-weight:600;
+    color:var(--text);padding:6px 0 10px;margin:4px 0 18px;border-radius:0}
+  .ed-title:focus{outline:none;border-bottom-color:var(--gold)}
+  .ed-text{display:block;width:100%;min-height:55vh;border:none;background:transparent;resize:none;font-family:var(--display);font-size:18px;
+    line-height:1.75;color:var(--text);padding:0;overflow:hidden}
+  .ed-text:focus{outline:none}
+  .ed-foot{display:flex;align-items:center;gap:14px;border-top:1px solid var(--line);margin-top:16px;padding-top:12px;font-size:12.5px;color:var(--muted);flex-wrap:wrap}
+  .ed-foot .spacer{flex:1}
+  .ed-tip{font-size:12px;color:var(--muted);margin:10px 0 0;line-height:1.55}
+  .ed-tip code{background:#0000000f;padding:1px 5px;border-radius:5px;font-size:11.5px;font-family:ui-monospace,monospace}
+  .ed-empty{text-align:center;font-family:var(--display);color:var(--muted);font-size:18px;padding:60px 30px}
+
+  body.mode-mobile .st-bar{flex-wrap:wrap;padding:8px 10px;gap:8px}
+  body.mode-mobile .st-bar .lbl{display:none}
+  body.mode-mobile .st-title{font-size:16px}
+  body.mode-mobile .seg{order:5;width:100%}
+  body.mode-mobile .seg button{flex:1;padding:9px}
+  body.mode-mobile .st-read{margin:0;padding:30px 20px 44px;border-radius:0;box-shadow:none;min-height:100%}
+  body.mode-mobile .rd-cover h1{font-size:28px}
+  body.mode-mobile .chap h2{font-size:24px}
+  body.mode-mobile .prose{font-size:17px;text-align:left}
+  body.mode-mobile .st-write{flex-direction:column;padding:12px 10px 34px;gap:12px;align-items:stretch}
+  body.mode-mobile .ch-list{width:100%;position:static}
+  body.mode-mobile .ch-item .mv{opacity:1;font-size:13px;padding:5px 8px}
+  body.mode-mobile .editor{padding:20px 18px 18px}
+  body.mode-mobile .ed-title{font-size:22px}
+  body.mode-mobile .ed-text{font-size:17px;min-height:45vh}
+
+  @media (prefers-reduced-motion: reduce){ .book,.ba-book,.ba-cover,#bookAnim{transition:none!important} }
 </style>
 </head>
-<body>
+<body class="view-library">
 
   <!-- MOBILE TOPBAR -->
   <div id="mobileTopbar">
     <button id="hamburgerBtn" title="Menu" onclick="toggleDrawer()">☰</button>
-    <span class="mt-title"><span class="crest" style="color:var(--gold)">❦</span> Alberi Genealogici</span>
+    <span class="mt-title"><span class="crest" style="color:var(--gold)">❦</span> <span class="nm" id="mtTitle">Alberi Genealogici</span></span>
+    <div class="mt-actions">
+      <button title="Torna alla biblioteca" onclick="goLibrary()">📚</button>
+      <button class="mt-story" title="Storia" onclick="openStory()">📖 Storia</button>
+    </div>
   </div>
   <div id="drawerScrim" onclick="closeDrawer()"></div>
 
@@ -295,6 +521,7 @@
     <div class="brand">
       <h1><span class="crest">❦</span> Alberi Genealogici</h1>
       <p>Lignaggi dei tuoi personaggi</p>
+      <button class="btn btn-ghost lib-back" onclick="goLibrary()">📚 Torna alla biblioteca</button>
     </div>
 
     <div class="side-scroll">
@@ -333,6 +560,7 @@
       <button class="btn btn-gold" onclick="openForm()">＋ Aggiungi personaggio</button>
       <button class="btn btn-paper" onclick="openLinkModal()">🔗 Crea legame</button>
     </div>
+    <button class="btn btn-gold story-fab" onclick="openStory()">📖 Storia</button>
 
     <div id="world">
       <svg id="edges" viewBox="-12000 -12000 24000 24000" preserveAspectRatio="xMinYMin slice"></svg>
@@ -354,6 +582,83 @@
       <button title="Centra / adatta" onclick="fitView()">⤢</button>
     </div>
   </main>
+
+  <!-- BIBLIOTECA -->
+  <section id="library">
+    <header class="lib-head">
+      <h1><span class="crest">❦</span> Alberi Genealogici</h1>
+      <p>La biblioteca dei tuoi lignaggi</p>
+    </header>
+    <div class="bookcase">
+      <div class="bc-crown"><span class="plaque">Biblioteca</span></div>
+      <div class="bc-inner" id="bcInner"></div>
+    </div>
+    <p class="lib-hint" id="libHint">Scegli un libro per aprire il suo albero genealogico</p>
+    <div class="lib-bar">
+      <button class="btn btn-ghost" id="manageBtn" onclick="toggleManage()">✎ Modifica libri</button>
+      <button class="btn btn-ghost" onclick="ghPull()">⬇ Carica</button>
+      <button class="btn btn-ghost" onclick="ghPush()">⬆ Salva</button>
+      <button class="btn btn-ghost" onclick="openSyncModal()">⚙ GitHub</button>
+      <button class="btn btn-ghost" onclick="openDeviceModal()">📱 Dispositivo</button>
+    </div>
+    <div class="lib-status" id="libSyncStatus"></div>
+  </section>
+
+  <!-- ANIMAZIONE APERTURA LIBRO -->
+  <div id="bookAnim" aria-hidden="true">
+    <div class="ba-book">
+      <div class="ba-pages"></div>
+      <div class="ba-cover">
+        <div class="ba-front"><span class="o">❦</span><span class="t" id="baTitle"></span><span class="o">❦</span></div>
+        <div class="ba-back"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STORIA -->
+  <section id="storyView">
+    <header class="st-bar">
+      <button class="st-btn" onclick="closeStory()" title="Torna all'albero">← <span class="lbl">Albero</span></button>
+      <div class="st-title"><small>Storia</small><span id="stName"></span></div>
+      <div class="seg" id="stSeg">
+        <button data-m="read" onclick="setStoryMode('read')">📖 Leggi</button>
+        <button data-m="write" onclick="setStoryMode('write')">✎ Scrivi</button>
+      </div>
+      <button class="st-btn" onclick="goLibrary()" title="Torna alla biblioteca">📚 <span class="lbl">Biblioteca</span></button>
+    </header>
+    <div class="st-body" id="stBody"></div>
+  </section>
+
+  <!-- BOOK MODAL -->
+  <div id="bookOverlay" class="overlay">
+    <div class="modal" style="width:460px">
+      <div class="m-hd">
+        <h2 id="bkTitle">Nuovo libro</h2>
+        <button class="close" onclick="closeBookModal()">×</button>
+      </div>
+      <div class="m-bd">
+        <div class="bk-preview" id="bkPreview"><span class="pv-o">❦</span><span class="pv-t" id="bkPvTitle"></span><span class="pv-o">❦</span></div>
+        <div class="field">
+          <label>Titolo (nome dell'albero)</label>
+          <input type="text" id="bkName" placeholder="Es. Casata Stormcrest" autocomplete="off" oninput="updateBookPreview()">
+        </div>
+        <div class="field">
+          <label>Colore della copertina</label>
+          <div class="swatches" id="bkSwatches"></div>
+          <div class="custom-color" id="bkCustom">
+            <label class="cc-swatch"><input type="color" id="bkColorInput"></label>
+            <span class="cc-txt">Colore personalizzato</span>
+          </div>
+        </div>
+      </div>
+      <div class="m-ft">
+        <button class="btn-del" id="bkDel" onclick="deleteBookFromModal()">🗑 Elimina libro</button>
+        <div class="spacer"></div>
+        <button class="btn-cancel" onclick="closeBookModal()">Annulla</button>
+        <button class="btn-primary" onclick="saveBookModal()">Salva</button>
+      </div>
+    </div>
+  </div>
 
   <!-- CHARACTER MODAL -->
   <div id="overlay" class="overlay">
@@ -529,7 +834,7 @@
         <button class="close" id="deviceCloseBtn" onclick="closeDeviceModal()">×</button>
       </div>
       <div class="m-bd">
-        <p class="lk-help">Scegli come vuoi visualizzare l'app. Puoi cambiare idea in qualsiasi momento da «Cambia modalità dispositivo» nella barra laterale.</p>
+        <p class="lk-help">Scegli come vuoi visualizzare l'app. Puoi cambiare idea in qualsiasi momento dal tasto «Dispositivo» della biblioteca o da «Cambia modalità dispositivo» nella barra laterale.</p>
         <div class="device-choice">
           <button type="button" class="device-opt" onclick="chooseDevice('desktop')">
             <span class="dev-ic">🖥️</span>
@@ -553,6 +858,7 @@
 const STORE_KEY = "alberi_genealogici_v4";
 const PRESETS = ["#7d3a36","#a9603e","#b8923f","#6f7a3f","#3f6b4a","#3a7d76","#4a6a8a","#5a4f8a","#79466e","#6a4f37"];
 const DEFAULT_COLOR = "#3f6b4a";
+const BOOK_COLORS=["#6b1f1f","#1f3b2c","#1d2c4a","#4a2a52","#7a4a1e","#2e4a4a","#5a1e3a","#8a6a2a","#3d5a2a","#2a2622","#9a3b2a","#d8c8a0"];
 const REL = {
   parent:  {label:"genitore", dash:"none",  width:5},
   partner: {label:"partner ♥", dash:"none",  width:5},
@@ -571,16 +877,24 @@ function load(){
     const raw = localStorage.getItem(STORE_KEY);
     if(raw){ const s = JSON.parse(raw); if(s && s.trees) return normalize(s); }
   }catch(e){ console.warn("load failed", e); }
-  return { trees:[ blankTree("Albero 1") ], currentId:null };
+  return { trees:[ blankTree("Albero 1", 0) ], currentId:null };
 }
 function defaultShow(){ return {name:true, classes:true, role:true, race:true, years:true, pronouns:false, notes:false}; }
 const DND_CLASSES=["Artefice","Barbaro","Bardo","Chierico","Druido","Guerriero","Ladro","Mago","Monaco","Paladino","Ranger","Stregone","Warlock"];
 const PRON_PRESETS=["she/her","he/him","they/them","she/they","he/they","xe/xem","ze/hir","fae/faer","it/its"];
-function blankTree(name){ return { id:uid(), name, nodes:[], edges:[], view:{panX:0,panY:0,zoom:1} }; }
+function blankTree(name, idx){
+  const i = (typeof idx==="number") ? idx : (state ? state.trees.length : 0);
+  return { id:uid(), name, nodes:[], edges:[], view:{panX:0,panY:0,zoom:1},
+           cover:BOOK_COLORS[i % BOOK_COLORS.length], story:{chapters:[]} };
+}
 function normalize(s){
-  s.trees = (s.trees||[]).map(t=>({
+  s.trees = (s.trees||[]).map((t,i)=>({
     id:t.id||uid(), name:t.name||"Albero", nodes:(t.nodes||[]), edges:(t.edges||[]),
-    view: t.view || {panX:0,panY:0,zoom:1}
+    view: t.view || {panX:0,panY:0,zoom:1},
+    cover: (typeof t.cover==="string" && /^#[0-9a-fA-F]{6}$/.test(t.cover)) ? t.cover : BOOK_COLORS[i % BOOK_COLORS.length],
+    story: { chapters: (t.story && Array.isArray(t.story.chapters) ? t.story.chapters : [])
+              .filter(c=>c && typeof c==="object")
+              .map(c=>({ id:c.id||uid(), title:String(c.title||""), text:String(c.text||"") })) }
   }));
   s.trees.forEach(t=>t.nodes.forEach(n=>{
     n.scale = n.scale||1; n.color = n.color||DEFAULT_COLOR; n.x = n.x||0; n.y = n.y||0;
@@ -619,6 +933,7 @@ function flashSaved(){
   p.style.opacity="1";
   clearTimeout(saveTimer);
   saveTimer=setTimeout(()=>{ p.innerHTML='<span class="chk">✓</span> Salvato sul dispositivo'; p.style.opacity="0.7"; },1200);
+  const es=document.getElementById("edSaved"); if(es) es.textContent="✓ Salvato";
 }
 
 function tree(){ return state.trees.find(t=>t.id===currentId); }
@@ -903,13 +1218,19 @@ window.addEventListener("keydown", e=>{
   const charOpen = document.getElementById("overlay").classList.contains("show");
   const linkOpen = document.getElementById("linkOverlay").classList.contains("show");
   const syncOpen = document.getElementById("syncOverlay").classList.contains("show");
+  const bookOpen = document.getElementById("bookOverlay").classList.contains("show");
+  const typing = e.target && e.target.closest && e.target.closest("input, textarea, select, [contenteditable]");
   if(e.key==="Escape"){
     if(charOpen){ closeForm(); return; }
     if(linkOpen){ closeLinkModal(); return; }
     if(syncOpen){ closeSyncModal(); return; }
+    if(bookOpen){ closeBookModal(); return; }
+    if(uiView==="story"){ if(typing) e.target.blur(); else closeStory(); return; }
+    if(uiView==="library"){ if(managing) toggleManage(); return; }
     clearSelection(); return;
   }
-  if(charOpen || linkOpen || syncOpen) return;
+  if(charOpen || linkOpen || syncOpen || bookOpen) return;
+  if(uiView!=="tree" || typing) return;
   if((e.key==="Delete"||e.key==="Backspace") && selEdge){
     e.preventDefault(); deleteEdge(selEdge);
   }
@@ -946,7 +1267,11 @@ function nameFontSize(name){
 /* ============================================================
    RENDER
 ============================================================ */
-function renderAll(){ renderSidebar(); applyTransform(); renderNodes(); renderEdges(); }
+function renderAll(){
+  renderSidebar(); applyTransform(); renderNodes(); renderEdges(); updateTreeChrome();
+  if(uiView==="library") renderLibrary();
+  if(uiView==="story") renderStory();
+}
 
 function renderSidebar(){
   const list=document.getElementById("treeList"); list.innerHTML="";
@@ -1423,26 +1748,326 @@ function deleteCurrent(){
 /* ============================================================
    TREE MANAGEMENT
 ============================================================ */
-function newTree(){
-  const name=prompt("Nome del nuovo albero:", "Albero "+(state.trees.length+1));
-  if(name===null) return;
-  const t=blankTree(name.trim()||("Albero "+(state.trees.length+1)));
-  state.trees.push(t); currentId=t.id; clearSelection(); save(); renderAll();
-}
-function renameTree(id){
-  const t=state.trees.find(x=>x.id===id);
-  const name=prompt("Rinomina albero:", t.name);
-  if(name===null) return;
-  t.name=name.trim()||t.name; save(); renderSidebar();
-}
+function newTree(){ openBookModal(null); }
+function renameTree(id){ openBookModal(id); }
 function deleteTree(id){
-  if(state.trees.length===1){ toast("Deve restare almeno un albero"); return; }
+  if(state.trees.length===1){ toast("Deve restare almeno un libro"); return false; }
   const t=state.trees.find(x=>x.id===id);
-  if(!confirm(`Eliminare l'albero "${t.name}" e tutti i suoi personaggi?`)) return;
+  if(!confirm(`Eliminare il libro "${t.name}" con tutti i suoi personaggi e la sua storia?`)) return false;
   state.trees=state.trees.filter(x=>x.id!==id);
   if(currentId===id) currentId=state.trees[0].id;
   clearSelection(); save(); renderAll();
+  return true;
 }
+
+/* ============================================================
+   VIEWS: biblioteca / albero / storia
+============================================================ */
+let uiView="library", managing=false, animating=false;
+
+function showView(v){
+  uiView=v;
+  document.body.classList.remove("view-library","view-tree","view-story");
+  document.body.classList.add("view-"+v);
+  if(v!=="tree") closeDrawer();
+  if(v==="library") renderLibrary();
+  updateTreeChrome();
+}
+function updateTreeChrome(){
+  const t=tree(); const el=document.getElementById("mtTitle");
+  if(el && t) el.textContent=t.name||"Senza titolo";
+}
+function flushSave(){ clearTimeout(saveSoonTimer); save(); }
+function goLibrary(){ flushSave(); if(managing) toggleManage(); showView("library"); }
+
+/* ============================================================
+   BIBLIOTECA (ogni albero è un libro sullo scaffale)
+============================================================ */
+function hashStr(s){ let h=0; for(const c of String(s)) h=(h*31+c.charCodeAt(0))|0; return Math.abs(h); }
+function isMobile(){ return document.body.classList.contains("mode-mobile"); }
+function inkFor(c){ return isLight(c) ? "#2a1d0e" : "#ebcf82"; }
+function chapterCount(t){ return (t.story && t.story.chapters ? t.story.chapters.length : 0); }
+
+function bookDims(t){
+  const k=isMobile()?0.78:1;
+  const name=(t.name||"").trim()||"Senza titolo";
+  const len=Math.max(1,name.length);
+  const h=Math.round((208 + hashStr(t.id)%40)*k);
+  const titleH=h-Math.round(90*k);
+  const cpc=s=>titleH/(0.7*s);                 // caratteri per colonna con font s
+  let fs=15*k;
+  if(len>cpc(fs)) fs=Math.max(9.5*k, Math.min(15*k, (2*titleH)/(len*0.7)));
+  const cols = len>cpc(fs) ? 2 : 1;
+  const w=Math.round(Math.max(44*k, cols*fs*1.2 + 24*k) + Math.min(5,chapterCount(t))*2*k);
+  return {w,h,fs,titleH};
+}
+
+function bookHTML(t,d){
+  const ink=inkFor(t.cover), nodes=t.nodes.length, ch=chapterCount(t);
+  const name=t.name||"Senza titolo";
+  return `<button type="button" class="book" data-id="${esc(t.id)}" style="--c:${t.cover};--ink:${ink};--w:${d.w}px;--h:${d.h}px" aria-label="${esc(name)}">
+    <span class="bk-band"></span>
+    <span class="bk-title-wrap"><span class="bk-title" style="font-size:${d.fs.toFixed(1)}px;max-height:${d.titleH}px">${esc(name)}</span></span>
+    <span class="bk-orn">❦</span>
+    <span class="bk-band bot"></span>
+    <span class="bk-edit">✎</span>
+    <span class="bk-tip">${esc(name)}<small>${nodes} personagg${nodes===1?"io":"i"} · ${ch} capitol${ch===1?"o":"i"}</small></span>
+  </button>`;
+}
+
+function renderLibrary(){
+  const lib=document.getElementById("library"), inner=document.getElementById("bcInner");
+  if(!lib || !inner) return;
+  lib.classList.toggle("managing", managing);
+  const mob=isMobile(), k=mob?0.78:1;
+  const gap=mob?4:6;
+  const pad=parseFloat(getComputedStyle(inner).paddingLeft)||0;
+  const avail=Math.max(120, inner.clientWidth - pad*2 - (mob?8:12));
+  const addW=Math.round(52*k), addH=Math.round(200*k);
+  const endW=16, decoW=Math.round(140*k);
+
+  const rows=[]; let row=[], used=0;
+  const push=(item,w)=>{
+    if(row.length && used+gap+w>avail){ rows.push(row); row=[]; used=0; }
+    used += (row.length?gap:0) + w; row.push(item);
+  };
+  state.trees.forEach(t=>{ const d=bookDims(t); push({t,d}, d.w); });
+  push({add:true}, addW+gap+endW);
+  if(used+gap+decoW<=avail) row.push({deco:true});
+  rows.push(row);
+
+  const rowH=Math.round(258*k);
+  inner.innerHTML=rows.map(r=>`<div class="shelf"><div class="shelf-row" style="min-height:${rowH}px">${
+    r.map(it=>{
+      if(it.add) return `<button type="button" class="book-add" style="width:${addW}px;height:${addH}px" onclick="openBookModal(null)" title="Nuovo libro"><span class="pl">＋</span><span class="lbl">Nuovo libro</span></button><span class="bookend"></span>`;
+      if(it.deco) return `<span class="decor-stack" aria-hidden="true">
+          <i style="--c:#3a2a1a;width:${Math.round(118*k)}px"></i><i style="--c:#25382a;width:${Math.round(134*k)}px"></i><i style="--c:#4a2222;width:${Math.round(110*k)}px"></i></span>`;
+      return bookHTML(it.t,it.d);
+    }).join("")
+  }</div><div class="plank"></div></div>`).join("");
+
+  inner.querySelectorAll(".book").forEach(b=>b.addEventListener("click",()=>openBook(b.dataset.id)));
+  document.getElementById("libHint").textContent = managing
+    ? "Tocca un libro per cambiarne titolo e colore, o per eliminarlo"
+    : "Scegli un libro per aprire il suo albero genealogico";
+  const mb=document.getElementById("manageBtn");
+  mb.textContent = managing ? "✓ Fatto" : "✎ Modifica libri";
+  mb.classList.toggle("on", managing);
+}
+function toggleManage(){ managing=!managing; renderLibrary(); }
+
+function openBook(id){
+  if(animating) return;
+  if(managing){ openBookModal(id); return; }
+  const t=state.trees.find(x=>x.id===id); if(!t) return;
+  currentId=id; selNodes.clear(); selEdge=null; save(); renderAll();
+  playOpenAnim(t, ()=>showView("tree"));
+}
+
+function playOpenAnim(t, onSwap){
+  const reduce=window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if(reduce){ onSwap(); return; }
+  animating=true;
+  const a=document.getElementById("bookAnim");
+  const bk=document.querySelector(`.book[data-id="${CSS.escape(t.id)}"]`);
+  if(bk) bk.classList.add("pulled");
+  a.style.setProperty("--c", t.cover);
+  a.style.setProperty("--ink", inkFor(t.cover));
+  document.getElementById("baTitle").textContent=t.name||"Senza titolo";
+  a.className="show";
+  setTimeout(()=>{ a.classList.add("in"); }, 170);
+  setTimeout(()=>{ a.classList.add("open"); onSwap(); }, 620);
+  setTimeout(()=>{ a.classList.add("fade"); }, 1250);
+  setTimeout(()=>{ a.className=""; if(bk) bk.classList.remove("pulled"); animating=false; }, 1620);
+}
+
+/* ----- modale libro (nuovo / modifica) ----- */
+let bookEditId=null, bookColor=BOOK_COLORS[0];
+function openBookModal(id){
+  bookEditId=id||null;
+  const t=id?state.trees.find(x=>x.id===id):null;
+  document.getElementById("bkTitle").textContent=t?"Modifica libro":"Nuovo libro";
+  document.getElementById("bkName").value=t?(t.name||""):"";
+  bookColor = t ? t.cover : BOOK_COLORS[state.trees.length % BOOK_COLORS.length];
+  document.getElementById("bkDel").style.display = t?"":"none";
+  renderBookSwatches(); updateBookPreview();
+  document.getElementById("bookOverlay").classList.add("show");
+  if(!isMobile()) setTimeout(()=>document.getElementById("bkName").focus(),40);
+}
+function closeBookModal(){ document.getElementById("bookOverlay").classList.remove("show"); bookEditId=null; }
+function renderBookSwatches(){
+  const wrap=document.getElementById("bkSwatches"); wrap.innerHTML="";
+  BOOK_COLORS.forEach(c=>{
+    const s=document.createElement("div"); s.className="sw"; s.dataset.c=c; s.style.background=c;
+    s.addEventListener("click",()=>{ bookColor=c; renderBookSwatches(); updateBookPreview(); });
+    wrap.appendChild(s);
+  });
+  const fc=bookColor.toLowerCase();
+  wrap.querySelectorAll(".sw").forEach(s=>s.classList.toggle("sel", s.dataset.c.toLowerCase()===fc));
+  document.getElementById("bkCustom").classList.toggle("active", !BOOK_COLORS.some(c=>c.toLowerCase()===fc));
+  document.getElementById("bkColorInput").value=bookColor;
+}
+document.getElementById("bkColorInput").addEventListener("input", e=>{ bookColor=e.target.value; renderBookSwatches(); updateBookPreview(); });
+function updateBookPreview(){
+  const p=document.getElementById("bkPreview");
+  p.style.setProperty("--c", bookColor); p.style.setProperty("--ink", inkFor(bookColor));
+  document.getElementById("bkPvTitle").textContent = document.getElementById("bkName").value.trim() || "Senza titolo";
+}
+function saveBookModal(){
+  const name=document.getElementById("bkName").value.trim();
+  if(bookEditId){
+    const t=state.trees.find(x=>x.id===bookEditId);
+    if(t){ t.name=name||t.name; t.cover=bookColor; }
+  } else {
+    const t=blankTree(name||("Albero "+(state.trees.length+1)));
+    t.cover=bookColor; state.trees.push(t);
+    if(uiView!=="library"){ currentId=t.id; clearSelection(); }
+  }
+  save(); closeBookModal(); renderAll();
+}
+function deleteBookFromModal(){
+  if(!bookEditId) return;
+  if(deleteTree(bookEditId)) closeBookModal();
+}
+
+/* ============================================================
+   STORIA (capitoli: scrivi / leggi)
+============================================================ */
+let storyMode="read", storyChapId=null, storySaveTimer=null;
+
+function storyOf(t){ if(!t.story || !Array.isArray(t.story.chapters)) t.story={chapters:[]}; return t.story; }
+function chapters(){ return storyOf(tree()).chapters; }
+function curChap(){ return chapters().find(c=>c.id===storyChapId); }
+function roman(n){
+  const m=[[1000,"M"],[900,"CM"],[500,"D"],[400,"CD"],[100,"C"],[90,"XC"],[50,"L"],[40,"XL"],[10,"X"],[9,"IX"],[5,"V"],[4,"IV"],[1,"I"]];
+  let s=""; m.forEach(([v,r])=>{ while(n>=v){ s+=r; n-=v; } }); return s;
+}
+
+function openStory(mode){
+  const ch=chapters();
+  storyMode = mode || (ch.length ? "read" : "write");
+  if(!ch.find(c=>c.id===storyChapId)) storyChapId = ch[0] ? ch[0].id : null;
+  showView("story"); renderStory();
+  document.getElementById("stBody").scrollTop=0;
+}
+function closeStory(){ flushStorySave(); showView("tree"); }
+function setStoryMode(m){ flushStorySave(); storyMode=m; renderStory(); document.getElementById("stBody").scrollTop=0; }
+
+function renderStory(){
+  const t=tree(); if(!t) return;
+  document.getElementById("stName").textContent=t.name||"Senza titolo";
+  document.querySelectorAll("#stSeg button").forEach(b=>b.classList.toggle("on", b.dataset.m===storyMode));
+  const body=document.getElementById("stBody");
+  body.innerHTML = storyMode==="read" ? readHTML(t) : writeHTML(t);
+  if(storyMode==="write") bindEditor();
+}
+
+function inlineFmt(s){
+  return esc(s).replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>").replace(/\*(.+?)\*/g,"<em>$1</em>");
+}
+function proseHTML(text){
+  let out="", first=true, afterScene=false;
+  (text||"").split(/\r?\n/).forEach(line=>{
+    const s=line.trim(); if(!s) return;
+    if(/^(\*\s*){3,}$|^-{3,}$|^~{3,}$/.test(s)){ out+=`<p class="scene">❦ ❦ ❦</p>`; afterScene=true; return; }
+    const cls = first ? ' class="first"' : (afterScene ? ' class="ni"' : "");
+    out+=`<p${cls}>${inlineFmt(s)}</p>`; first=false; afterScene=false;
+  });
+  return out || `<p class="empty">Questo capitolo è ancora da scrivere.</p>`;
+}
+
+function readHTML(t){
+  const ch=storyOf(t).chapters;
+  const cover=`<header class="rd-cover"><div class="k">La storia di</div><h1>${esc(t.name||"Senza titolo")}</h1><div class="orn">❦</div></header>`;
+  if(!ch.length) return `<article class="st-read">${cover}
+      <div class="rd-empty">La storia di questo mondo non è ancora stata scritta.<br>
+      <button class="btn-primary" style="margin-top:20px" onclick="addChapter()">✎ Inizia a scrivere</button></div></article>`;
+  const toc = ch.length>1 ? `<nav class="toc"><div class="h">Indice</div>${
+      ch.map((c,i)=>`<a onclick="jumpChap('${esc(c.id)}')"><span class="n">${roman(i+1)}</span><span>${esc(c.title||"Senza titolo")}</span></a>`).join("")
+    }</nav>` : "";
+  const body = ch.map((c,i)=>`<section class="chap" id="chap-${esc(c.id)}">
+      <div class="chap-k">Capitolo ${roman(i+1)}</div>
+      <h2>${esc(c.title||"Senza titolo")}</h2>
+      <button class="chap-edit" onclick="editChap('${esc(c.id)}')">✎ modifica</button>
+      <div class="orn small">— ❦ —</div>
+      <div class="prose">${proseHTML(c.text)}</div>
+    </section>`).join("");
+  return `<article class="st-read">${cover}${toc}${body}<div class="rd-end">❦</div></article>`;
+}
+function jumpChap(id){ const el=document.getElementById("chap-"+id); if(el) el.scrollIntoView({behavior:"smooth", block:"start"}); }
+function editChap(id){ storyChapId=id; setStoryMode("write"); }
+
+function writeHTML(t){
+  const ch=storyOf(t).chapters;
+  const items = ch.map((c,i)=>`<div class="ch-item${c.id===storyChapId?" on":""}" onclick="selectChap('${esc(c.id)}')">
+      <span class="n">${roman(i+1)}</span><span class="t">${esc(c.title||"Senza titolo")}</span>
+      <button class="mv" title="Sposta su" onclick="event.stopPropagation();moveChap('${esc(c.id)}',-1)" ${i===0?"disabled":""}>▲</button>
+      <button class="mv" title="Sposta giù" onclick="event.stopPropagation();moveChap('${esc(c.id)}',1)" ${i===ch.length-1?"disabled":""}>▼</button>
+    </div>`).join("") || `<div class="ch-none">Nessun capitolo</div>`;
+  const list=`<aside class="ch-list"><div class="h">Capitoli</div>${items}<button class="ch-add" onclick="addChapter()">＋ Nuovo capitolo</button></aside>`;
+  const c=ch.find(x=>x.id===storyChapId);
+  const ed = c ? `<section class="editor">
+      <div class="ed-k">Capitolo ${roman(ch.indexOf(c)+1)}</div>
+      <input class="ed-title" id="edTitle" type="text" placeholder="Titolo del capitolo" autocomplete="off" value="${esc(c.title||"")}">
+      <textarea class="ed-text" id="edText" placeholder="C'era una volta…">${esc(c.text||"")}</textarea>
+      <div class="ed-foot"><span id="edCount"></span><span id="edSaved"></span><span class="spacer"></span>
+        <button class="btn-del" onclick="deleteChap('${esc(c.id)}')">🗑 Elimina capitolo</button></div>
+      <p class="ed-tip">Ogni a capo diventa un nuovo paragrafo. Puoi usare <code>**grassetto**</code>, <code>*corsivo*</code> e una riga con <code>***</code> per un cambio di scena.</p>
+    </section>`
+    : `<section class="editor ed-empty">Crea il primo capitolo per iniziare a scrivere la storia di questo mondo.<br>
+       <button class="btn-primary" style="margin-top:20px" onclick="addChapter()">＋ Nuovo capitolo</button></section>`;
+  return `<div class="st-write">${list}${ed}</div>`;
+}
+
+function bindEditor(){
+  const ti=document.getElementById("edTitle"), tx=document.getElementById("edText");
+  if(!ti || !tx) return;
+  const body=document.getElementById("stBody");
+  const grow=()=>{ const st=body.scrollTop; tx.style.height="auto"; tx.style.height=tx.scrollHeight+"px"; body.scrollTop=st; };
+  const count=()=>{ const n=(tx.value.trim().match(/\S+/g)||[]).length; document.getElementById("edCount").textContent=n+(n===1?" parola":" parole"); };
+  ti.addEventListener("input",()=>{
+    const c=curChap(); if(!c) return; c.title=ti.value;
+    const el=document.querySelector(".ch-item.on .t"); if(el) el.textContent=ti.value||"Senza titolo";
+    storyDirty();
+  });
+  tx.addEventListener("input",()=>{ const c=curChap(); if(!c) return; c.text=tx.value; grow(); count(); storyDirty(); });
+  grow(); count();
+}
+function storyDirty(){
+  const s=document.getElementById("edSaved"); if(s) s.textContent="Modifiche in corso…";
+  clearTimeout(storySaveTimer); storySaveTimer=setTimeout(save, 800);
+}
+function flushStorySave(){ if(storySaveTimer){ clearTimeout(storySaveTimer); storySaveTimer=null; save(); } }
+
+function addChapter(){
+  flushStorySave();
+  const c={id:uid(), title:"", text:""};
+  chapters().push(c); storyChapId=c.id; storyMode="write";
+  save(); renderStory();
+  const ti=document.getElementById("edTitle");
+  if(ti){ ti.scrollIntoView({block:"center"}); if(!isMobile()) ti.focus(); }
+}
+function selectChap(id){
+  flushStorySave(); storyChapId=id; renderStory();
+  if(isMobile()){ const ed=document.querySelector(".editor"); if(ed) ed.scrollIntoView({block:"start"}); }
+}
+function moveChap(id,dir){
+  const ch=chapters(), i=ch.findIndex(c=>c.id===id), j=i+dir;
+  if(i<0 || j<0 || j>=ch.length) return;
+  [ch[i],ch[j]]=[ch[j],ch[i]];
+  save(); renderStory();
+}
+function deleteChap(id){
+  const ch=chapters(), i=ch.findIndex(c=>c.id===id); if(i<0) return;
+  if(!confirm(`Eliminare il capitolo "${ch[i].title||"Senza titolo"}"? Il testo andrà perso.`)) return;
+  clearTimeout(storySaveTimer); storySaveTimer=null;
+  ch.splice(i,1);
+  storyChapId = ch[i] ? ch[i].id : (ch[i-1] ? ch[i-1].id : null);
+  save(); renderStory();
+}
+
+let libResizeTimer=null;
+window.addEventListener("resize", ()=>{ clearTimeout(libResizeTimer); libResizeTimer=setTimeout(()=>{ if(uiView==="library") renderLibrary(); }, 150); });
 
 /* ============================================================
    DEVICE MODE (Computer / Telefono) + MOBILE DRAWER
@@ -1452,6 +2077,7 @@ const DEVICE_KEY="alberi_device_mode_v1";
 function applyDeviceMode(mode){
   document.body.classList.toggle("mode-mobile", mode==="mobile");
   if(mode!=="mobile") closeDrawer();
+  if(uiView==="library") renderLibrary();
 }
 function chooseDevice(mode){
   localStorage.setItem(DEVICE_KEY, mode);
@@ -1506,7 +2132,9 @@ function ghUrl(c){
 function b64enc(str){ const b=new TextEncoder().encode(str); let s=""; b.forEach(x=>s+=String.fromCharCode(x)); return btoa(s); }
 function b64dec(b64){ const bin=atob((b64||"").replace(/\s/g,"")); const arr=Uint8Array.from(bin,c=>c.charCodeAt(0)); return new TextDecoder().decode(arr); }
 
-function setSyncStatus(msg){ const el=document.getElementById("syncStatus"); if(el) el.textContent=msg; }
+function setSyncStatus(msg){
+  ["syncStatus","libSyncStatus"].forEach(id=>{ const el=document.getElementById(id); if(el) el.textContent=msg; });
+}
 function refreshSyncUI(){
   const c=syncCfg();
   setSyncStatus(c.owner&&c.repo&&c.token ? `☁ ${c.owner}/${c.repo}${c.auto?" · auto":""}` : "Sincronizzazione non configurata");
@@ -1586,12 +2214,13 @@ function scheduleGhPush(){ clearTimeout(ghPushTimer); ghPushTimer=setTimeout(()=
    INIT
 ============================================================ */
 window.addEventListener("beforeunload", save);
+const savedDevice = localStorage.getItem(DEVICE_KEY);
+if(savedDevice) applyDeviceMode(savedDevice);
 renderAll();
+showView("library");          // all'apertura si parte sempre dalla biblioteca
 refreshSyncUI();
 if(autoSyncOn()) ghPull(true);
-
-const savedDevice = localStorage.getItem(DEVICE_KEY);
-if(savedDevice){ applyDeviceMode(savedDevice); } else { openDeviceModal(); }
+if(!savedDevice) openDeviceModal();   // prima volta: chiede Computer o Telefono
 </script>
 </body>
 </html>
