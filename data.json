@@ -449,6 +449,21 @@
       "story": {
         "chapters": []
       }
+    },
+    {
+      "id": "a88e858e-0b41-4e18-98f4-21267b7cdc6b",
+      "name": "BEATRICE",
+      "nodes": [],
+      "edges": [],
+      "view": {
+        "panX": 0,
+        "panY": 0,
+        "zoom": 1
+      },
+      "cover": "#d8c8a0",
+      "story": {
+        "chapters": []
+      }
     }
   ],
   "currentId": "22cec225-80c1-47af-bb3c-1e17d9f749cf"
