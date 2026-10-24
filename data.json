@@ -9,6 +9,10 @@
         "panX": 0,
         "panY": 0,
         "zoom": 1
+      },
+      "cover": "#6b1f1f",
+      "story": {
+        "chapters": []
       }
     },
     {
@@ -20,6 +24,10 @@
         "panX": 0,
         "panY": 0,
         "zoom": 1
+      },
+      "cover": "#1f3b2c",
+      "story": {
+        "chapters": []
       }
     },
     {
@@ -31,6 +39,10 @@
         "panX": 0,
         "panY": 0,
         "zoom": 1
+      },
+      "cover": "#1d2c4a",
+      "story": {
+        "chapters": []
       }
     },
     {
@@ -42,8 +54,12 @@
         "panX": 42,
         "panY": 17,
         "zoom": 1
+      },
+      "cover": "#4a2a52",
+      "story": {
+        "chapters": []
       }
     }
   ],
-  "currentId": "050ce71b-d79c-42dc-a82e-332a30526afb"
+  "currentId": "19997cfa-b34f-4f62-a067-204c6bac7635"
 }
