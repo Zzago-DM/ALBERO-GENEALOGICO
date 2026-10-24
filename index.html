@@ -504,7 +504,78 @@
   body.mode-mobile .ed-title{font-size:22px}
   body.mode-mobile .ed-text{font-size:17px;min-height:45vh}
 
-  @media (prefers-reduced-motion: reduce){ .book,.ba-book,.ba-cover,#bookAnim{transition:none!important} }
+  /* ---------- Biblioteca incantata (bosco, rovi, edera, fiori) ---------- */
+  #library{
+    background:
+      radial-gradient(ellipse 55% 45% at 50% -5%, rgba(190,225,160,.16), transparent 70%),
+      radial-gradient(ellipse 45% 40% at 8% 95%, rgba(70,130,80,.22), transparent 70%),
+      radial-gradient(ellipse 45% 40% at 92% 90%, rgba(80,100,140,.18), transparent 70%),
+      linear-gradient(180deg,#0f1c13 0%,#0b150e 55%,#070c08 100%)}
+  #library>*{position:relative;z-index:1}
+  #library>.lib-rays,#library>.ff-layer{position:fixed;inset:0;pointer-events:none;z-index:0}
+  #library>.ff-layer.front{z-index:6}
+  .lib-rays{background:repeating-linear-gradient(104deg,transparent 0 70px,rgba(225,245,195,.035) 70px 130px,transparent 130px 230px);
+    -webkit-mask-image:linear-gradient(180deg,#000,transparent 75%);mask-image:linear-gradient(180deg,#000,transparent 75%)}
+  .ff{position:absolute;width:5px;height:5px;border-radius:50%;background:#f8f2b0;
+    box-shadow:0 0 8px 3px rgba(240,232,130,.6),0 0 22px 8px rgba(180,230,120,.22);
+    animation:ffMove var(--d) ease-in-out infinite alternate, ffBlink var(--b) ease-in-out infinite;animation-delay:var(--dl),var(--dl)}
+  @keyframes ffMove{to{transform:translate(var(--dx),var(--dy))}}
+  @keyframes ffBlink{0%,100%{opacity:.12}50%{opacity:1}}
+
+  .lib-head h1{text-shadow:0 0 22px rgba(214,173,82,.35),0 2px 3px rgba(0,0,0,.6)}
+  .lib-head p{color:#a9b896}
+  .lib-flourish{height:34px;margin:6px auto 0;width:280px;max-width:80vw}
+  .lib-flourish svg{width:100%;height:100%;overflow:visible}
+
+  .bookcase{border-radius:50% 50% 10px 10px / 70px 70px 10px 10px;
+    background:
+      repeating-linear-gradient(90deg,rgba(255,255,255,.025) 0 1px,transparent 1px 7px),
+      radial-gradient(ellipse 120% 40% at 50% 100%, rgba(60,90,40,.35), transparent 70%),
+      linear-gradient(180deg,#6a4628,#4e321a 35%,#33200f);
+    box-shadow:0 34px 70px rgba(0,0,0,.7), 0 0 90px rgba(120,180,110,.08), inset 0 0 0 1px rgba(0,0,0,.5), inset 0 2px 0 rgba(255,255,255,.07)}
+  .bc-crown{padding:30px 0 16px}
+  .bc-inner{border-radius:50% 50% 3px 3px / 30px 30px 3px 3px;
+    background:radial-gradient(ellipse 80% 50% at 50% 0%, rgba(150,200,130,.07), transparent 70%),linear-gradient(180deg,#140f08,#1d140b 30%,#170f08);
+    box-shadow:inset 0 10px 26px rgba(0,0,0,.8), inset 0 0 0 1px rgba(0,0,0,.6), inset 0 0 0 4px rgba(214,173,82,.07)}
+  .plaque{position:relative;background:linear-gradient(180deg,#efe2bd,#d9c48f 60%,#c2a86b);color:#4a3215;
+    font-variant:small-caps;text-transform:none;letter-spacing:3px;font-size:17px;padding:5px 30px 7px;border-radius:2px;
+    box-shadow:0 3px 6px rgba(0,0,0,.5), inset 0 0 0 1px rgba(120,90,40,.35)}
+  .plaque::before,.plaque::after{content:"";position:absolute;top:8px;width:30px;height:100%;z-index:-1;
+    background:linear-gradient(180deg,#cdb67c,#a88d52);box-shadow:0 3px 5px rgba(0,0,0,.45)}
+  .plaque::before{left:-22px;clip-path:polygon(0 0,100% 0,100% 100%,0 100%,32% 50%)}
+  .plaque::after{right:-22px;clip-path:polygon(0 0,100% 0,68% 50%,100% 100%,0 100%)}
+
+  .plank::before{content:"";position:absolute;left:0;right:0;top:-5px;height:10px;opacity:.95;
+    background:
+      radial-gradient(circle at 6px 10px,#3d6a2c 5px,transparent 5.6px) 0 0/12px 10px repeat-x,
+      radial-gradient(circle at 4px 10px,#58893a 3.6px,transparent 4.2px) 5px 2px/17px 10px repeat-x;
+    -webkit-mask-image:linear-gradient(90deg,#000 0 16%,transparent 24% 38%,#000 46% 58%,transparent 68% 80%,#000 88%);
+            mask-image:linear-gradient(90deg,#000 0 16%,transparent 24% 38%,#000 46% 58%,transparent 68% 80%,#000 88%)}
+  .shelf:nth-child(even) .plank::before{-webkit-mask-image:linear-gradient(90deg,transparent 0 10%,#000 18% 34%,transparent 44% 62%,#000 72% 100%);
+            mask-image:linear-gradient(90deg,transparent 0 10%,#000 18% 34%,transparent 44% 62%,#000 72% 100%)}
+  .shelf-row:hover{z-index:8}
+  .bookend{width:34px;height:30px;border-radius:55% 65% 18% 22% / 70% 75% 25% 25%;margin-left:4px;position:relative;
+    background:radial-gradient(ellipse at 35% 30%,#8b9086,#5e645b 55%,#383c36);box-shadow:inset -3px -3px 6px rgba(0,0,0,.35),0 2px 3px rgba(0,0,0,.5)}
+  .bookend::before{content:"";position:absolute;left:3px;right:6px;top:-2px;height:11px;border-radius:60% 70% 40% 50%;
+    background:radial-gradient(circle at 30% 60%,#5f9140,#3a6428 75%)}
+  .book-add{border-color:rgba(160,200,120,.45);background:rgba(120,170,90,.06);color:#c9d99a}
+  .book-add:hover{background:rgba(120,170,90,.15);border-color:#b6cf84}
+  .shelf-shrooms{flex:none;align-self:flex-end;margin-left:auto;margin-right:6px;pointer-events:none}
+  .decor-stack{margin-left:0}
+
+  .overgrowth{position:absolute;pointer-events:none;z-index:4;overflow:visible;filter:drop-shadow(0 3px 3px rgba(0,0,0,.55))}
+
+  .lib-hint{color:#a9b896}
+  .lib-bar .btn-ghost{background:rgba(18,30,18,.75);border:1px solid rgba(160,200,120,.28);color:#e3dcc2}
+  .lib-bar .btn-ghost:hover{background:rgba(40,64,36,.85);border-color:rgba(190,220,140,.5)}
+  .lib-status{color:#93a383}
+
+  body.mode-mobile .bookcase{border-radius:50% 50% 8px 8px / 44px 44px 8px 8px}
+  body.mode-mobile .bc-crown{padding:22px 0 12px}
+  body.mode-mobile .plaque{font-size:14.5px;padding:4px 22px 6px}
+  body.mode-mobile .bc-inner{border-radius:50% 50% 3px 3px / 20px 20px 3px 3px}
+
+  @media (prefers-reduced-motion: reduce){ .book,.ba-book,.ba-cover,#bookAnim{transition:none!important} .ff{animation:none!important;opacity:.6} }
 </style>
 </head>
 <body class="view-library">
@@ -584,9 +655,12 @@
 
   <!-- BIBLIOTECA -->
   <section id="library">
+    <div class="lib-rays"></div>
+    <div class="ff-layer" id="ffBack"></div>
     <header class="lib-head">
       <h1><span class="crest">❦</span> Alberi Genealogici</h1>
-      <p>La biblioteca dei tuoi lignaggi</p>
+      <div class="lib-flourish" id="libFlourish"></div>
+      <p>La biblioteca incantata dei tuoi lignaggi</p>
     </header>
     <div class="bookcase">
       <div class="bc-crown"><span class="plaque">Biblioteca</span></div>
@@ -601,6 +675,7 @@
       <button class="btn btn-ghost" onclick="openDeviceModal()">📱 Dispositivo</button>
     </div>
     <div class="lib-status" id="libSyncStatus"></div>
+    <div class="ff-layer front" id="ffFront"></div>
   </section>
 
   <!-- ANIMAZIONE APERTURA LIBRO -->
@@ -833,7 +908,7 @@
         <button class="close" id="deviceCloseBtn" onclick="closeDeviceModal()">×</button>
       </div>
       <div class="m-bd">
-        <p class="lk-help">Scegli come vuoi visualizzare l'app. Puoi cambiare idea in qualsiasi momento dal tasto «Dispositivo» della biblioteca o da «Cambia modalità dispositivo» nella barra laterale.</p>
+        <p class="lk-help">Scegli come vuoi visualizzare l'app. Puoi cambiare idea in qualsiasi momento dal tasto «Dispositivo» della biblioteca.</p>
         <div class="device-choice">
           <button type="button" class="device-opt" onclick="chooseDevice('desktop')">
             <span class="dev-ic">🖥️</span>
@@ -1807,7 +1882,7 @@ function renderLibrary(){
   const pad=parseFloat(getComputedStyle(inner).paddingLeft)||0;
   const avail=Math.max(120, inner.clientWidth - pad*2 - (mob?8:12));
   const addW=Math.round(52*k), addH=Math.round(200*k);
-  const endW=16, decoW=Math.round(140*k);
+  const endW=40, decoW=Math.round(200*k);
 
   const rows=[]; let row=[], used=0;
   const push=(item,w)=>{
@@ -1823,7 +1898,7 @@ function renderLibrary(){
   inner.innerHTML=rows.map(r=>`<div class="shelf"><div class="shelf-row" style="min-height:${rowH}px">${
     r.map(it=>{
       if(it.add) return `<button type="button" class="book-add" style="width:${addW}px;height:${addH}px" onclick="openBookModal(null)" title="Nuovo libro"><span class="pl">＋</span><span class="lbl">Nuovo libro</span></button><span class="bookend"></span>`;
-      if(it.deco) return `<span class="decor-stack" aria-hidden="true">
+      if(it.deco) return shroomsSVG(k) + `<span class="decor-stack" aria-hidden="true">
           <i style="--c:#3a2a1a;width:${Math.round(118*k)}px"></i><i style="--c:#25382a;width:${Math.round(134*k)}px"></i><i style="--c:#4a2222;width:${Math.round(110*k)}px"></i></span>`;
       return bookHTML(it.t,it.d);
     }).join("")
@@ -1836,8 +1911,259 @@ function renderLibrary(){
   const mb=document.getElementById("manageBtn");
   mb.textContent = managing ? "✓ Fatto" : "✎ Modifica libri";
   mb.classList.toggle("on", managing);
+  decorateLibrary();
 }
 function toggleManage(){ managing=!managing; renderLibrary(); }
+
+/* ============================================================
+   BIBLIOTECA INCANTATA — rovi, edera, fiori, funghi, lucciole
+   (disegnati con SVG generato, così si adattano a ogni schermo)
+============================================================ */
+function rng(seed){ let s=(seed>>>0)||1; return ()=>{ s^=s<<13; s>>>=0; s^=s>>>17; s^=s<<5; s>>>=0; return s/4294967296; }; }
+function pick(r,arr){ return arr[Math.floor(r()*arr.length)]; }
+const IVY_GREENS=["#2f5a2a","#3c6b30","#4b7a35","#2a4a26","#5a8a3c","#356b45","#46703a"];
+const FAIRY_PETALS=["#f6e7f0","#e8c9f2","#cfe3ff","#fff6d8","#f7c6d4","#d9f0ff"];
+
+function resample(pts, step){
+  const out=[]; let carry=0;
+  for(let i=0;i<pts.length-1;i++){
+    const [x1,y1]=pts[i], [x2,y2]=pts[i+1]; const L=Math.hypot(x2-x1,y2-y1); if(L<1e-6) continue;
+    const tx=(x2-x1)/L, ty=(y2-y1)/L; let d=carry;
+    while(d<=L){ out.push({x:x1+tx*d, y:y1+ty*d, tx, ty}); d+=step; }
+    carry=d-L;
+  }
+  return out;
+}
+function f1(n){ return Math.round(n*10)/10; }
+
+function blossom(x,y,r,col,glow,rot){
+  let s=`<g transform="translate(${f1(x)},${f1(y)}) rotate(${Math.round(rot)})"${glow?' filter="url(#fglow)"':""}>`;
+  for(let i=0;i<5;i++) s+=`<ellipse cy="${f1(-r*0.85)}" rx="${f1(r*0.52)}" ry="${f1(r*0.88)}" fill="${col}" transform="rotate(${i*72})"/>`;
+  return s+`<circle r="${f1(r*0.36)}" fill="#e8b93a"/></g>`;
+}
+function berries(x,y,k,r){
+  let s="";
+  for(let i=0;i<6;i++){ const a=r()*6.28, d=r()*3*k; s+=`<circle cx="${f1(x+Math.cos(a)*d)}" cy="${f1(y+Math.sin(a)*d)}" r="${f1(2.3*k)}" fill="${i%3?"#2a1230":"#3d1a44"}"/>`; }
+  return s+`<circle cx="${f1(x-1*k)}" cy="${f1(y-1.2*k)}" r="${f1(0.8*k)}" fill="#ffffff55"/>`;
+}
+
+/* un rampicante lungo una linea: type "ivy" (edera) o "bramble" (rovo) */
+function vineSVG(pts, o){
+  const r=rng(o.seed), k=o.k||1, step=3;
+  const S=resample(pts, step); if(S.length<3) return "";
+  const ph=r()*6.28, amp=(o.amp||6)*k, wl=(o.wl||90)*k;
+  const P=S.map((p,i)=>{
+    const s=i*step, nx=-p.ty, ny=p.tx;
+    const fade = o.tendril ? Math.min(1, i/12) : 1;
+    const w=fade*(amp*Math.sin(s/wl*6.283+ph) + amp*0.35*Math.sin(s/(wl*0.37)*6.283+ph*1.7));
+    return {x:p.x+nx*w, y:p.y+ny*w, nx, ny, tx:p.tx, ty:p.ty};
+  });
+  const bram=o.type==="bramble";
+  const stem=bram?"#4a2b1f":"#3b4a25", sw=(bram?3:2.8)*k*(o.thin||1);
+  const d="M"+P.map(p=>f1(p.x)+" "+f1(p.y)).join(" L");
+  let out=`<path d="${d}" fill="none" stroke="${stem}" stroke-width="${f1(sw)}" stroke-linecap="round" stroke-linejoin="round"/>`;
+  if(o.tendril){ // punta più sottile
+    const tail=P.slice(Math.floor(P.length*0.6));
+    out+=`<path d="M${tail.map(p=>f1(p.x)+" "+f1(p.y)).join(" L")}" fill="none" stroke="${bram?"#6a3b2a":"#4d6030"}" stroke-width="${f1(sw*0.6)}" stroke-linecap="round"/>`;
+  }
+  let leaves="", extras="", side=1;
+  if(bram){
+    for(let i=2;i<P.length-1;i+=3){ // spine
+      const p=P[i], sd=(i/3)%2?1:-1, b=1.8*k;
+      const tip=[p.x+p.nx*sd*5.5*k+p.tx*2.2*k, p.y+p.ny*sd*5.5*k+p.ty*2.2*k];
+      extras+=`<path d="M${f1(p.x-p.tx*b)} ${f1(p.y-p.ty*b)} L${f1(tip[0])} ${f1(tip[1])} L${f1(p.x+p.tx*b)} ${f1(p.y+p.ty*b)}Z" fill="#3a1f15"/>`;
+    }
+  }
+  const every=Math.max(3, Math.round((o.leafEvery||(bram?30:12))*k/step));
+  for(let i=Math.floor(every*r()); i<P.length; i+=every+Math.floor(r()*every*0.6)){
+    const p=P[i]; side=-side;
+    if(o.tendril && i<4) continue;
+    const ang=Math.atan2(p.ny*side+p.ty*0.35, p.nx*side+p.tx*0.35)*180/Math.PI + 90 + (r()-0.5)*30;
+    const sz=(bram?13:(o.small?12:17))*k*(0.75+r()*0.6);
+    const bx=p.x+p.nx*side*3*k, by=p.y+p.ny*side*3*k;
+    leaves+=`<line x1="${f1(p.x)}" y1="${f1(p.y)}" x2="${f1(bx)}" y2="${f1(by)}" stroke="${stem}" stroke-width="${f1(1.1*k)}"/>`;
+    const col=bram?pick(r,["#3e5a2c","#4a6a32","#36502a"]):pick(r,IVY_GREENS);
+    leaves+=`<use href="#${bram?"brLeaf":"ivyLeaf"}" fill="${col}" transform="translate(${f1(bx)},${f1(by)}) rotate(${Math.round(ang)}) scale(${f1(sz)})"/>`;
+    if(!bram && r()<0.5) leaves+=`<use href="#ivyVein" transform="translate(${f1(bx)},${f1(by)}) rotate(${Math.round(ang)}) scale(${f1(sz)})"/>`;
+    const fp=o.flowers==null ? (bram?0.22:0.13) : o.flowers;
+    if(r()<fp){
+      const fx=p.x-p.nx*side*4*k, fy=p.y-p.ny*side*4*k;
+      if(bram && r()<0.45) extras+=berries(fx,fy,k,r);
+      else extras+=blossom(fx,fy,(bram?6.2:4.4)*k*(0.8+r()*0.5), bram?pick(r,["#f6dde2","#f3e9ef","#efc8d2"]):pick(r,FAIRY_PETALS), !bram && r()<0.55, r()*72);
+    }
+  }
+  return out+leaves+extras;
+}
+
+function grassTuft(x,y,h,k,r){
+  let s="";
+  const n=3+Math.floor(r()*4);
+  for(let i=0;i<n;i++){
+    const lean=(r()-0.5)*h*0.9, hh=h*(0.6+r()*0.5), xx=x+(r()-0.5)*8*k;
+    s+=`<path d="M${f1(xx)} ${f1(y)} Q${f1(xx+lean*0.2)} ${f1(y-hh*0.6)} ${f1(xx+lean)} ${f1(y-hh)}" fill="none" stroke="${pick(r,["#3f6a2e","#4f7d36","#335a28","#5d8c3e"])}" stroke-width="${f1(1.7*k)}" stroke-linecap="round"/>`;
+  }
+  return s;
+}
+function mushroom(x,y,sz,kind){
+  const w=sz, h=sz*0.9;
+  if(kind==="fairy"){
+    return `<g filter="url(#fglow)"><rect x="${f1(x-w*0.12)}" y="${f1(y-h)}" width="${f1(w*0.24)}" height="${f1(h)}" rx="${f1(w*0.1)}" fill="#cfeee4"/>
+      <path d="M${f1(x-w*0.5)} ${f1(y-h*0.9)} Q${f1(x)} ${f1(y-h*1.75)} ${f1(x+w*0.5)} ${f1(y-h*0.9)} Z" fill="#7fe0cf"/></g>`;
+  }
+  let s=`<rect x="${f1(x-w*0.13)}" y="${f1(y-h)}" width="${f1(w*0.26)}" height="${f1(h)}" rx="${f1(w*0.1)}" fill="#efe6d2"/>
+    <path d="M${f1(x-w*0.55)} ${f1(y-h*0.85)} Q${f1(x)} ${f1(y-h*1.85)} ${f1(x+w*0.55)} ${f1(y-h*0.85)} Z" fill="#b8322a"/>`;
+  [[-0.25,-1.15],[0.12,-1.32],[0.3,-1.02],[-0.05,-1.0]].forEach(([dx,dy])=>{ s+=`<circle cx="${f1(x+dx*w)}" cy="${f1(y+dy*h)}" r="${f1(w*0.06)}" fill="#fff4e4"/>`; });
+  return s;
+}
+function flowerStem(x,y,h,k,r){
+  const lean=(r()-0.5)*10*k, tx=x+lean, ty=y-h;
+  return `<path d="M${f1(x)} ${f1(y)} Q${f1(x+lean*0.3)} ${f1(y-h*0.5)} ${f1(tx)} ${f1(ty)}" fill="none" stroke="#3f6a2e" stroke-width="${f1(1.4*k)}"/>`
+    + blossom(tx,ty,3.8*k*(0.8+r()*0.4), pick(r,FAIRY_PETALS), r()<0.6, r()*72);
+}
+function groundCluster(x,y,k,r,dir,big){
+  let s="";
+  const n=big?12:4;
+  if(big){
+    s+=fern(x-dir*10*k, y, 78*k, -dir, k, r)+fern(x+dir*14*k, y, 64*k, dir, k, r)+fern(x+dir*2*k, y, 92*k, -dir*0.4, k, r);
+  }
+  for(let i=0;i<n;i++){ s+=grassTuft(x+dir*i*7*k+(r()-0.5)*6*k, y, (big?34:16)*k*(0.6+r()*0.6), k, r); }
+  if(big){
+    for(let i=0;i<5;i++) s+=flowerStem(x+dir*(i*13-6)*k, y, (22+r()*30)*k, k, r);
+    s+=mushroom(x+dir*10*k, y, 26*k, "amanita");
+    s+=mushroom(x+dir*34*k, y, 15*k, "amanita");
+    s+=mushroom(x+dir*54*k, y, 12*k, "fairy");
+    s+=mushroom(x+dir*64*k, y, 8*k, "fairy");
+    s+=mushroom(x-dir*14*k, y, 10*k, "fairy");
+  } else if(r()<0.6){
+    s+=flowerStem(x, y, (10+r()*10)*k, k, r);
+  }
+  return s;
+}
+
+function fern(x,y,L,dir,k,r){
+  const tx=x+dir*L*0.6, ty=y-L, cx=x+dir*L*0.02, cy=y-L*0.8, n=26;
+  const Q=t=>[(1-t)*(1-t)*x+2*(1-t)*t*cx+t*t*tx, (1-t)*(1-t)*y+2*(1-t)*t*cy+t*t*ty];
+  let pts=[]; for(let i=0;i<=n;i++) pts.push(Q(i/n));
+  let s=`<path d="M${pts.map(p=>f1(p[0])+" "+f1(p[1])).join(" L")}" fill="none" stroke="#3d6a2c" stroke-width="${f1(1.6*k)}" stroke-linecap="round"/>`;
+  for(let i=3;i<n;i++){
+    const t=i/n, [px,py]=pts[i], [qx,qy]=pts[i+1]||pts[i];
+    const a=Math.atan2(qy-py,qx-px)*180/Math.PI, sz=10*k*(1-t*0.75)*(L/60);
+    const col=i%2?"#4f8a3a":"#3f7330";
+    s+=`<use href="#brLeaf" fill="${col}" transform="translate(${f1(px)},${f1(py)}) rotate(${Math.round(a+90-55)}) scale(${f1(sz)})"/>`;
+    s+=`<use href="#brLeaf" fill="${col}" transform="translate(${f1(px)},${f1(py)}) rotate(${Math.round(a+90+55)}) scale(${f1(sz)})"/>`;
+  }
+  return s;
+}
+function clump(x,y,R,n,k,r,flowers){
+  let s="";
+  for(let i=0;i<n;i++){
+    const a=r()*6.283, d=Math.sqrt(r())*R*k;
+    s+=`<use href="#ivyLeaf" fill="${pick(r,IVY_GREENS)}" transform="translate(${f1(x+Math.cos(a)*d)},${f1(y+Math.sin(a)*d)}) rotate(${Math.round(r()*360)}) scale(${f1((13+r()*9)*k)})"/>`;
+  }
+  for(let i=0;i<(flowers||0);i++){
+    const a=r()*6.283, d=r()*R*0.8*k;
+    s+=blossom(x+Math.cos(a)*d, y+Math.sin(a)*d, (4.5+r()*3)*k, pick(r,FAIRY_PETALS), r()<0.7, r()*72);
+  }
+  return s;
+}
+
+const SVG_DEFS=`<defs>
+  <filter id="fglow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="2.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <path id="ivyLeaf" d="M0,0 C-.15,-.1 -.5,-.15 -.55,-.4 C-.45,-.45 -.3,-.42 -.25,-.5 C-.3,-.75 -.1,-.95 0,-1 C.1,-.95 .3,-.75 .25,-.5 C.3,-.42 .45,-.45 .55,-.4 C.5,-.15 .15,-.1 0,0Z"/>
+  <path id="ivyVein" d="M0,-.05 L0,-.8 M0,-.35 L-.3,-.42 M0,-.35 L.3,-.42" fill="none" stroke="#9fc07a" stroke-opacity=".45" stroke-width=".05"/>
+  <path id="brLeaf" d="M0,0 C-.38,-.22 -.4,-.72 0,-1.05 C.4,-.72 .38,-.22 0,0Z"/>
+</defs>`;
+
+function shroomsSVG(k){
+  ensureSvgDefs();
+  const r=rng(77), w=Math.round(58*k), h=Math.round(40*k), y=h;
+  return `<svg class="shelf-shrooms" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" aria-hidden="true">
+    ${grassTuft(8*k,y,14*k,k,r)}${grassTuft(46*k,y,12*k,k,r)}
+    ${mushroom(16*k,y,20*k,"amanita")}${mushroom(34*k,y,12*k,"amanita")}${mushroom(47*k,y,9*k,"fairy")}</svg>`;
+}
+
+function ensureSvgDefs(){
+  if(document.getElementById("libSvgDefs")) return;
+  document.body.insertAdjacentHTML("beforeend", `<svg id="libSvgDefs" width="0" height="0" style="position:absolute" aria-hidden="true">${SVG_DEFS}</svg>`);
+}
+function decorateLibrary(){
+  ensureSvgDefs();
+  const bc=document.querySelector("#library .bookcase"); if(!bc) return;
+  const old=bc.querySelector(".overgrowth"); if(old) old.remove();
+  const W=bc.offsetWidth, H=bc.offsetHeight; if(!W||!H) return;
+  const mob=isMobile(), k=mob?0.72:1, M=70;
+  const ry=mob?44:70, cx=W/2;
+  const archY=x=>{ const u=(x-cx)/cx; return ry - ry*Math.sqrt(Math.max(0,1-u*u)); };
+  const arch=(x0,x1,inset)=>{ const pts=[], n=40; for(let i=0;i<=n;i++){ const x=x0+(x1-x0)*i/n; pts.push([x, archY(x)+inset]); } return pts; };
+  const side=mob?7:11;
+  const topL=archY(side)+8, topR=archY(W-side)+8;
+  let g="";
+  // edera: sale dai lati e corre lungo l'arco
+  g+=vineSVG([[side,H-4],[side,topL],...arch(side,W*0.62,8)], {type:"ivy",amp:7,wl:110,seed:11,k});
+  g+=vineSVG([[W-side,H-4],[W-side,topR],...arch(W-side,W*0.4,9)], {type:"ivy",amp:7,wl:96,seed:23,k});
+  // rovi intrecciati
+  g+=vineSVG(arch(W*0.12,W*0.88,6), {type:"bramble",amp:10,wl:140,seed:5,k});
+  g+=vineSVG([[side-4,H*0.75],[side-4,topL+4],...arch(side,W*0.38,2)], {type:"ivy",amp:9,wl:70,seed:17,k});
+  g+=vineSVG([[W-side+4,H*0.8],[W-side+4,topR+4],...arch(W-side,W*0.62,3)], {type:"ivy",amp:9,wl:74,seed:29,k});
+  g+=vineSVG(arch(W*0.3,W*0.97,12), {type:"bramble",amp:8,wl:100,seed:71,k});
+  g+=vineSVG([[side+3,H-6],[side+3,H*0.42]], {type:"bramble",amp:9,wl:120,seed:41,k});
+  g+=vineSVG([[W-side-3,H-6],[W-side-3,H*0.5]], {type:"bramble",amp:9,wl:120,seed:53,k});
+  // tralci che pendono dall'arco
+  [[0.012,170],[0.03,120],[0.06,80],[0.11,48],[0.24,36],[0.33,26],[0.68,28],[0.77,34],[0.9,56],[0.955,110],[0.985,160]].forEach(([fx,len],i)=>{
+    const x=W*fx, y0=archY(x)+10;
+    g+=vineSVG([[x,y0],[x+(i%2?3:-3)*k,y0+len*k]], {type:"ivy",amp:2.4,wl:40,seed:100+i,k,tendril:true,small:true,leafEvery:11,flowers:0.18,thin:0.8});
+  });
+  // cespugli di foglie e fiori sugli angoli e lungo l'arco
+  [[side,topL+6,34,26,4],[W-side,topR+6,34,26,4],[W*0.2,archY(W*0.2)+6,22,12,2],[W*0.8,archY(W*0.8)+6,22,12,2],
+   [W*0.31,archY(W*0.31)+4,16,8,1],[W*0.69,archY(W*0.69)+4,16,8,1],[side,H*0.55,18,10,2],[W-side,H*0.48,18,10,2],[side,H-10,26,16,2],[W-side,H-10,26,16,2]]
+    .forEach(([x,y,R,n,fl],i)=>{ g+=clump(x,y,R,n,k,rng(500+i),fl); });
+  // edera sui ripiani
+  const bcR=bc.getBoundingClientRect();
+  bc.querySelectorAll(".plank").forEach((pl,i)=>{
+    const pr=pl.getBoundingClientRect(), y=pr.top-bcR.top+pr.height*0.45;
+    const fromLeft=i%2===0, len=W*(0.14+((i*37)%10)/80);
+    const x0=fromLeft?side:W-side, x1=fromLeft?x0+len:x0-len;
+    g+=vineSVG([[x0,y],[x1,y]], {type:"ivy",amp:3.5,wl:70,seed:300+i*7,k,small:true,leafEvery:14});
+    const tx=fromLeft?x0+len*0.55:x0-len*0.55;
+    g+=vineSVG([[tx,y+2],[tx+2,y+26*k]], {type:"ivy",amp:2,wl:30,seed:400+i,k,tendril:true,small:true,leafEvery:10,flowers:0.25,thin:0.75});
+  });
+  // erba, fiori e funghi alla base
+  const r=rng(9), gy=H+4;
+  let ground=groundCluster(-6*k,gy,k,r,1,true)+groundCluster(W+6*k,gy,k,r,-1,true);
+  for(let x=W*0.16;x<W*0.84;x+=(mob?34:46)*(0.7+r()*0.6)) ground+=groundCluster(x,gy,k*0.8,r,1,false);
+  const svg=`<svg class="overgrowth" style="left:${-M}px;top:${-M}px" width="${W+M*2}" height="${H+M*2}" viewBox="${-M} ${-M} ${W+M*2} ${H+M*2}" aria-hidden="true"><g>${g}</g><g>${ground}</g></svg>`;
+  bc.insertAdjacentHTML("beforeend", svg);
+
+  const fl=document.getElementById("libFlourish");
+  if(fl && !fl.dataset.done){
+    fl.dataset.done="1";
+    fl.innerHTML=`<svg viewBox="0 0 280 34" aria-hidden="true">
+      ${vineSVG([[140,18],[14,18]],{type:"ivy",amp:5,wl:70,seed:61,k:0.85,small:true,leafEvery:16,flowers:0.2})}
+      ${vineSVG([[140,18],[266,18]],{type:"ivy",amp:5,wl:70,seed:62,k:0.85,small:true,leafEvery:16,flowers:0.2})}
+      ${blossom(140,18,6.5,"#f6e7f0",true,0)}</svg>`;
+  }
+  spawnFireflies();
+}
+
+function spawnFireflies(){
+  const back=document.getElementById("ffBack"), front=document.getElementById("ffFront");
+  if(!back || back.dataset.done) return;
+  back.dataset.done="1";
+  const r=rng(Date.now()%100000+3), n=isMobile()?12:22;
+  const make=()=>{
+    const el=document.createElement("span"); el.className="ff";
+    el.style.left=(r()*100).toFixed(1)+"%"; el.style.top=(10+r()*85).toFixed(1)+"%";
+    el.style.setProperty("--dx", Math.round((r()-0.5)*160)+"px");
+    el.style.setProperty("--dy", Math.round((r()-0.5)*120)+"px");
+    el.style.setProperty("--d", (7+r()*9).toFixed(1)+"s");
+    el.style.setProperty("--b", (2.5+r()*3.5).toFixed(1)+"s");
+    el.style.setProperty("--dl", (-r()*10).toFixed(1)+"s");
+    const s=(3+r()*3).toFixed(1); el.style.width=s+"px"; el.style.height=s+"px";
+    return el;
+  };
+  for(let i=0;i<n;i++) back.appendChild(make());
+  for(let i=0;i<Math.round(n/4);i++) front.appendChild(make());
+}
 
 function openBook(id){
   if(animating) return;
