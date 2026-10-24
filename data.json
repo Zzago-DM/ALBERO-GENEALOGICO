@@ -404,6 +404,21 @@
       "story": {
         "chapters": []
       }
+    },
+    {
+      "id": "c75a8a81-b250-4289-8f35-02493b808174",
+      "name": "MIONA",
+      "nodes": [],
+      "edges": [],
+      "view": {
+        "panX": 0,
+        "panY": 0,
+        "zoom": 1
+      },
+      "cover": "#5a1e3a",
+      "story": {
+        "chapters": []
+      }
     }
   ],
   "currentId": "ce880fc1-fb1b-4407-b369-4a24799b5474"
