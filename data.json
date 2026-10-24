@@ -33,7 +33,37 @@
     {
       "id": "f19ec9de-106c-436e-a987-0c1a50b22067",
       "name": "SARIY ANCUNIN DEKARIOS",
-      "nodes": [],
+      "nodes": [
+        {
+          "id": "4d3dda6b-2712-44e4-8c51-c4de5d8b2c2a",
+          "x": 665.374769590721,
+          "y": 582.6769287737307,
+          "name": "SARIY",
+          "classes": [
+            "Stregone di magia selvaggia"
+          ],
+          "role": "avventuriero del tempo",
+          "race": "Mezzelfo",
+          "pronouns": [
+            "they/them"
+          ],
+          "birth": "",
+          "death": "",
+          "notes": "",
+          "color": "#79466e",
+          "photo": null,
+          "scale": 1,
+          "show": {
+            "name": true,
+            "classes": true,
+            "role": true,
+            "race": true,
+            "years": false,
+            "pronouns": false,
+            "notes": false
+          }
+        }
+      ],
       "edges": [],
       "view": {
         "panX": 1,
