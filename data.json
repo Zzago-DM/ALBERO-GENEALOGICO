@@ -205,6 +205,33 @@
             "pronouns": false,
             "notes": false
           }
+        },
+        {
+          "id": "73a262ea-3120-4e61-8d80-69c1e45f0296",
+          "x": 1179.7643556422058,
+          "y": 368.9848323241295,
+          "name": "ALYSSA",
+          "classes": [
+            "Necromante"
+          ],
+          "role": "Necromante di Cazador",
+          "race": "Drow (Elfo Oscuro)",
+          "pronouns": [],
+          "birth": "",
+          "death": "",
+          "notes": "",
+          "color": "#a9603e",
+          "photo": null,
+          "scale": 1,
+          "show": {
+            "name": true,
+            "classes": true,
+            "role": true,
+            "race": true,
+            "years": false,
+            "pronouns": false,
+            "notes": false
+          }
         }
       ],
       "edges": [
