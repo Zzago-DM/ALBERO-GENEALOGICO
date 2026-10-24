@@ -236,7 +236,7 @@
         {
           "id": "6ab0cbb0-8117-4688-b833-bf5655f334eb",
           "x": 855.5050066985973,
-          "y": 87.45313387807963,
+          "y": 112.89032343248445,
           "name": "Cazador",
           "classes": [],
           "role": "",
@@ -309,6 +309,13 @@
           "type": "partner",
           "from": "73a262ea-3120-4e61-8d80-69c1e45f0296",
           "to": "131b6a66-fba1-4f0d-82b1-a3f4b95cbb11"
+        },
+        {
+          "id": "49059731-96be-40f6-80c0-e85dfef50c42",
+          "type": "other",
+          "from": "6ab0cbb0-8117-4688-b833-bf5655f334eb",
+          "to": "1f4d21e0-a4e0-4c14-b89f-93d8544119e2",
+          "label": "creatore/ ex padrone"
         }
       ],
       "view": {
