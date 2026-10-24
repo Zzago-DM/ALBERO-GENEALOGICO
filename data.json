@@ -419,6 +419,21 @@
       "story": {
         "chapters": []
       }
+    },
+    {
+      "id": "691863c7-1e2b-4817-a9a0-c6ad5cc2ad76",
+      "name": "SIENA, LE CENERI DEL SOLE",
+      "nodes": [],
+      "edges": [],
+      "view": {
+        "panX": 0,
+        "panY": 0,
+        "zoom": 1
+      },
+      "cover": "#8a6a2a",
+      "story": {
+        "chapters": []
+      }
     }
   ],
   "currentId": "ce880fc1-fb1b-4407-b369-4a24799b5474"
