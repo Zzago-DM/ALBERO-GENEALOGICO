@@ -260,7 +260,7 @@
         },
         {
           "id": "22c61c7c-a99f-4b3a-8dac-9bb50cea5877",
-          "x": 470.52437832127606,
+          "x": 463.2566098771604,
           "y": 121.07100008668544,
           "name": "MYSTRA",
           "classes": [
@@ -343,6 +343,13 @@
           "from": "6ab0cbb0-8117-4688-b833-bf5655f334eb",
           "to": "1f4d21e0-a4e0-4c14-b89f-93d8544119e2",
           "label": "creatore/ ex padrone"
+        },
+        {
+          "id": "564b2829-ed38-48a1-af27-a3154e10e232",
+          "type": "other",
+          "from": "de63ca54-993e-4a7b-abab-7a15345ec82a",
+          "to": "22c61c7c-a99f-4b3a-8dac-9bb50cea5877",
+          "label": "dea/seguace"
         }
       ],
       "view": {
