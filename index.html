@@ -507,6 +507,30 @@
   body.mode-mobile .ed-title{font-size:22px}
   body.mode-mobile .ed-text{font-size:17px;min-height:45vh}
 
+
+  /* ---------- Ingresso nel bosco ---------- */
+  #intro{position:fixed;inset:0;z-index:47;display:none;overflow:hidden;cursor:pointer;transition:opacity .35s}
+  #intro::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 50% 45% at 50% 50%, #0d170f, #050906 75%);
+    transition:opacity 1.4s ease .3s}
+  #intro.show{display:block}
+  #intro.opening::before{opacity:0}
+  #intro.skip{opacity:0}
+  #intro svg{display:block;overflow:visible}
+  .in-side{position:absolute;top:-6vh;will-change:transform;transition:transform 2.3s cubic-bezier(.55,.02,.22,1)}
+  .in-l{left:-4vw;transform-origin:0% 50%}
+  .in-r{right:-4vw;transform-origin:100% 50%}
+  .in-side.back{filter:brightness(.62) saturate(.85)}
+  .in-side.front{filter:brightness(.36) saturate(.7)}
+  .in-top{position:absolute;left:0;top:0;will-change:transform;filter:brightness(.5);transition:transform 2.1s cubic-bezier(.55,.02,.22,1) .1s}
+  #intro.opening .in-l.back{transform:translateX(-78%) rotate(-7deg);transition-delay:.18s}
+  #intro.opening .in-r.back{transform:translateX(78%) rotate(7deg);transition-delay:.18s}
+  #intro.opening .in-l.front{transform:translateX(-102%) rotate(-11deg) scale(1.18)}
+  #intro.opening .in-r.front{transform:translateX(102%) rotate(11deg) scale(1.18)}
+  #intro.opening .in-top{transform:translateY(-105%)}
+  .lib-stage{display:flex;flex-direction:column;align-items:center;width:100%;flex:none;transform-origin:50% 40vh;
+    transition:transform 2.6s cubic-bezier(.3,.55,.2,1)}
+  #library.approach .lib-stage{transform:scale(.84) translateY(3vh);transition:none}
+
   /* ---------- Biblioteca incantata (bosco, rovi, edera, fiori) ---------- */
   #library{
     background:
@@ -586,7 +610,7 @@
   body.mode-mobile .plaque{font-size:14.5px;padding:4px 22px 6px}
   body.mode-mobile .bc-inner{border-radius:50% 50% 3px 3px / 20px 20px 3px 3px}
 
-  @media (prefers-reduced-motion: reduce){ .book,.ba-book,.ba-cover,#bookAnim{transition:none!important} .ff{animation:none!important;opacity:.6} }
+  @media (prefers-reduced-motion: reduce){ #intro{display:none!important} .book,.ba-book,.ba-cover,#bookAnim{transition:none!important} .ff{animation:none!important;opacity:.6} }
 </style>
 </head>
 <body class="view-library">
@@ -668,6 +692,7 @@
   <section id="library">
     <div class="lib-rays"></div>
     <div class="ff-layer" id="ffBack"></div>
+    <div class="lib-stage" id="libStage">
     <header class="lib-head">
       <h1><span class="crest">❦</span> Alberi Genealogici</h1>
       <div class="lib-flourish" id="libFlourish"></div>
@@ -686,8 +711,12 @@
       <button class="btn btn-ghost" onclick="openDeviceModal()">📱 Dispositivo</button>
     </div>
     <div class="lib-status" id="libSyncStatus"></div>
+    </div>
     <div class="ff-layer front" id="ffFront"></div>
   </section>
+
+  <!-- INGRESSO NEL BOSCO -->
+  <div id="intro" aria-hidden="true"></div>
 
   <!-- ANIMAZIONE APERTURA LIBRO -->
   <div id="bookAnim" aria-hidden="true">
@@ -2027,7 +2056,7 @@ function vineSVG(pts, o){
     } else {
       const sz=(o.small?11:16)*k*(0.75+r()*0.6), sx=sz*(0.82+r()*0.18), shp=ivyShape(r,o.small);
       const tr=`translate(${f1(bx)},${f1(by)}) rotate(${Math.round(ang)}) scale(${f1(sx)},${f1(sz)})`;
-      leaf+=`<use href="#${shp}" fill="${ivyFill(r)}" transform="${tr}"/><use href="#ivyVein" transform="${tr}"/>`;
+      leaf+=`<use href="#${shp}" fill="${ivyFill(r)}" transform="${tr}"/>`+(o.noVein?"":`<use href="#ivyVein" transform="${tr}"/>`);
     }
     if(r()<0.38) back+=leaf; else front+=leaf;
     if(r()<fp){
@@ -2088,12 +2117,12 @@ function groundCorner(x,y,k,r){
   s+=moss(x+100*k,y,70*k,7*k,r);
   return s;
 }
-function clump(x,y,R,n,k,r){
+function clump(x,y,R,n,k,r,noVein){
   let s="";
   for(let i=0;i<n;i++){
     const a=r()*6.283, d=Math.sqrt(r())*R*k, sz=(12+r()*8)*k;
     const tr=`translate(${f1(x+Math.cos(a)*d)},${f1(y+Math.sin(a)*d)}) rotate(${Math.round(r()*360)}) scale(${f1(sz*(0.82+r()*0.18))},${f1(sz)})`;
-    s+=`<use href="#${ivyShape(r,false)}" fill="${ivyFill(r)}" transform="${tr}"/><use href="#ivyVein" transform="${tr}"/>`;
+    s+=`<use href="#${ivyShape(r,false)}" fill="${ivyFill(r)}" transform="${tr}"/>`+(noVein?"":`<use href="#ivyVein" transform="${tr}"/>`);
   }
   return s;
 }
@@ -2184,7 +2213,7 @@ function decorateLibrary(){
   g+=vineSVG([[L,H-10],[W*0.3,H-10]], {type:"ivy",amp:4,wl:80,seed:19,k,small:true,leafEvery:12});
   const planks=bc.querySelectorAll(".plank");
   if(planks.length){
-    const pr=planks[planks.length-1].getBoundingClientRect(), y=pr.top-bcR.top+pr.height*0.45;
+    const sc=(bcR.width/W)||1, pr=planks[planks.length-1].getBoundingClientRect(), y=(pr.top-bcR.top+pr.height*0.45)/sc;
     g+=vineSVG([[L,y],[L+W*0.2,y]], {type:"ivy",amp:3.5,wl:70,seed:307,k,small:true,leafEvery:13,thin:0.8});
   }
   [[L,H-12,36,26],[L,H*0.6,20,10]].forEach(([x,y,Rr,n],i)=>{ g+=clump(x,y,Rr,n,k,rng(600+i)); });
@@ -2450,6 +2479,7 @@ function chooseDevice(mode){
   localStorage.setItem(DEVICE_KEY, mode);
   applyDeviceMode(mode);
   closeDeviceModal(true);
+  if(introPending) playIntro();
 }
 function openDeviceModal(){
   const forced = !localStorage.getItem(DEVICE_KEY);
@@ -2577,6 +2607,86 @@ async function ghPull(silent){
 }
 function scheduleGhPush(){ clearTimeout(ghPushTimer); ghPushTimer=setTimeout(()=>{ if(autoSyncOn()) ghPush(); }, 4000); }
 
+
+/* ============================================================
+   INGRESSO NEL BOSCO — i rami si scostano e ci si avvicina alla libreria
+============================================================ */
+let introPending=false, introTimer=null;
+
+function introFoliage(W,H,k,seed,front){
+  // un lato di rami: partono dal bordo esterno (x≈0) e si allungano verso il centro
+  const r=rng(seed); let g="";
+  const nB=Math.round((front?6:9)*Math.max(0.7,H/900));
+  for(let i=0;i<nB;i++){
+    const y0=H*(0.04+0.92*(i+r()*0.6)/nB), reach=W*(0.75+r()*0.3), sag=(r()-0.4)*H*0.18;
+    const pts=[[-20,y0],[reach*0.5,y0+sag*0.6],[reach,y0+sag]];
+    g+=vineSVG(pts,{type:r()<0.25?"bramble":"ivy",amp:(front?16:11),wl:(front?160:120),seed:seed*31+i,k,leafEvery:front?9:8,noVein:true,flowers:0});
+    // rametti secondari
+    const sx=reach*(0.3+r()*0.35), sy=y0+sag*0.4;
+    g+=vineSVG([[sx,sy],[sx+W*0.25*(0.6+r()*0.5),sy+(r()-0.5)*H*0.16]],{type:"ivy",amp:8,wl:70,seed:seed*57+i,k:k*0.85,leafEvery:8,noVein:true,flowers:0,thin:0.7});
+  }
+  // cespugli per riempire i vuoti, più fitti verso il centro dello schermo
+  const nC=Math.round((front?22:42)*(W*H)/(800*900));
+  for(let i=0;i<nC;i++){
+    const x=W*(0.25+0.8*Math.sqrt(r())), y=H*r();
+    g+=clump(x,y,(front?34:26),front?9:11,k,r,true);
+  }
+  return g;
+}
+
+function buildIntro(){
+  const box=document.getElementById("intro");
+  const vw=window.innerWidth, vh=window.innerHeight, mob=isMobile();
+  const W=Math.round(vw*0.64), H=Math.round(vh*1.12), k=mob?0.95:1.3;
+  const side=(cls,seed,front,mirror)=>{
+    const g=introFoliage(W,H,front?k*1.45:k,seed,front);
+    const inner = mirror ? `<g transform="translate(${W},0) scale(-1,1)">${g}</g>` : g;
+    return `<div class="${cls}"><svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">${inner}</svg></div>`;
+  };
+  // tralci che pendono dall'alto
+  const TH=Math.round(vh*0.5), r=rng(808); let top="";
+  for(let x=-10;x<vw+20;x+=(mob?34:48)*(0.7+r()*0.6)){
+    top+=vineSVG([[x,-10],[x+(r()-0.5)*20,TH*(0.35+r()*0.6)]],{type:"ivy",amp:4,wl:60,seed:900+Math.round(x),k:k*0.9,tendril:true,leafEvery:9,noVein:true,flowers:0});
+  }
+  for(let i=0;i<Math.round(vw/60);i++) top+=clump(r()*vw, r()*TH*0.25, 30, 8, k, r, true);
+  box.innerHTML =
+    side("in-side in-l back",11,false,false) + side("in-side in-r back",22,false,true) +
+    `<div class="in-top"><svg width="${vw}" height="${TH}" viewBox="0 0 ${vw} ${TH}">${top}</svg></div>` +
+    side("in-side in-l front",33,true,false) + side("in-side in-r front",44,true,true);
+}
+
+function playIntro(){
+  introPending=false;
+  const reduce=window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if(reduce) return;
+  ensureSvgDefs();
+  const box=document.getElementById("intro"), lib=document.getElementById("library");
+  buildIntro();
+  box.className="show";
+  lib.classList.add("approach");
+  void box.offsetWidth;                       // fa partire le transizioni dallo stato iniziale
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    box.classList.add("opening");
+    lib.classList.remove("approach");
+  }));
+  clearTimeout(introTimer);
+  introTimer=setTimeout(endIntro, 3000);
+}
+function endIntro(){
+  clearTimeout(introTimer);
+  const box=document.getElementById("intro");
+  box.className=""; box.innerHTML="";
+  document.getElementById("library").classList.remove("approach");
+}
+function skipIntro(){
+  const box=document.getElementById("intro");
+  if(!box.classList.contains("show") || box.classList.contains("skip")) return;
+  box.classList.add("skip");
+  clearTimeout(introTimer); introTimer=setTimeout(endIntro, 380);
+}
+document.getElementById("intro").addEventListener("pointerdown", skipIntro);
+window.addEventListener("keydown", e=>{ if(document.getElementById("intro").classList.contains("show")) skipIntro(); }, true);
+
 /* ============================================================
    INIT
 ============================================================ */
@@ -2588,7 +2698,8 @@ renderAll();
 showView("library");          // all'apertura si parte sempre dalla biblioteca
 refreshSyncUI();
 if(autoSyncOn()) ghPull(true);
-if(!savedDevice) openDeviceModal();   // prima volta: chiede Computer o Telefono
+if(savedDevice) playIntro();          // ingresso tra i rami
+else { introPending=true; openDeviceModal(); }   // prima volta: prima chiede Computer o Telefono, poi l'ingresso
 </script>
 </body>
 </html>
