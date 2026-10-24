@@ -545,14 +545,16 @@
   .plaque::before{left:-22px;clip-path:polygon(0 0,100% 0,100% 100%,0 100%,32% 50%)}
   .plaque::after{right:-22px;clip-path:polygon(0 0,100% 0,68% 50%,100% 100%,0 100%)}
 
-  .plank::before{content:"";position:absolute;left:0;right:0;top:-5px;height:10px;opacity:.95;
+  .plank::before{content:"";position:absolute;left:0;right:0;top:-5px;height:10px;opacity:.95;display:none;
     background:
       radial-gradient(circle at 6px 10px,#3d6a2c 5px,transparent 5.6px) 0 0/12px 10px repeat-x,
-      radial-gradient(circle at 4px 10px,#58893a 3.6px,transparent 4.2px) 5px 2px/17px 10px repeat-x;
-    -webkit-mask-image:linear-gradient(90deg,#000 0 16%,transparent 24% 38%,#000 46% 58%,transparent 68% 80%,#000 88%);
-            mask-image:linear-gradient(90deg,#000 0 16%,transparent 24% 38%,#000 46% 58%,transparent 68% 80%,#000 88%)}
-  .shelf:nth-child(even) .plank::before{-webkit-mask-image:linear-gradient(90deg,transparent 0 10%,#000 18% 34%,transparent 44% 62%,#000 72% 100%);
-            mask-image:linear-gradient(90deg,transparent 0 10%,#000 18% 34%,transparent 44% 62%,#000 72% 100%)}
+      radial-gradient(circle at 4px 10px,#58893a 3.6px,transparent 4.2px) 5px 2px/17px 10px repeat-x}
+  .shelf:first-child .plank::before{display:block;
+    -webkit-mask-image:linear-gradient(90deg,transparent 0 72%,#000 86%);mask-image:linear-gradient(90deg,transparent 0 72%,#000 86%)}
+  .shelf:last-child .plank::before{display:block;
+    -webkit-mask-image:linear-gradient(90deg,#000 0 14%,transparent 30%);mask-image:linear-gradient(90deg,#000 0 14%,transparent 30%)}
+  .shelf:only-child .plank::before{
+    -webkit-mask-image:linear-gradient(90deg,#000 0 14%,transparent 30% 72%,#000 86%);mask-image:linear-gradient(90deg,#000 0 14%,transparent 30% 72%,#000 86%)}
   .shelf-row:hover{z-index:8}
   .bookend{width:34px;height:30px;border-radius:55% 65% 18% 22% / 70% 75% 25% 25%;margin-left:4px;position:relative;
     background:radial-gradient(ellipse at 35% 30%,#8b9086,#5e645b 55%,#383c36);box-shadow:inset -3px -3px 6px rgba(0,0,0,.35),0 2px 3px rgba(0,0,0,.5)}
@@ -1882,7 +1884,7 @@ function renderLibrary(){
   const pad=parseFloat(getComputedStyle(inner).paddingLeft)||0;
   const avail=Math.max(120, inner.clientWidth - pad*2 - (mob?8:12));
   const addW=Math.round(52*k), addH=Math.round(200*k);
-  const endW=40, decoW=Math.round(200*k);
+  const endW=40, decoW=Math.round(140*k);
 
   const rows=[]; let row=[], used=0;
   const push=(item,w)=>{
@@ -1898,7 +1900,7 @@ function renderLibrary(){
   inner.innerHTML=rows.map(r=>`<div class="shelf"><div class="shelf-row" style="min-height:${rowH}px">${
     r.map(it=>{
       if(it.add) return `<button type="button" class="book-add" style="width:${addW}px;height:${addH}px" onclick="openBookModal(null)" title="Nuovo libro"><span class="pl">＋</span><span class="lbl">Nuovo libro</span></button><span class="bookend"></span>`;
-      if(it.deco) return shroomsSVG(k) + `<span class="decor-stack" aria-hidden="true">
+      if(it.deco) return `<span class="decor-stack" aria-hidden="true">
           <i style="--c:#3a2a1a;width:${Math.round(118*k)}px"></i><i style="--c:#25382a;width:${Math.round(134*k)}px"></i><i style="--c:#4a2222;width:${Math.round(110*k)}px"></i></span>`;
       return bookHTML(it.t,it.d);
     }).join("")
@@ -2098,39 +2100,38 @@ function decorateLibrary(){
   const side=mob?7:11;
   const topL=archY(side)+8, topR=archY(W-side)+8;
   let g="";
-  // edera: sale dai lati e corre lungo l'arco
-  g+=vineSVG([[side,H-4],[side,topL],...arch(side,W*0.62,8)], {type:"ivy",amp:7,wl:110,seed:11,k});
-  g+=vineSVG([[W-side,H-4],[W-side,topR],...arch(W-side,W*0.4,9)], {type:"ivy",amp:7,wl:96,seed:23,k});
-  // rovi intrecciati
-  g+=vineSVG(arch(W*0.12,W*0.88,6), {type:"bramble",amp:10,wl:140,seed:5,k});
-  g+=vineSVG([[side-4,H*0.75],[side-4,topL+4],...arch(side,W*0.38,2)], {type:"ivy",amp:9,wl:70,seed:17,k});
-  g+=vineSVG([[W-side+4,H*0.8],[W-side+4,topR+4],...arch(W-side,W*0.62,3)], {type:"ivy",amp:9,wl:74,seed:29,k});
-  g+=vineSVG(arch(W*0.3,W*0.97,12), {type:"bramble",amp:8,wl:100,seed:71,k});
-  g+=vineSVG([[side+3,H-6],[side+3,H*0.42]], {type:"bramble",amp:9,wl:120,seed:41,k});
-  g+=vineSVG([[W-side-3,H-6],[W-side-3,H*0.5]], {type:"bramble",amp:9,wl:120,seed:53,k});
-  // tralci che pendono dall'arco
-  [[0.012,170],[0.03,120],[0.06,80],[0.11,48],[0.24,36],[0.33,26],[0.68,28],[0.77,34],[0.9,56],[0.955,110],[0.985,160]].forEach(([fx,len],i)=>{
-    const x=W*fx, y0=archY(x)+10;
-    g+=vineSVG([[x,y0],[x+(i%2?3:-3)*k,y0+len*k]], {type:"ivy",amp:2.4,wl:40,seed:100+i,k,tendril:true,small:true,leafEvery:11,flowers:0.18,thin:0.8});
-  });
-  // cespugli di foglie e fiori sugli angoli e lungo l'arco
-  [[side,topL+6,34,26,4],[W-side,topR+6,34,26,4],[W*0.2,archY(W*0.2)+6,22,12,2],[W*0.8,archY(W*0.8)+6,22,12,2],
-   [W*0.31,archY(W*0.31)+4,16,8,1],[W*0.69,archY(W*0.69)+4,16,8,1],[side,H*0.55,18,10,2],[W-side,H*0.48,18,10,2],[side,H-10,26,16,2],[W-side,H-10,26,16,2]]
-    .forEach(([x,y,R,n,fl],i)=>{ g+=clump(x,y,R,n,k,rng(500+i),fl); });
-  // edera sui ripiani
+  const L=side, R=W-side;
   const bcR=bc.getBoundingClientRect();
-  bc.querySelectorAll(".plank").forEach((pl,i)=>{
-    const pr=pl.getBoundingClientRect(), y=pr.top-bcR.top+pr.height*0.45;
-    const fromLeft=i%2===0, len=W*(0.14+((i*37)%10)/80);
-    const x0=fromLeft?side:W-side, x1=fromLeft?x0+len:x0-len;
-    g+=vineSVG([[x0,y],[x1,y]], {type:"ivy",amp:3.5,wl:70,seed:300+i*7,k,small:true,leafEvery:14});
-    const tx=fromLeft?x0+len*0.55:x0-len*0.55;
-    g+=vineSVG([[tx,y+2],[tx+2,y+26*k]], {type:"ivy",amp:2,wl:30,seed:400+i,k,tendril:true,small:true,leafEvery:10,flowers:0.25,thin:0.75});
+
+  /* ---- ANGOLO IN ALTO A DESTRA: edera e rovi che scendono dall'arco ---- */
+  g+=vineSVG([[R,H*0.5],[R,topR],...arch(R,W*0.6,8)], {type:"ivy",amp:7,wl:96,seed:23,k});
+  g+=vineSVG([[R+4,H*0.38],[R+4,topR+4],...arch(R,W*0.7,3)], {type:"ivy",amp:9,wl:74,seed:29,k});
+  g+=vineSVG([[R-3,H*0.32],[R-3,topR],...arch(R,W*0.66,6)], {type:"bramble",amp:9,wl:120,seed:5,k});
+  g+=vineSVG(arch(W*0.97,W*0.76,12), {type:"bramble",amp:7,wl:90,seed:71,k});
+  [[R+2,170],[R-6,125],[R-14,85],[W-62*k,52],[W-98*k,38],[W*0.83,30],[W*0.75,22]].forEach(([x,len],i)=>{
+    const y0=archY(x)+10;
+    g+=vineSVG([[x,y0],[x+(i%2?3:-3)*k,y0+len*k]], {type:"ivy",amp:2.4,wl:40,seed:100+i,k,tendril:true,small:true,leafEvery:11,flowers:0.2,thin:0.8});
   });
-  // erba, fiori e funghi alla base
+  [[R,topR+6,40,34,5],[W*0.87,archY(W*0.87)+6,26,18,3],[W*0.76,archY(W*0.76)+5,16,9,1],[R,H*0.27,22,14,2]]
+    .forEach(([x,y,Rr,n,fl],i)=>{ g+=clump(x,y,Rr,n,k,rng(500+i),fl); });
+
+  /* ---- ANGOLO IN BASSO A SINISTRA: sottobosco che si arrampica ---- */
+  g+=vineSVG([[L,H-4],[L,H*0.4]], {type:"ivy",amp:7,wl:110,seed:11,k});
+  g+=vineSVG([[L-4,H-2],[L-4,H*0.55]], {type:"ivy",amp:9,wl:70,seed:17,k});
+  g+=vineSVG([[L+3,H-6],[L+3,H*0.5]], {type:"bramble",amp:9,wl:120,seed:41,k});
+  g+=vineSVG([[L,H-10],[W*0.3,H-10]], {type:"ivy",amp:4,wl:80,seed:19,k,small:true,leafEvery:13});
+  g+=vineSVG([[L,H-8],[W*0.2,H-8]], {type:"bramble",amp:6,wl:90,seed:43,k});
+  const planks=bc.querySelectorAll(".plank");
+  if(planks.length){
+    const pr=planks[planks.length-1].getBoundingClientRect(), y=pr.top-bcR.top+pr.height*0.45, len=W*0.2;
+    g+=vineSVG([[L,y],[L+len,y]], {type:"ivy",amp:3.5,wl:70,seed:307,k,small:true,leafEvery:14});
+  }
+  [[L,H-12,40,34,5],[L,H*0.6,22,14,2],[W*0.15,H-10,20,12,2]]
+    .forEach(([x,y,Rr,n,fl],i)=>{ g+=clump(x,y,Rr,n,k,rng(600+i),fl); });
+
   const r=rng(9), gy=H+4;
-  let ground=groundCluster(-6*k,gy,k,r,1,true)+groundCluster(W+6*k,gy,k,r,-1,true);
-  for(let x=W*0.16;x<W*0.84;x+=(mob?34:46)*(0.7+r()*0.6)) ground+=groundCluster(x,gy,k*0.8,r,1,false);
+  let ground=groundCluster(-6*k,gy,k,r,1,true)+groundCluster(W*0.1,gy,k*0.8,r,1,true);
+  for(let x=W*0.17, step=(mob?20:26); x<W*0.36; x+=step, step*=1.25) ground+=groundCluster(x,gy,k*0.8,r,1,false);
   const svg=`<svg class="overgrowth" style="left:${-M}px;top:${-M}px" width="${W+M*2}" height="${H+M*2}" viewBox="${-M} ${-M} ${W+M*2} ${H+M*2}" aria-hidden="true"><g>${g}</g><g>${ground}</g></svg>`;
   bc.insertAdjacentHTML("beforeend", svg);
 
