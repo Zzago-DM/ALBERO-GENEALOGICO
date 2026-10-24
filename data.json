@@ -62,6 +62,35 @@
             "pronouns": false,
             "notes": false
           }
+        },
+        {
+          "id": "de63ca54-993e-4a7b-abab-7a15345ec82a",
+          "x": 426.5643203446715,
+          "y": 402.5034484757915,
+          "name": "GALE DEKARIOS",
+          "classes": [
+            "Mago"
+          ],
+          "role": "Arcimago di Waterdeep",
+          "race": "Umano",
+          "pronouns": [
+            "he/him"
+          ],
+          "birth": "",
+          "death": "",
+          "notes": "",
+          "color": "#5a4f8a",
+          "photo": null,
+          "scale": 1,
+          "show": {
+            "name": true,
+            "classes": true,
+            "role": true,
+            "race": true,
+            "years": false,
+            "pronouns": true,
+            "notes": false
+          }
         }
       ],
       "edges": [],
