@@ -22,12 +22,23 @@
       "edges": [],
       "view": {
         "panX": 0,
-        "panY": 0,
+        "panY": 1,
         "zoom": 1
       },
       "cover": "#1f3b2c",
       "story": {
-        "chapters": []
+        "chapters": [
+          {
+            "id": "bcbab925-5fb1-4b00-9253-02d26dfd2096",
+            "title": "",
+            "text": ""
+          },
+          {
+            "id": "ac8775cf-74c2-417f-b177-d52618daa6f9",
+            "title": "",
+            "text": ""
+          }
+        ]
       }
     },
     {
