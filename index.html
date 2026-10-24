@@ -2699,7 +2699,8 @@ function introRestVars(){
   const W=parseFloat(box.dataset.w), off=0.04*vw;
   const free=(vw-bcW)/2;
   // le punte delle fronde sporgono oltre il bordo del livello, quindi lo teniamo un po' più indietro
-  const vis = mob ? -14 : Math.max(20, Math.min(vw*0.22, free-40));
+  // resta vicina al bordo dello schermo, lasciando sempre un bel distacco dalla libreria
+  const vis = mob ? -26 : Math.max(-10, Math.min(vw*0.1, free*0.5-50));
   const visF = mob ? vis-16 : vis*0.55;
   box.style.setProperty("--back",  Math.round(-(W-off-vis))+"px");
   box.style.setProperty("--front", Math.round(-(W-off-visF))+"px");
