@@ -350,11 +350,18 @@
           "from": "22c61c7c-a99f-4b3a-8dac-9bb50cea5877",
           "to": "de63ca54-993e-4a7b-abab-7a15345ec82a",
           "label": "ex amanti"
+        },
+        {
+          "id": "7c6f9101-8ac8-4f25-bcb1-220a0643a26d",
+          "type": "other",
+          "from": "de63ca54-993e-4a7b-abab-7a15345ec82a",
+          "to": "131b6a66-fba1-4f0d-82b1-a3f4b95cbb11",
+          "label": "ex amanti"
         }
       ],
       "view": {
-        "panX": 301.7866125082145,
-        "panY": 203.73891634119872,
+        "panX": 218.7866125082145,
+        "panY": 219.73891634119872,
         "zoom": 0.7766797549568482
       },
       "cover": "#4a2a52",
