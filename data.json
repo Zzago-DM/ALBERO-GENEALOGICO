@@ -131,7 +131,9 @@
           ],
           "role": "lama dei morti",
           "race": "Tiefling",
-          "pronouns": [],
+          "pronouns": [
+            "she/her"
+          ],
           "birth": "",
           "death": "",
           "notes": "",
@@ -150,8 +152,8 @@
         },
         {
           "id": "97548225-9386-4730-a906-4e007b74c320",
-          "x": 389.7830997386707,
-          "y": 372.2023634601862,
+          "x": -138.24555845055278,
+          "y": 365.8405723976654,
           "name": "KRONO",
           "classes": [
             "Artefice"
