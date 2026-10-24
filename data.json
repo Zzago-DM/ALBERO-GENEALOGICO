@@ -59,6 +59,21 @@
       "story": {
         "chapters": []
       }
+    },
+    {
+      "id": "ce880fc1-fb1b-4407-b369-4a24799b5474",
+      "name": "HARPER MAXIMOFF",
+      "nodes": [],
+      "edges": [],
+      "view": {
+        "panX": 0,
+        "panY": 0,
+        "zoom": 1
+      },
+      "cover": "#757575",
+      "story": {
+        "chapters": []
+      }
     }
   ],
   "currentId": "050ce71b-d79c-42dc-a82e-332a30526afb"
