@@ -91,6 +91,35 @@
             "pronouns": true,
             "notes": false
           }
+        },
+        {
+          "id": "1f4d21e0-a4e0-4c14-b89f-93d8544119e2",
+          "x": 889.9152575900627,
+          "y": 405.83049642124973,
+          "name": "ASTARION ANCUNìN",
+          "classes": [
+            "Ladro"
+          ],
+          "role": "Alto magistrato di Waterdeep",
+          "race": "Elfo",
+          "pronouns": [
+            "he/him"
+          ],
+          "birth": "",
+          "death": "",
+          "notes": "",
+          "color": "#7d3a36",
+          "photo": null,
+          "scale": 1,
+          "show": {
+            "name": true,
+            "classes": true,
+            "role": true,
+            "race": true,
+            "years": false,
+            "pronouns": true,
+            "notes": false
+          }
         }
       ],
       "edges": [],
