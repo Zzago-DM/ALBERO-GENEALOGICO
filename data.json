@@ -178,6 +178,33 @@
             "pronouns": true,
             "notes": false
           }
+        },
+        {
+          "id": "dec97f66-71c9-4975-9fad-cda841c8b047",
+          "x": 85.8602295162022,
+          "y": 62.681011551729,
+          "name": "BHAAL",
+          "classes": [
+            "Dio"
+          ],
+          "role": "Dio degli omicidi",
+          "race": "",
+          "pronouns": [],
+          "birth": "",
+          "death": "",
+          "notes": "",
+          "color": "#7d3a36",
+          "photo": null,
+          "scale": 1,
+          "show": {
+            "name": true,
+            "classes": true,
+            "role": true,
+            "race": false,
+            "years": false,
+            "pronouns": false,
+            "notes": false
+          }
         }
       ],
       "edges": [
