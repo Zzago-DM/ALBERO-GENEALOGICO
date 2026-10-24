@@ -47,6 +47,9 @@
   .tree-row .mini:hover{color:#fff;background:#0003}
 
   .side-block{margin-top:16px;padding-top:14px;border-top:1px solid var(--ink-3)}
+  .side-block.first{margin-top:0;padding-top:4px;border-top:none}
+  .brand p.sb-book{text-transform:none;letter-spacing:0;font-family:var(--display);font-size:15px;color:#e6d3a8;margin-top:8px;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .legend{display:flex;flex-direction:column;gap:10px;padding:2px 4px}
   .lg{display:flex;align-items:center;gap:11px;font-size:13.5px;color:#d8cdb2;font-family:var(--display)}
   .lg-line{width:34px;border-top:3px solid var(--gold);flex:none;border-radius:2px}
@@ -261,6 +264,7 @@
   body.mode-mobile #sidebar{position:fixed;top:0;left:0;height:100vh;z-index:30;
     transform:translateX(-100%);transition:transform .22s ease;box-shadow:0 0 40px rgba(0,0,0,.55)}
   body.mode-mobile #sidebar.open{transform:translateX(0)}
+  body.mode-mobile #sidebar{top:52px;height:calc(100vh - 52px)}
   body.mode-mobile #stage{margin-top:52px;height:calc(100vh - 52px)}
   body.mode-mobile .fab-add{top:14px;left:14px;right:14px;flex-direction:column;align-items:flex-start}
   body.mode-mobile .fab-add .btn{width:100%}
@@ -520,16 +524,12 @@
   <aside id="sidebar">
     <div class="brand">
       <h1><span class="crest">❦</span> Alberi Genealogici</h1>
-      <p>Lignaggi dei tuoi personaggi</p>
+      <p class="sb-book">📖 <span id="sbBook"></span></p>
       <button class="btn btn-ghost lib-back" onclick="goLibrary()">📚 Torna alla biblioteca</button>
     </div>
 
     <div class="side-scroll">
-      <div class="side-label">I tuoi alberi</div>
-      <div id="treeList"></div>
-      <button class="btn btn-gold" style="width:100%;margin-top:6px" onclick="newTree()">＋ Nuovo albero</button>
-
-      <div class="side-block">
+      <div class="side-block first">
         <div class="side-label">Legenda dei legami</div>
         <div class="legend">
           <div class="lg"><span class="lg-line"></span> Genitore</div>
@@ -549,7 +549,6 @@
       </div>
       <div class="sync-status" id="syncStatus">Sincronizzazione non configurata</div>
       <button class="sync-cfg" onclick="openSyncModal()">⚙ Configura GitHub</button>
-      <button class="sync-cfg" onclick="openDeviceModal()">📱 Cambia modalità dispositivo</button>
       <div class="saved-pill" id="savedPill"><span class="chk">✓</span> Salvato sul dispositivo</div>
     </div>
   </aside>
@@ -1273,26 +1272,10 @@ function renderAll(){
   if(uiView==="story") renderStory();
 }
 
+// La barra laterale mostra solo il libro aperto: per cambiare albero si torna alla biblioteca.
 function renderSidebar(){
-  const list=document.getElementById("treeList"); list.innerHTML="";
-  state.trees.forEach(t=>{
-    const row=document.createElement("div");
-    row.className="tree-row"+(t.id===currentId?" active":"");
-    row.innerHTML=`<span class="dot"></span>
-      <span class="tname">${esc(t.name)}</span>
-      <span class="count">${t.nodes.length}</span>
-      <button class="mini" title="Rinomina">✎</button>
-      <button class="mini" title="Elimina">🗑</button>`;
-    row.addEventListener("click", ev=>{
-      if(ev.target.closest(".mini")) return;
-      currentId=t.id; clearSelection(); save(); renderAll();
-      if(document.body.classList.contains("mode-mobile")) closeDrawer();
-    });
-    const btns=row.querySelectorAll(".mini");
-    btns[0].addEventListener("click",()=>renameTree(t.id));
-    btns[1].addEventListener("click",()=>deleteTree(t.id));
-    list.appendChild(row);
-  });
+  const t=tree(), el=document.getElementById("sbBook");
+  if(el && t) el.textContent=t.name||"Senza titolo";
 }
 
 function nodeBodyHTML(n){
