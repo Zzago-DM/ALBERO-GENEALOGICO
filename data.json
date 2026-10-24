@@ -232,6 +232,31 @@
             "pronouns": false,
             "notes": false
           }
+        },
+        {
+          "id": "6ab0cbb0-8117-4688-b833-bf5655f334eb",
+          "x": 855.5050066985973,
+          "y": 87.45313387807963,
+          "name": "Cazador",
+          "classes": [],
+          "role": "",
+          "race": "Vampiro",
+          "pronouns": [],
+          "birth": "",
+          "death": "",
+          "notes": "",
+          "color": "#7d3a36",
+          "photo": null,
+          "scale": 1,
+          "show": {
+            "name": true,
+            "classes": true,
+            "role": true,
+            "race": false,
+            "years": false,
+            "pronouns": false,
+            "notes": false
+          }
         }
       ],
       "edges": [
