@@ -688,17 +688,7 @@
             "comments": []
           }
         ],
-        "stories": [
-          {
-            "id": "9994b711-c36c-4778-a50a-dc2b6f031ff8",
-            "author": "a4784486-8866-4daf-837f-74c7ac1a323c",
-            "image": "social/ce880fc1-462f79429a614e.jpg",
-            "text": "",
-            "date": "",
-            "at": 1794087089476,
-            "likes": []
-          }
-        ],
+        "stories": [],
         "acting": "a4784486-8866-4daf-837f-74c7ac1a323c"
       }
     },
@@ -879,7 +869,7 @@
       }
     }
   ],
-  "currentId": "050ce71b-d79c-42dc-a82e-332a30526afb",
+  "currentId": "ce880fc1-fb1b-4407-b369-4a24799b5474",
   "dms": {
     "threads": [
       {
