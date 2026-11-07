@@ -417,7 +417,33 @@
     {
       "id": "ce880fc1-fb1b-4407-b369-4a24799b5474",
       "name": "HARPER MAXIMOFF",
-      "nodes": [],
+      "nodes": [
+        {
+          "id": "d65f8b94-a39a-4dce-a453-3bf5019a49d6",
+          "x": 627.0412870195931,
+          "y": 349.7153789150878,
+          "name": "Harper Maximoff",
+          "classes": [],
+          "role": "",
+          "race": "",
+          "pronouns": [],
+          "birth": "",
+          "death": "",
+          "notes": "",
+          "color": "#3f6b4a",
+          "photo": null,
+          "scale": 1,
+          "show": {
+            "name": true,
+            "classes": true,
+            "role": true,
+            "race": true,
+            "years": true,
+            "pronouns": false,
+            "notes": false
+          }
+        }
+      ],
       "edges": [],
       "view": {
         "panX": -6,
