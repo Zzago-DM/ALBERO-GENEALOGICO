@@ -551,7 +551,24 @@
           }
         },
         "follows": [],
-        "posts": [],
+        "posts": [
+          {
+            "id": "fa9f8062-b6f5-491b-8fb6-1f1d7c68be67",
+            "author": "dcdaa1e3-6c21-4288-b951-7ce9d4543701",
+            "images": [
+              "social/050ce71b-fe22bbc639ea4b.jpg"
+            ],
+            "text": "me, myself and nobody else",
+            "date": "",
+            "place": "Copenaghen",
+            "nLikes": "6537",
+            "nComments": "1654",
+            "at": 1794077006904,
+            "tags": [],
+            "likes": [],
+            "comments": []
+          }
+        ],
         "acting": "dcdaa1e3-6c21-4288-b951-7ce9d4543701"
       }
     },
