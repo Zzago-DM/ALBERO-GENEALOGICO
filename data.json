@@ -460,10 +460,22 @@
         "chapters": []
       },
       "social": {
-        "profiles": {},
+        "profiles": {
+          "a4784486-8866-4daf-837f-74c7ac1a323c": {
+            "username": "harper_maximoff",
+            "name": "",
+            "website": "",
+            "bio": "",
+            "nPosts": "",
+            "nFollowers": "",
+            "nFollowing": "",
+            "verified": false,
+            "avatar": null
+          }
+        },
         "follows": [],
         "posts": [],
-        "acting": null
+        "acting": "a4784486-8866-4daf-837f-74c7ac1a323c"
       }
     },
     {
