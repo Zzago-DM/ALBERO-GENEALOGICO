@@ -3455,7 +3455,7 @@ function scrFeed(){
   const t=tree(), posts=feedPosts();
   const body = storyBarHTML() + (posts.length ? posts.map(postHTML).join("")
     : `<div class="empty-s"><span class="big">❦</span>Ancora nessun post in questo mondo.<br>Tocca <b>＋</b> in basso per pubblicare il primo.</div>`);
-  return hd(treeBackBtn()+`<button class="ib" data-a="dm-inbox" title="Messaggi">${IC.dm}${dmUnreadDot()}</button>`, `<span class="crest">❦</span> ${acting()?esc(prof(acting()).username)+badgeHTML(acting()):esc(t.name||"Social")}`, "") + `<div class="ph-main">${body}</div>`;
+  return hd(treeBackBtn(), `<span class="crest">❦</span> ${acting()?esc(prof(acting()).username)+badgeHTML(acting()):esc(t.name||"Social")}`, `<button class="ib" data-a="dm-inbox" title="Messaggi">${IC.dm}${dmUnreadDot()}</button>`) + `<div class="ph-main">${body}</div>`;
 }
 function scrSearch(){
   return `<div class="ph-hd">${treeBackBtn()}<label class="search">${IC.search}<input id="soQ" type="search" placeholder="Cerca in tutti gli alberi" autocomplete="off" autocapitalize="off" spellcheck="false" value="${esc(soc.q)}"></label></div>
