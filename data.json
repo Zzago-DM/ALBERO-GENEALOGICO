@@ -602,7 +602,17 @@
             "comments": []
           }
         ],
-        "stories": [],
+        "stories": [
+          {
+            "id": "8b9d309f-1747-43c8-b621-f147df607575",
+            "author": "dcdaa1e3-6c21-4288-b951-7ce9d4543701",
+            "image": "social/050ce71b-ca1ffbaf6aaa48.jpg",
+            "text": "",
+            "date": "",
+            "at": 1794094138990,
+            "likes": []
+          }
+        ],
         "acting": "dcdaa1e3-6c21-4288-b951-7ce9d4543701"
       }
     },
