@@ -655,7 +655,7 @@
             "nFollowing": "570",
             "verified": false,
             "avatar": "social/ce880fc1-b4091b3c63e84b.jpg",
-            "created": false
+            "created": true
           }
         },
         "follows": [
@@ -869,7 +869,7 @@
       }
     }
   ],
-  "currentId": "050ce71b-d79c-42dc-a82e-332a30526afb",
+  "currentId": "ce880fc1-fb1b-4407-b369-4a24799b5474",
   "dms": {
     "threads": [
       {
@@ -895,6 +895,6 @@
         ]
       }
     ],
-    "acting": "dcdaa1e3-6c21-4288-b951-7ce9d4543701"
+    "acting": "a4784486-8866-4daf-837f-74c7ac1a323c"
   }
 }
