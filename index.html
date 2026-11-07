@@ -879,6 +879,8 @@
   .cbar .in .ib svg{width:22px;height:22px}
   .cbar .in .ib.txt{padding:6px 4px}
 
+  .acc-sep{margin-top:10px;border-top:1px solid #2c2416;padding-top:16px}
+  .acc-sep small{display:block;font-size:11.5px;font-weight:500;color:var(--on-ink-muted);margin-top:2px}
   /* ---------- Storie ---------- */
   .sbar{display:flex;gap:12px;overflow-x:auto;padding:10px 12px 10px;border-bottom:1px solid #2a2215;scrollbar-width:none}
   .sbar::-webkit-scrollbar{display:none}
@@ -3140,7 +3142,7 @@ function normSocial(s){
     const p=profiles[k]||{};
     profiles[k]={ username:String(p.username||""), name:String(p.name||""), website:String(p.website||""), bio:String(p.bio||""),
       nPosts:String(p.nPosts??""), nFollowers:String(p.nFollowers??""), nFollowing:String(p.nFollowing??""),
-      verified:!!p.verified, avatar:(typeof p.avatar==="string" && p.avatar) ? p.avatar : null };
+      verified:!!p.verified, avatar:(typeof p.avatar==="string" && p.avatar) ? p.avatar : null, created:!!p.created };
   });
   const follows=(Array.isArray(s.follows)?s.follows:[]).filter(f=>f&&f.from&&f.to&&f.from!==f.to)
     .map(f=>({from:f.from, to:f.to, at:+f.at||0}));
@@ -3182,6 +3184,27 @@ function prof(id){
     p.username=u;
   }
   return p;
+}
+// un personaggio "ha un profilo" se l'hai creato/scelto o se l'hai già usato nel social
+function socialUsedSet(){
+  const u=new Set();
+  state.trees.forEach(t=>{
+    const s=socOf(t);
+    Object.entries(s.profiles).forEach(([id,p])=>{ if(p && (p.created||p.avatar||p.bio||p.website||p.name||p.verified||p.nPosts||p.nFollowers||p.nFollowing)) u.add(id); });
+    s.posts.forEach(p=>{ u.add(p.author); p.likes.forEach(l=>u.add(l.by)); p.comments.forEach(c=>{ u.add(c.author); c.likes.forEach(l=>u.add(l.by)); }); });
+    s.stories.forEach(st=>{ u.add(st.author); st.likes.forEach(l=>u.add(l.by)); });
+    s.follows.forEach(f=>{ u.add(f.from); u.add(f.to); });
+  });
+  DM().threads.forEach(t=>{ if(t.msgs.length) t.members.forEach(m=>u.add(m)); });
+  return u;
+}
+function accountsHTML(act, cur, rowFn){
+  const used=socialUsedSet();
+  const top=groupedRows(id=>used.has(id), rowFn);
+  const has=charsGrouped(id=>used.has(id)).length, rest=charsGrouped(id=>!used.has(id)).length;
+  return `<div class="sh-t">Cambia account</div>`+
+    (has?top:`<div class="empty-s" style="padding:18px 20px">Nessun profilo social ancora.<br>Scegline uno qui sotto per crearlo.</div>`)+
+    (rest?`<div class="sec-h acc-sep">Non ancora aggiunti<small>Tocca un personaggio per creargli il profilo social</small></div>`+groupedRows(id=>!used.has(id), rowFn):"");
 }
 function displayName(id){ const p=prof(id), n=nodeOf(id); return p.name || (n&&n.name) || ""; }
 function byUsername(u){ u=String(u||"").toLowerCase(); const n=tree().nodes.find(n=>prof(n.id).username.toLowerCase()===u); return n?n.id:null; }
@@ -3634,7 +3657,7 @@ function sheetHTML(){
   const sh=soc.sheet; if(!sh) return "";
   let inner="";
   if(sh.k==="accounts"){
-    inner=`<div class="sh-t">Cambia account</div>`+groupedRows(null, id=>rowHTML(id,{check:true, act:"set-acting"}));
+    inner=accountsHTML("set-acting", acting(), id=>rowHTML(id,{check:true, act:"set-acting"}));
   } else if(sh.k==="post-menu"){
     const posts=livePosts(), i=posts.findIndex(p=>p.id===sh.id);
     inner=`<div class="sh-t">Post</div>
@@ -3842,9 +3865,10 @@ function socHandleClick(ev){
       break;
     }
     case "follow": ev.stopPropagation(); toggleFollow(id); break;
-    case "act-as": S().acting=id; save(); toast("Ora usi @"+prof(id).username); renderSocial(); break;
+    case "act-as": prof(id).created=true; S().acting=id; save(); toast("Ora usi @"+prof(id).username); renderSocial(); break;
     case "accounts": if(!tree().nodes.length) break; soc.sheet={k:"accounts"}; renderSocial(); break;
     case "set-acting":
+      prof(id).created=true;
       if(!alive(id)){            // personaggio di un altro albero: il social passa a quel libro
         const t2=charTree(id); flushSave(); currentId=t2.id; socOf(t2).acting=id;
         soc.stack=soc.stack.filter(x=>x.k==="compose"); soc.profTab={}; soc.car={}; soc.lastKey="";
@@ -4105,7 +4129,7 @@ const DM_SCREENS={ inbox:scrInbox, newchat:scrNewChat, chat:scrChat, dminfo:scrD
 /* ---------- fogli ---------- */
 const DM_SHEETS={
   dmacc(){ const a=dmActing();
-    return `<div class="sh-t">Cambia account</div>`+groupedRows(null, id=>gRow(id,{act:"dm-setacc", right:id===a?`<span class="chk">✓</span>`:""})); },
+    return accountsHTML("dm-setacc", a, id=>gRow(id,{act:"dm-setacc", right:id===a?`<span class="chk">✓</span>`:""})); },
   speaker(sh){ const t=threadById(sh.id), a=dmActing(); if(!t) return "";
     return `<div class="sh-t">Chi scrive?</div>`+liveMembers(t).map(id=>gRow(id,{act:"dm-setacc", sub:"📖 "+treeNameOf(id), right:id===a?`<span class="chk">✓</span>`:""})).join(""); },
   share(sh){ const a=acting(); if(!a) return "";
@@ -4164,7 +4188,7 @@ function dmAction(A, el, ev){
       soc.dmQ=""; socPush({k:"inbox"}); break;
     }
     case "dm-acc": soc.sheet={k:"dmacc"}; renderSocial(); break;
-    case "dm-setacc": DM().acting=id; save(); soc.sheet=null; renderSocial(); break;
+    case "dm-setacc": prof(id).created=true; DM().acting=id; save(); soc.sheet=null; renderSocial(); break;
     case "dm-speaker": soc.sheet={k:"speaker", id}; renderSocial(); break;
     case "dm-new": soc.dmNew={sel:[], q:"", name:"", share:null}; socPush({k:"newchat"}); break;
     case "dm-sel": { const n=soc.dmNew; if(!n) break; const i=n.sel.indexOf(id); if(i>=0) n.sel.splice(i,1); else n.sel.push(id); n.q="";
