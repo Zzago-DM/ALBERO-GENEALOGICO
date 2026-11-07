@@ -18,6 +18,7 @@
         "profiles": {},
         "follows": [],
         "posts": [],
+        "stories": [],
         "acting": null
       }
     },
@@ -39,6 +40,7 @@
         "profiles": {},
         "follows": [],
         "posts": [],
+        "stories": [],
         "acting": null
       }
     },
@@ -490,6 +492,7 @@
         },
         "follows": [],
         "posts": [],
+        "stories": [],
         "acting": null
       }
     },
@@ -569,6 +572,7 @@
             "comments": []
           }
         ],
+        "stories": [],
         "acting": "dcdaa1e3-6c21-4288-b951-7ce9d4543701"
       }
     },
@@ -650,6 +654,7 @@
             "comments": []
           }
         ],
+        "stories": [],
         "acting": "a4784486-8866-4daf-837f-74c7ac1a323c"
       }
     },
@@ -671,6 +676,7 @@
         "profiles": {},
         "follows": [],
         "posts": [],
+        "stories": [],
         "acting": null
       }
     },
@@ -692,6 +698,7 @@
         "profiles": {},
         "follows": [],
         "posts": [],
+        "stories": [],
         "acting": null
       }
     },
@@ -713,6 +720,7 @@
         "profiles": {},
         "follows": [],
         "posts": [],
+        "stories": [],
         "acting": null
       }
     },
@@ -734,6 +742,7 @@
         "profiles": {},
         "follows": [],
         "posts": [],
+        "stories": [],
         "acting": null
       }
     },
@@ -755,6 +764,7 @@
         "profiles": {},
         "follows": [],
         "posts": [],
+        "stories": [],
         "acting": null
       }
     },
@@ -776,6 +786,7 @@
         "profiles": {},
         "follows": [],
         "posts": [],
+        "stories": [],
         "acting": null
       }
     },
@@ -797,6 +808,7 @@
         "profiles": {},
         "follows": [],
         "posts": [],
+        "stories": [],
         "acting": null
       }
     },
@@ -818,6 +830,7 @@
         "profiles": {},
         "follows": [],
         "posts": [],
+        "stories": [],
         "acting": null
       }
     }
