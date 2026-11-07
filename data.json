@@ -523,7 +523,7 @@
             "pronouns": false,
             "notes": false
           },
-          "main": false
+          "main": true
         }
       ],
       "edges": [],
