@@ -622,6 +622,198 @@
   body.mode-mobile .bc-inner{border-radius:50% 50% 3px 3px / 20px 20px 3px 3px}
 
   @media (prefers-reduced-motion: reduce){ #intro .in-side svg{animation:none!important} .book,.ba-book,.ba-cover,#bookAnim{transition:none!important} .ff{animation:none!important;opacity:.6} }
+
+  /* ---------- Social ---------- */
+  #socialView{position:fixed;inset:0;z-index:45;display:none;flex-direction:column;background:#17120b;color:var(--text)}
+  body.view-social #socialView{display:flex}
+  .tree-fabs{position:absolute;right:20px;top:18px;z-index:20;display:flex;gap:8px}
+  .tree-fabs .btn{box-shadow:var(--shadow)}
+  body.mode-mobile .tree-fabs{display:none}
+  #mobileTopbar .mt-social{font-size:13.5px;font-weight:700;background:var(--surface);color:#2c2417;padding:8px 10px;border-radius:9px}
+
+  .so-body{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:18px;
+    background:radial-gradient(ellipse at 50% 30%, rgba(214,173,82,.10), transparent 60%),#17120b}
+  .phone{position:relative;width:400px;max-width:100%;height:min(860px,100%);border-radius:48px;padding:11px;
+    background:linear-gradient(160deg,#3a2f1c,#1b150c 40%,#2a2113);box-shadow:0 0 0 1.5px var(--gold),0 0 0 6px #120e08,0 0 0 7.5px rgba(184,146,63,.45),0 34px 80px rgba(0,0,0,.7)}
+  .phone::before{content:"❦";position:absolute;top:-1px;left:50%;transform:translateX(-50%);z-index:3;width:120px;height:26px;
+    background:#120e08;border-radius:0 0 16px 16px;color:var(--gold);font-size:13px;text-align:center;line-height:24px}
+  .ph-screen{position:relative;width:100%;height:100%;border-radius:38px;overflow:hidden;display:flex;flex-direction:column;
+    background:#16120b;color:var(--on-ink);font-family:var(--ui)}
+  .ph-status{flex:none;height:34px;display:flex;align-items:center;justify-content:space-between;padding:6px 28px 0;font-size:12.5px;font-weight:700;color:var(--on-ink)}
+  body.mode-mobile .so-body{padding:0}
+  body.mode-mobile .phone{width:100%;height:100%;border-radius:0;padding:0;box-shadow:none;background:none}
+  body.mode-mobile .phone::before{display:none}
+  body.mode-mobile .ph-screen{border-radius:0}
+  body.mode-mobile .ph-status{display:none}
+  body.mode-mobile #socialView .st-bar{display:none}
+  #soScreen .mob-only{display:none}
+  body.mode-mobile #soScreen .mob-only{display:inline-flex}
+
+  .ph-hd{flex:none;display:flex;align-items:center;gap:8px;min-height:48px;padding:6px 12px;border-bottom:1px solid #2c2416;background:#16120b}
+  .ph-hd .ttl{flex:1;min-width:0;font-family:var(--display);font-size:20px;font-weight:600;color:#ecdcb4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:6px}
+  .ph-hd .ttl.c{justify-content:center;font-size:17px}
+  .ph-hd .ttl .crest{color:var(--gold)}
+  .ib{background:none;border:none;color:var(--on-ink);cursor:pointer;padding:6px;border-radius:9px;display:inline-flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;line-height:1;font-family:var(--ui);flex:none}
+  .ib:hover{background:#ffffff0d}
+  .ib svg{width:24px;height:24px}
+  .ib.gold{color:var(--gold-bright)}
+  .ib.txt{padding:7px 9px;font-size:14.5px}
+  .ib:disabled{opacity:.35;cursor:default}
+  .acct{display:inline-flex;align-items:center;gap:6px;background:#241d12;border:1px solid #3a2f1c;border-radius:999px;padding:3px 9px 3px 3px;color:var(--on-ink);cursor:pointer;font-size:12.5px;font-weight:700;max-width:150px;flex:none}
+  .acct span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .ph-main{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+  .ph-nav{flex:none;display:flex;justify-content:space-around;align-items:center;height:56px;border-top:1px solid #2c2416;background:#16120b;padding-bottom:4px}
+  .ph-nav .ib{color:#a89a7c;padding:9px 14px}
+  .ph-nav .ib.on{color:var(--gold-bright)}
+  .ph-nav .av{width:28px;height:28px}
+  .ph-nav .ib.on .av{box-shadow:0 0 0 2px var(--gold-bright)}
+
+  .av{width:34px;height:34px;border-radius:50%;flex:none;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;
+    font-family:var(--display);font-weight:700;font-size:13px;background:#3f6b4a;color:#fbf3e1;box-shadow:0 0 0 1.5px #3a2f1c}
+  .av img{width:100%;height:100%;object-fit:cover;display:block}
+  .av.ring{box-shadow:0 0 0 2px #16120b,0 0 0 3.5px var(--gold)}
+  .badge{display:inline-flex;width:15px;height:15px;flex:none;vertical-align:-2px;margin-left:3px}
+  .badge svg{width:100%;height:100%}
+  .uname{font-weight:700;color:#f0e2c0;cursor:pointer;display:inline-flex;align-items:center;max-width:100%}
+  .mention{color:var(--gold-bright);cursor:pointer;font-weight:600}
+  .htag{color:#d9b866}
+
+  /* post */
+  .po{border-bottom:1px solid #2a2215;padding-bottom:10px}
+  .po-hd{display:flex;align-items:center;gap:10px;padding:10px 12px}
+  .po-hd .who{flex:1;min-width:0;line-height:1.2}
+  .po-hd .who small{display:block;color:var(--on-ink-muted);font-size:11.5px;font-weight:500;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .po-media{position:relative;background:#0d0a06}
+  .po-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .po-track::-webkit-scrollbar{display:none}
+  .po-track img{flex:none;width:100%;aspect-ratio:4/5;object-fit:cover;scroll-snap-align:center;display:block;background:#1d170e;user-select:none;-webkit-user-drag:none}
+  .po-count{position:absolute;top:10px;right:10px;background:rgba(10,8,4,.7);color:#f0e2c0;font-size:11.5px;font-weight:700;padding:3px 8px;border-radius:999px}
+  .po-heart{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(0);color:#f4e7c8;font-size:90px;pointer-events:none;opacity:0;text-shadow:0 4px 20px rgba(0,0,0,.5)}
+  .po-heart.pop{animation:heartpop .8s ease-out}
+  @keyframes heartpop{0%{transform:translate(-50%,-50%) scale(0);opacity:0}25%{transform:translate(-50%,-50%) scale(1.15);opacity:1}55%{transform:translate(-50%,-50%) scale(1);opacity:1}100%{transform:translate(-50%,-50%) scale(1);opacity:0}}
+  .po-text{margin:0 12px;padding:30px 22px;border-radius:6px;font-family:var(--display);font-size:20px;line-height:1.5;color:#2c2417;text-align:center;
+    background:linear-gradient(180deg,#f2e8cf,#e6d8b6);box-shadow:inset 0 0 40px rgba(120,90,40,.22);white-space:pre-wrap;word-break:break-word}
+  .po-dots{display:flex;justify-content:center;gap:4px;padding-top:8px;height:14px}
+  .po-dots i{width:6px;height:6px;border-radius:50%;background:#4a3f2a}
+  .po-dots i.on{background:var(--gold-bright)}
+  .po-act{display:flex;align-items:center;gap:4px;padding:2px 6px 0;margin-top:-14px}
+  .po-act .sp{flex:1}
+  .po-act .ib svg{width:26px;height:26px}
+  .liked{color:#d4574a!important}
+  .po-likes{padding:2px 12px;font-size:13.5px;font-weight:700;cursor:pointer;color:#f0e2c0}
+  .po-cap{padding:4px 12px 0;font-size:13.5px;line-height:1.45;color:#e2d4b4;white-space:pre-wrap;word-break:break-word}
+  .po-tags{padding:4px 12px 0;font-size:12.5px;color:var(--on-ink-muted)}
+  .po-more{display:block;background:none;border:none;padding:5px 12px 0;color:var(--on-ink-muted);font-size:13px;cursor:pointer;font-family:var(--ui)}
+  .po-date{padding:5px 12px 0;font-size:11px;color:#8d8066;letter-spacing:.3px;font-family:var(--display);font-style:italic}
+
+  /* profile */
+  .pr-top{display:flex;align-items:center;gap:16px;padding:14px 16px 8px}
+  .pr-top .av{width:84px;height:84px;font-size:30px}
+  .pr-stats{flex:1;display:flex;justify-content:space-around;text-align:center}
+  .pr-stats button{background:none;border:none;color:var(--on-ink);cursor:pointer;font-family:var(--ui);padding:4px 2px;border-radius:8px}
+  .pr-stats b{display:block;font-size:17px;color:#f4e7c8}
+  .pr-stats span{font-size:12.5px;color:var(--on-ink-muted)}
+  .pr-info{padding:0 16px 10px;font-size:13.5px;line-height:1.45}
+  .pr-info .nm{font-weight:700;color:#f0e2c0;font-family:var(--display);font-size:15.5px}
+  .pr-info .bio{white-space:pre-wrap;word-break:break-word;color:#e2d4b4}
+  .pr-info .web{color:#9fb6d6;word-break:break-all}
+  .pr-info .fy{display:inline-block;margin-top:5px;font-size:11.5px;background:#2a2215;color:var(--on-ink-muted);padding:2px 8px;border-radius:6px}
+  .pr-btns{display:flex;gap:6px;padding:0 16px 12px}
+  .pbtn{flex:1;border:none;border-radius:9px;padding:8px 10px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:var(--ui);background:#2c2416;color:#f0e2c0}
+  .pbtn:hover{filter:brightness(1.12)}
+  .pbtn.gold{background:var(--gold);color:#1e1a10}
+  .pr-tabs{display:flex;border-top:1px solid #2a2215}
+  .pr-tabs button{flex:1;background:none;border:none;border-bottom:1.5px solid transparent;color:#8d8066;padding:10px;cursor:pointer;display:flex;justify-content:center}
+  .pr-tabs button.on{color:#f0e2c0;border-bottom-color:#f0e2c0}
+  .pr-tabs svg{width:22px;height:22px}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+  .grid button{position:relative;aspect-ratio:1;border:none;padding:0;cursor:pointer;background:#221b10;overflow:hidden}
+  .grid img{width:100%;height:100%;object-fit:cover;display:block}
+  .grid .gt{position:absolute;inset:0;padding:8px;font-family:var(--display);font-size:11.5px;line-height:1.35;color:#2c2417;text-align:left;overflow:hidden;
+    background:linear-gradient(180deg,#f2e8cf,#e6d8b6)}
+  .grid .multi{position:absolute;top:6px;right:6px;color:#fff;font-size:12px;text-shadow:0 1px 3px #000}
+  .empty-s{padding:44px 26px;text-align:center;color:var(--on-ink-muted);font-family:var(--display);font-size:16px;line-height:1.55}
+  .empty-s .big{font-size:38px;color:var(--gold);display:block;margin-bottom:8px}
+
+  /* rows / lists */
+  .row{display:flex;align-items:center;gap:11px;padding:8px 14px;cursor:pointer}
+  .row:hover{background:#ffffff08}
+  .row .tx{flex:1;min-width:0;line-height:1.25;font-size:13.5px}
+  .row .tx small{display:block;color:var(--on-ink-muted);font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .row .av{width:44px;height:44px;font-size:16px}
+  .row .sbtn{border:none;border-radius:8px;padding:6px 14px;font-size:12.5px;font-weight:700;cursor:pointer;background:var(--gold);color:#1e1a10;font-family:var(--ui);flex:none}
+  .row .sbtn.on{background:#2c2416;color:#f0e2c0}
+  .row .chk{color:var(--gold-bright);font-size:18px;font-weight:800}
+  .row .thumb{width:44px;height:44px;flex:none;object-fit:cover;border-radius:4px;background:#2a2215}
+  .sec-h{padding:14px 14px 6px;font-size:15px;font-weight:700;color:#f0e2c0}
+  .seg2{display:flex;border-bottom:1px solid #2a2215}
+  .seg2 button{flex:1;background:none;border:none;border-bottom:1.5px solid transparent;color:#8d8066;padding:11px;font-weight:700;font-size:13.5px;cursor:pointer;font-family:var(--ui)}
+  .seg2 button.on{color:#f0e2c0;border-bottom-color:#f0e2c0}
+  .search{flex:1;display:flex;align-items:center;gap:8px;background:#241d12;border-radius:10px;padding:8px 11px;color:#8d8066}
+  .search svg{width:17px;height:17px;flex:none}
+  .search input{flex:1;min-width:0;background:none;border:none;color:#f0e2c0;font-size:15px;font-family:var(--ui);outline:none}
+
+  /* comments */
+  .cm{display:flex;gap:10px;padding:9px 14px;font-size:13.5px;line-height:1.4}
+  .cm.reply{padding-left:56px}
+  .cm .av{width:32px;height:32px;font-size:12px}
+  .cm.reply .av{width:24px;height:24px;font-size:10px}
+  .cm .bd{flex:1;min-width:0;color:#e2d4b4;white-space:pre-wrap;word-break:break-word}
+  .cm .meta{display:flex;gap:14px;margin-top:4px;font-size:12px;color:#8d8066;font-weight:600}
+  .cm .meta button{background:none;border:none;color:inherit;font:inherit;cursor:pointer;padding:0}
+  .cm .lk{background:none;border:none;color:#8d8066;cursor:pointer;padding:2px;align-self:flex-start;display:flex;flex-direction:column;align-items:center;font-size:10.5px}
+  .cm .lk svg{width:15px;height:15px}
+  .cm.cap{border-bottom:1px solid #2a2215;padding-bottom:12px;margin-bottom:4px}
+  .cbar{flex:none;border-top:1px solid #2c2416;background:#16120b;padding:8px 10px}
+  .cbar .rp{font-size:12px;color:var(--on-ink-muted);padding:0 4px 6px;display:flex;justify-content:space-between}
+  .cbar .rp button{background:none;border:none;color:inherit;cursor:pointer;font-size:14px}
+  .cbar .in{display:flex;align-items:center;gap:8px}
+  .cbar input{flex:1;min-width:0;background:#241d12;border:1px solid #3a2f1c;border-radius:999px;padding:9px 14px;color:#f0e2c0;font-size:14.5px;font-family:var(--ui);outline:none}
+  .cbar input:focus{border-color:var(--gold)}
+  .cbar .av{width:32px;height:32px;cursor:pointer}
+
+  /* forms (modifica profilo / nuovo post) */
+  .pf{padding:6px 16px 26px}
+  .pf-av{display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 0 6px}
+  .pf-av .av{width:88px;height:88px;font-size:30px}
+  .pf-av .lnk{display:flex;gap:16px}
+  .pf-av .lnk button{background:none;border:none;color:var(--gold-bright);font-weight:700;font-size:13.5px;cursor:pointer;font-family:var(--ui)}
+  .pf-av .lnk button.dg{color:#d07a68}
+  .uf{padding-top:12px}
+  .uf label{display:block;font-size:12px;color:var(--on-ink-muted);margin-bottom:3px}
+  .uf input,.uf textarea{width:100%;background:none;border:none;border-bottom:1px solid #4a3f2a;color:#f4e7c8;font-size:15.5px;padding:5px 0 7px;font-family:var(--ui);outline:none;border-radius:0}
+  .uf textarea{resize:none;min-height:66px;line-height:1.4}
+  .uf input:focus,.uf textarea:focus{border-bottom-color:var(--gold)}
+  .uf .cnt{text-align:right;font-size:11px;color:#8d8066;margin-top:3px}
+  .uf .hint{font-size:11.5px;color:#8d8066;margin-top:3px;font-style:italic}
+  .uf.err input{border-bottom-color:#d07a68}
+  .uf .er{font-size:12px;color:#e08a76;margin-top:3px}
+  .ck{display:flex;align-items:center;gap:12px;padding:18px 0 4px;font-size:14.5px;color:#f0e2c0;cursor:pointer}
+  .ck input{width:20px;height:20px;accent-color:var(--gold)}
+  .cp-who{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid #2a2215;font-size:13.5px;cursor:pointer}
+  .cp-who .tx{flex:1}
+  .cp-who small{color:var(--on-ink-muted)}
+  .cp-imgs{display:flex;gap:8px;overflow-x:auto;padding:14px 16px 6px}
+  .cp-imgs .it{position:relative;flex:none;width:96px;height:120px;border-radius:8px;overflow:hidden;background:#241d12}
+  .cp-imgs .it img{width:100%;height:100%;object-fit:cover}
+  .cp-imgs .it .x{position:absolute;top:4px;right:4px;width:24px;height:24px;border-radius:50%;border:none;background:rgba(10,8,4,.75);color:#fff;cursor:pointer;font-size:12px}
+  .cp-imgs .it .mv{position:absolute;bottom:4px;left:4px;width:24px;height:24px;border-radius:50%;border:none;background:rgba(10,8,4,.75);color:#fff;cursor:pointer;font-size:11px}
+  .cp-imgs .add{flex:none;width:96px;height:120px;border-radius:8px;border:1.5px dashed #5a4c30;background:none;color:var(--gold-bright);cursor:pointer;font-size:13px;font-weight:700;font-family:var(--ui);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+  .cp-imgs .add b{font-size:28px;font-weight:400}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;padding-top:6px}
+  .chip{display:inline-flex;align-items:center;gap:6px;border:1px solid #4a3f2a;background:#1f190f;color:#e2d4b4;border-radius:999px;padding:3px 10px 3px 3px;font-size:12.5px;cursor:pointer;font-family:var(--ui)}
+  .chip .av{width:22px;height:22px;font-size:9px}
+  .chip.on{border-color:var(--gold);background:#3a2f1a;color:#f4e7c8;font-weight:700}
+
+  /* fogli (account / menu) */
+  .sheet-bg{position:absolute;inset:0;background:rgba(5,4,2,.6);z-index:20;display:flex;align-items:flex-end}
+  .sheet{width:100%;max-height:75%;overflow-y:auto;background:#211a10;border-radius:18px 18px 0 0;padding:8px 0 16px;box-shadow:0 -10px 40px rgba(0,0,0,.5)}
+  .sheet .grab{width:38px;height:4px;border-radius:2px;background:#4a3f2a;margin:2px auto 8px}
+  .sheet .sh-t{text-align:center;font-weight:700;color:#f0e2c0;padding:4px 0 10px;border-bottom:1px solid #2c2416;margin-bottom:4px;font-size:14.5px}
+  .sheet .opt{display:block;width:100%;text-align:left;background:none;border:none;color:#f0e2c0;padding:13px 20px;font-size:15px;cursor:pointer;font-family:var(--ui)}
+  .sheet .opt:hover{background:#ffffff08}
+  .sheet .opt.dg{color:#e08a76}
+  .sheet .opt:disabled{opacity:.35;cursor:default}
 </style>
 </head>
 <body class="view-library">
@@ -632,6 +824,7 @@
     <span class="mt-title"><span class="crest" style="color:var(--gold)">❦</span> <span class="nm" id="mtTitle">Alberi Genealogici</span></span>
     <div class="mt-actions">
       <button title="Torna alla biblioteca" onclick="goLibrary()">📚</button>
+      <button class="mt-social" title="Social" onclick="openSocial()">📱 Social</button>
       <button class="mt-story" title="Storia" onclick="openStory()">📖 Storia</button>
     </div>
   </div>
@@ -676,7 +869,10 @@
       <button class="btn btn-gold" onclick="openForm()">＋ Aggiungi personaggio</button>
       <button class="btn btn-paper" onclick="openLinkModal()">🔗 Crea legame</button>
     </div>
-    <button class="btn btn-gold story-fab" onclick="openStory()">📖 Storia</button>
+    <div class="tree-fabs">
+      <button class="btn btn-paper" onclick="openSocial()">📱 Social</button>
+      <button class="btn btn-gold" onclick="openStory()">📖 Storia</button>
+    </div>
 
     <div id="world">
       <svg id="edges" viewBox="-12000 -12000 24000 24000" preserveAspectRatio="xMinYMin slice"></svg>
@@ -752,6 +948,17 @@
       <button class="st-btn" onclick="goLibrary()" title="Torna alla biblioteca">📚 <span class="lbl">Biblioteca</span></button>
     </header>
     <div class="st-body" id="stBody"></div>
+  </section>
+
+  <!-- SOCIAL -->
+  <section id="socialView">
+    <header class="st-bar">
+      <button class="st-btn" onclick="closeSocial()" title="Torna all'albero">← <span class="lbl">Albero</span></button>
+      <div class="st-title"><small>Social</small><span id="soName"></span></div>
+      <button class="st-btn" onclick="goLibrary()" title="Torna alla biblioteca">📚 <span class="lbl">Biblioteca</span></button>
+    </header>
+    <div class="so-body"><div class="phone"><div class="ph-screen" id="soScreen"></div></div></div>
+    <input type="file" id="soFile" accept="image/*" multiple style="display:none">
   </section>
 
   <!-- BOOK MODAL -->
@@ -1019,7 +1226,8 @@ function normalize(s){
     cover: (typeof t.cover==="string" && /^#[0-9a-fA-F]{6}$/.test(t.cover)) ? t.cover : BOOK_COLORS[i % BOOK_COLORS.length],
     story: { chapters: (t.story && Array.isArray(t.story.chapters) ? t.story.chapters : [])
               .filter(c=>c && typeof c==="object")
-              .map(c=>({ id:c.id||uid(), title:String(c.title||""), text:String(c.text||"") })) }
+              .map(c=>({ id:c.id||uid(), title:String(c.title||""), text:String(c.text||"") })) },
+    social: normSocial(t.social)
   }));
   s.trees.forEach(t=>t.nodes.forEach(n=>{
     n.scale = n.scale||1; n.color = n.color||DEFAULT_COLOR; n.x = n.x||0; n.y = n.y||0;
@@ -1351,6 +1559,7 @@ window.addEventListener("keydown", e=>{
     if(syncOpen){ closeSyncModal(); return; }
     if(bookOpen){ closeBookModal(); return; }
     if(uiView==="story"){ if(typing) e.target.blur(); else closeStory(); return; }
+    if(uiView==="social"){ if(typing) e.target.blur(); else if(soc.sheet||soc.stack.length) socBack(); else closeSocial(); return; }
     if(uiView==="library"){ if(managing) toggleManage(); return; }
     clearSelection(); return;
   }
@@ -1396,6 +1605,7 @@ function renderAll(){
   renderSidebar(); applyTransform(); renderNodes(); renderEdges(); updateTreeChrome();
   if(uiView==="library") renderLibrary();
   if(uiView==="story") renderStory();
+  if(uiView==="social") renderSocial();
 }
 
 // La barra laterale mostra solo il libro aperto: per cambiare albero si torna alla biblioteca.
@@ -1898,7 +2108,7 @@ let uiView="library", managing=false, animating=false;
 
 function showView(v){
   uiView=v;
-  document.body.classList.remove("view-library","view-tree","view-story");
+  document.body.classList.remove("view-library","view-tree","view-story","view-social");
   document.body.classList.add("view-"+v);
   if(v!=="tree") closeDrawer();
   if(v==="library") renderLibrary();
@@ -2610,6 +2820,7 @@ async function ghPush(){
   const c=syncCfg(); if(!c.owner||!c.repo||!c.token){ openSyncModal(); return; }
   setSyncStatus("Invio a GitHub…");
   try{
+    if(pendingList().length){ setSyncStatus("Caricamento foto…"); await socFlushUploads(); setSyncStatus("Invio a GitHub…"); }
     let sha=ghShaCache;
     if(!sha){ const cur=await ghGet(c); sha=cur&&cur.sha; }
     const body={ message:"Aggiorna dati alberi — "+new Date().toLocaleString(),
@@ -2745,6 +2956,755 @@ function skipIntro(){
 }
 document.getElementById("intro").addEventListener("pointerdown", skipIntro);
 window.addEventListener("keydown", e=>{ const b=document.getElementById("intro"); if(b.classList.contains("show") && !b.classList.contains("rest")) skipIntro(); }, true);
+
+
+/* ============================================================
+   SOCIAL — feed in stile PhotoNote per i personaggi di ogni albero
+   Dati: tree.social = { profiles:{[nodeId]:{…}}, follows:[{from,to,at}], posts:[…], acting }
+   Foto: salvate sul dispositivo (IndexedDB) e caricate nel repo GitHub nella cartella social/
+============================================================ */
+const SOC_PENDING_KEY="alberi_social_pending_v1";
+const SOC_DIR="social";
+const SOC_LIM={name:30, username:30, website:100, bio:150, num:9, caption:2200, date:60, comment:500};
+let soc={tab:"feed", stack:[], q:"", draft:null, edit:null, sheet:null, replyTo:null, profTab:{}, lastKey:"", car:{}};
+
+const IC={
+  home:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><path d="M3.5 10.5 12 3.5l8.5 7V20a.5.5 0 0 1-.5.5h-5v-6h-6v6H4a.5.5 0 0 1-.5-.5z"/></svg>',
+  homeOn:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.5 10.5 12 3.5l8.5 7V20a.5.5 0 0 1-.5.5h-5v-6h-6v6H4a.5.5 0 0 1-.5-.5z"/></svg>',
+  search:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m20 20-4.6-4.6"/></svg>',
+  plus:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><path d="M12 8v8M8 12h8"/></svg>',
+  heart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><path d="M12 20.5s-7.5-4.6-9-9.3C1.9 7.6 4.3 4.5 7.6 4.5c2 0 3.4 1.1 4.4 2.6 1-1.5 2.4-2.6 4.4-2.6 3.3 0 5.7 3.1 4.6 6.7-1.5 4.7-9 9.3-9 9.3z"/></svg>',
+  heartOn:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 20.5s-7.5-4.6-9-9.3C1.9 7.6 4.3 4.5 7.6 4.5c2 0 3.4 1.1 4.4 2.6 1-1.5 2.4-2.6 4.4-2.6 3.3 0 5.7 3.1 4.6 6.7-1.5 4.7-9 9.3-9 9.3z"/></svg>',
+  comment:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><path d="M20.5 11.5a8.5 8.5 0 0 1-12.6 7.4L3.5 20.5l1.6-4.3A8.5 8.5 0 1 1 20.5 11.5z"/></svg>',
+  tag:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c.8-3.7 3.8-6 7.5-6s6.7 2.3 7.5 6"/></svg>',
+  grid:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3.5" y="3.5" width="17" height="17" rx="1.5"/><path d="M9.2 3.5v17M14.8 3.5v17M3.5 9.2h17M3.5 14.8h17"/></svg>',
+  back:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>',
+  close:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>',
+  check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12.5l5 5 10-11"/></svg>',
+  more:'<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg>',
+  down:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><path d="M6 9l6 6 6-6"/></svg>',
+  badge:'<svg viewBox="0 0 24 24"><path fill="#d6ad52" d="M12 1.8l2.5 1.9 3.1-.2 1 3 2.6 1.7-.9 3 .9 3-2.6 1.7-1 3-3.1-.2L12 22.2l-2.5-1.9-3.1.2-1-3-2.6-1.7.9-3-.9-3 2.6-1.7 1-3 3.1.2z"/><path d="M7.8 12.2l2.9 2.9 5.5-5.6" fill="none" stroke="#1e1a10" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+};
+
+/* ---------- dati ---------- */
+function normSocial(s){
+  s = (s && typeof s==="object") ? s : {};
+  const profiles = (s.profiles && typeof s.profiles==="object") ? s.profiles : {};
+  Object.keys(profiles).forEach(k=>{
+    const p=profiles[k]||{};
+    profiles[k]={ username:String(p.username||""), name:String(p.name||""), website:String(p.website||""), bio:String(p.bio||""),
+      nPosts:String(p.nPosts??""), nFollowers:String(p.nFollowers??""), nFollowing:String(p.nFollowing??""),
+      verified:!!p.verified, avatar:(typeof p.avatar==="string" && p.avatar) ? p.avatar : null };
+  });
+  const follows=(Array.isArray(s.follows)?s.follows:[]).filter(f=>f&&f.from&&f.to&&f.from!==f.to)
+    .map(f=>({from:f.from, to:f.to, at:+f.at||0}));
+  const likeArr=a=>(Array.isArray(a)?a:[]).map(x=>typeof x==="string"?{by:x,at:0}:x).filter(x=>x&&x.by).map(x=>({by:x.by, at:+x.at||0}));
+  const posts=(Array.isArray(s.posts)?s.posts:[]).filter(p=>p&&p.author).map(p=>({
+    id:p.id||uid(), author:p.author, images:(Array.isArray(p.images)?p.images:[]).filter(x=>typeof x==="string"&&x),
+    text:String(p.text||""), date:String(p.date||""), at:+p.at||Date.now(),
+    tags:(Array.isArray(p.tags)?p.tags:[]).filter(x=>typeof x==="string"),
+    likes:likeArr(p.likes),
+    comments:(Array.isArray(p.comments)?p.comments:[]).filter(c=>c&&c.author).map(c=>({
+      id:c.id||uid(), author:c.author, text:String(c.text||""), at:+c.at||0, replyTo:c.replyTo||null, likes:likeArr(c.likes) }))
+  }));
+  return { profiles, follows, posts, acting:(typeof s.acting==="string"?s.acting:null) };
+}
+function S(){ const t=tree(); if(!t.social || !t.social.profiles) t.social=normSocial(t.social); return t.social; }
+function nodeOf(id){ return tree().nodes.find(n=>n.id===id); }
+function alive(id){ return !!nodeOf(id); }
+function slugName(name){
+  let s=String(name||"").normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase().replace(/\s+/g,"_").replace(/[^a-z0-9._]/g,"");
+  s=s.replace(/^[._]+|[._]+$/g,"").slice(0,26);
+  return s||"personaggio";
+}
+function usernameTaken(u, exceptId){
+  const ps=S().profiles; u=u.toLowerCase();
+  return tree().nodes.some(n=>n.id!==exceptId && ps[n.id] && ps[n.id].username.toLowerCase()===u);
+}
+function prof(id){
+  const s=S(); let p=s.profiles[id];
+  if(!p){ p=s.profiles[id]={username:"",name:"",website:"",bio:"",nPosts:"",nFollowers:"",nFollowing:"",verified:false,avatar:null}; }
+  if(!p.username){
+    const n=nodeOf(id); const base=slugName(n&&n.name); let u=base, i=2;
+    while(usernameTaken(u,id)) u=base+(i++);
+    p.username=u;
+  }
+  return p;
+}
+function displayName(id){ const p=prof(id), n=nodeOf(id); return p.name || (n&&n.name) || ""; }
+function byUsername(u){ u=String(u||"").toLowerCase(); const n=tree().nodes.find(n=>prof(n.id).username.toLowerCase()===u); return n?n.id:null; }
+function acting(){
+  const s=S(), t=tree();
+  if(!s.acting || !alive(s.acting)) s.acting = t.nodes[0] ? t.nodes[0].id : null;
+  return s.acting;
+}
+function livePosts(){ return S().posts.filter(p=>alive(p.author)).sort((a,b)=>b.at-a.at); }
+function postById(id){ return S().posts.find(p=>p.id===id); }
+function follows(a,b){ return S().follows.some(f=>f.from===a && f.to===b); }
+function followersOf(id){ return S().follows.filter(f=>f.to===id && alive(f.from)).map(f=>f.from); }
+function followingOf(id){ return S().follows.filter(f=>f.from===id && alive(f.to)).map(f=>f.to); }
+function postsOf(id){ return livePosts().filter(p=>p.author===id); }
+function taggedIn(id){ return livePosts().filter(p=>p.tags.includes(id)); }
+function liveLikes(arr){ return arr.filter(l=>alive(l.by)); }
+function liveComments(p){ return p.comments.filter(c=>alive(c.author)); }
+function fmtNum(v){
+  const n=parseInt(v,10); if(isNaN(n)) return String(v);
+  const f=x=>x.toFixed(1).replace(/\.0$/,"").replace(".",",");
+  if(n<10000) return String(n);
+  if(n<1e6) return f(n/1000)+"K";
+  return f(n/1e6)+" Mln";
+}
+function statVal(manual, real){ return String(manual).trim()!=="" ? fmtNum(manual) : String(real); }
+
+/* ---------- immagini: dispositivo (IndexedDB) + GitHub ---------- */
+let socDbP=null; const socImgMem=new Map();
+function socDb(){
+  if(socDbP) return socDbP;
+  socDbP=new Promise(res=>{
+    try{
+      if(!window.indexedDB){ res(null); return; }
+      const r=indexedDB.open("alberi_social_imgs",1);
+      r.onupgradeneeded=()=>r.result.createObjectStore("imgs");
+      r.onsuccess=()=>res(r.result); r.onerror=()=>res(null);
+    }catch(e){ res(null); }
+  });
+  return socDbP;
+}
+function idbOp(mode, fn){
+  return socDb().then(db=>new Promise(res=>{
+    if(!db){ res(undefined); return; }
+    try{ const tx=db.transaction("imgs",mode); const st=tx.objectStore("imgs"); const rq=fn(st);
+      tx.oncomplete=()=>res(rq&&rq.result); tx.onerror=()=>res(undefined);
+    }catch(e){ res(undefined); }
+  }));
+}
+const idbPut=(k,v)=>idbOp("readwrite",st=>st.put(v,k));
+const idbGet=k=>idbOp("readonly",st=>st.get(k));
+const idbDel=k=>idbOp("readwrite",st=>st.delete(k));
+
+function remoteImgUrl(path){
+  const c=syncCfg();
+  if(c.owner && c.repo) return `https://raw.githubusercontent.com/${encodeURIComponent(c.owner)}/${encodeURIComponent(c.repo)}/${encodeURIComponent(c.branch||"main")}/${path}`;
+  return path;
+}
+function imgTag(ref, cls){
+  if(!ref) return "";
+  if(ref.startsWith("data:")) return `<img${cls?` class="${cls}"`:""} src="${ref}" alt="" draggable="false">`;
+  const m=socImgMem.get(ref);
+  return `<img${cls?` class="${cls}"`:""} ${m?`src="${m}"`:""} data-img="${esc(ref)}" alt="" draggable="false">`;
+}
+function hydrateImgs(root){
+  root.querySelectorAll("img[data-img]").forEach(img=>{
+    if(img.getAttribute("src")) return;
+    const k=img.dataset.img;
+    idbGet(k).then(v=>{
+      if(v){ socImgMem.set(k,v); img.src=v; return; }
+      img.onerror=()=>{ img.onerror=null; if(!img.src.endsWith(k)) img.src=k; };
+      img.src=remoteImgUrl(k);
+    });
+  });
+}
+function readImageFile(file, max){
+  return new Promise((res,rej)=>{
+    const fr=new FileReader();
+    fr.onerror=()=>rej(new Error("file non leggibile"));
+    fr.onload=()=>{
+      const img=new Image();
+      img.onerror=()=>rej(new Error("immagine non leggibile"));
+      img.onload=()=>{
+        const k=Math.min(1, max/Math.max(img.naturalWidth,img.naturalHeight));
+        const cv=document.createElement("canvas");
+        cv.width=Math.max(1,Math.round(img.naturalWidth*k)); cv.height=Math.max(1,Math.round(img.naturalHeight*k));
+        const cx=cv.getContext("2d"); cx.fillStyle="#16120b"; cx.fillRect(0,0,cv.width,cv.height);
+        cx.drawImage(img,0,0,cv.width,cv.height);
+        res(cv.toDataURL("image/jpeg",0.85));
+      };
+      img.src=fr.result;
+    };
+    fr.readAsDataURL(file);
+  });
+}
+function pendingList(){ try{ return JSON.parse(localStorage.getItem(SOC_PENDING_KEY))||[]; }catch(e){ return []; } }
+function setPending(a){ try{ localStorage.setItem(SOC_PENDING_KEY, JSON.stringify(a)); }catch(e){} }
+async function storeImage(ref){
+  if(!ref || !ref.startsWith("data:")) return ref;
+  const path=`${SOC_DIR}/${String(tree().id).slice(0,8)}-${uid().replace(/-/g,"").slice(0,14)}.jpg`;
+  socImgMem.set(path, ref);
+  await idbPut(path, ref);
+  const p=pendingList(); p.push(path); setPending(p);
+  return path;
+}
+function ghFileUrl(c, path){
+  return `https://api.github.com/repos/${encodeURIComponent(c.owner)}/${encodeURIComponent(c.repo)}/contents/${path.split("/").map(encodeURIComponent).join("/")}`;
+}
+let socUploading=null;
+function socFlushUploads(){
+  if(socUploading) return socUploading;
+  socUploading=(async()=>{
+    const c=syncCfg(); if(!c.owner||!c.repo||!c.token) return;
+    let list=pendingList(); if(!list.length) return;
+    let ok=0, fail=0;
+    for(const path of list.slice()){
+      try{
+        let data=socImgMem.get(path) || await idbGet(path);
+        if(data){
+          const body={message:"Foto social — "+new Date().toLocaleString(), content:data.split(",")[1], branch:c.branch||"main"};
+          let res=null;
+          for(let i=0;i<3;i++){
+            res=await fetch(ghFileUrl(c,path), {method:"PUT", headers:ghHeaders(c), body:JSON.stringify(body)});
+            if(res.ok || res.status===422) break;      // 422 = file già presente
+            if(res.status!==409) break;
+            await new Promise(r=>setTimeout(r,800));
+          }
+          if(!res.ok && res.status!==422) throw new Error("HTTP "+res.status);
+        }
+        list=pendingList().filter(x=>x!==path); setPending(list); ok++;
+      }catch(e){ fail++; console.warn("upload foto", path, e); }
+    }
+    if(fail) toast("⚠ Alcune foto non sono state caricate su GitHub: riproverò al prossimo salvataggio", 3500);
+    else if(ok) setSyncStatus(`Foto caricate su GitHub ✓ (${ok})`);
+  })().finally(()=>{ socUploading=null; });
+  return socUploading;
+}
+function socKickUploads(){
+  const c=syncCfg();
+  if(c.owner&&c.repo&&c.token) socFlushUploads();
+  else if(pendingList().length) toast("📷 Foto salvate su questo dispositivo. Configura GitHub per vederle anche sugli altri.", 3800);
+}
+async function deleteImages(refs){
+  const c=syncCfg();
+  for(const path of refs){
+    if(!path || path.startsWith("data:")) continue;
+    socImgMem.delete(path); idbDel(path);
+    const pend=pendingList();
+    if(pend.includes(path)){ setPending(pend.filter(x=>x!==path)); continue; }   // mai caricata: basta toglierla
+    if(!(c.owner&&c.repo&&c.token)) continue;
+    try{
+      const r=await fetch(ghFileUrl(c,path)+"?ref="+encodeURIComponent(c.branch||"main"), {headers:ghHeaders(c)});
+      if(!r.ok) continue;
+      const d=await r.json();
+      await fetch(ghFileUrl(c,path), {method:"DELETE", headers:ghHeaders(c),
+        body:JSON.stringify({message:"Rimuovi foto social", sha:d.sha, branch:c.branch||"main"})});
+    }catch(e){ console.warn("delete foto", e); }
+  }
+}
+
+/* ---------- pezzi di interfaccia ---------- */
+function avHTML(id, cls){
+  const n=nodeOf(id); const p=prof(id);
+  const col=(n&&n.color)||DEFAULT_COLOR;
+  const src=p.avatar || (n&&n.photo) || null;
+  const inner = src ? imgTag(src) : esc(initials(n?n.name:"?"));
+  return `<span class="av${cls?" "+cls:""}" style="background:${col};color:${on(col)}">${inner}</span>`;
+}
+function badgeHTML(id){ return prof(id).verified ? `<span class="badge" title="Profilo ufficiale">${IC.badge}</span>` : ""; }
+function unameHTML(id){ return `<span class="uname" data-a="user" data-id="${esc(id)}">${esc(prof(id).username)}${badgeHTML(id)}</span>`; }
+function richText(s){
+  return esc(s)
+    .replace(/@([a-z0-9._]{1,30})/gi,(m,u)=>{ const id=byUsername(u); return id?`<span class="mention" data-a="user" data-id="${esc(id)}">@${esc(u)}</span>`:m; })
+    .replace(/(^|\s)(#[\p{L}\p{N}_]+)/gu,'$1<span class="htag">$2</span>');
+}
+function hd(left, title, right, center){
+  return `<div class="ph-hd">${left||""}<div class="ttl${center?" c":""}">${title}</div>${right||""}</div>`;
+}
+function backBtn(){ return `<button class="ib" data-a="back" title="Indietro">${IC.back}</button>`; }
+function treeBackBtn(){ return `<button class="ib mob-only" data-a="close-social" title="Torna all'albero">${IC.back}</button>`; }
+function acctBtn(){
+  const a=acting(); if(!a) return "";
+  return `<button class="acct" data-a="accounts" title="Cambia account">${avHTML(a)}<span>${esc(prof(a).username)}</span>${IC.down}</button>`;
+}
+function navHTML(){
+  const a=acting(), cur=soc.stack.length?null:soc.tab;
+  const b=(tab,ic,icOn,title)=>`<button class="ib${cur===tab?" on":""}" data-a="tab" data-t="${tab}" title="${title}">${cur===tab&&icOn?icOn:ic}</button>`;
+  return `<nav class="ph-nav">${b("feed",IC.home,IC.homeOn,"Home")}${b("search",IC.search,null,"Cerca")}`+
+    `<button class="ib" data-a="compose" title="Nuovo post">${IC.plus}</button>${b("activity",IC.heart,IC.heartOn,"Attività")}`+
+    `<button class="ib${cur==="profile"?" on":""}" data-a="tab" data-t="profile" title="Profilo">${a?avHTML(a):IC.tag}</button></nav>`;
+}
+function statusHTML(){
+  const d=new Date(); const t=String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0");
+  return `<div class="ph-status"><span>${t}</span><span></span><span>▮▮▮ ◔</span></div>`;
+}
+
+function postHTML(p){
+  const a=acting(), likes=liveLikes(p.likes), liked=likes.some(l=>l.by===a), cms=liveComments(p);
+  const imgs=p.images;
+  let media;
+  if(imgs.length){
+    media=`<div class="po-media" data-a="media" data-id="${esc(p.id)}">
+      <div class="po-track" data-car="${esc(p.id)}">${imgs.map(r=>imgTag(r)).join("")}</div>
+      ${imgs.length>1?`<span class="po-count">${(soc.car[p.id]||0)+1}/${imgs.length}</span>`:""}
+      <span class="po-heart">♥</span></div>
+      <div class="po-dots">${imgs.length>1?imgs.map((_,i)=>`<i class="${i===(soc.car[p.id]||0)?"on":""}"></i>`).join(""):""}</div>`;
+  } else {
+    media=`<div class="po-media" data-a="media" data-id="${esc(p.id)}" style="background:none"><div class="po-text">${richText(p.text)||"…"}</div><span class="po-heart">♥</span></div><div class="po-dots"></div>`;
+  }
+  let likeLine="";
+  if(likes.length){
+    const first=likes[likes.length-1].by;
+    likeLine=`<div class="po-likes" data-a="likes" data-id="${esc(p.id)}">Piace a <b>${esc(prof(first).username)}</b>${likes.length>1?` e <b>altri ${likes.length-1}</b>`:""}</div>`;
+  }
+  const tags=p.tags.filter(alive);
+  return `<article class="po">
+    <div class="po-hd">${avHTML(p.author)}<div class="who">${unameHTML(p.author)}${p.date?`<small>${esc(p.date)}</small>`:""}</div>
+      <button class="ib" data-a="post-menu" data-id="${esc(p.id)}" title="Opzioni">${IC.more}</button></div>
+    ${media}
+    <div class="po-act">
+      <button class="ib${liked?" liked":""}" data-a="like" data-id="${esc(p.id)}" title="Mi piace">${liked?IC.heartOn:IC.heart}</button>
+      <button class="ib" data-a="comments" data-id="${esc(p.id)}" title="Commenta">${IC.comment}</button>
+      <span class="sp"></span>
+    </div>
+    ${likeLine}
+    ${imgs.length&&p.text?`<div class="po-cap">${unameHTML(p.author)} ${richText(p.text)}</div>`:""}
+    ${tags.length?`<div class="po-tags">con ${tags.map(id=>`<span class="mention" data-a="user" data-id="${esc(id)}">@${esc(prof(id).username)}</span>`).join(", ")}</div>`:""}
+    ${cms.length?`<button class="po-more" data-a="comments" data-id="${esc(p.id)}">${cms.length===1?"Mostra 1 commento":`Mostra tutti i ${cms.length} commenti`}</button>`:
+      `<button class="po-more" data-a="comments" data-id="${esc(p.id)}">Aggiungi un commento…</button>`}
+  </article>`;
+}
+
+/* ---------- schermate ---------- */
+function scrFeed(){
+  const t=tree(), posts=livePosts();
+  const body = posts.length ? posts.map(postHTML).join("")
+    : `<div class="empty-s"><span class="big">❦</span>Ancora nessun post in questo mondo.<br>Tocca <b>＋</b> in basso per pubblicare il primo.</div>`;
+  return hd(treeBackBtn(), `<span class="crest">❦</span> ${esc(t.name||"Social")}`, acctBtn()) + `<div class="ph-main">${body}</div>`;
+}
+function scrSearch(){
+  return `<div class="ph-hd">${treeBackBtn()}<label class="search">${IC.search}<input id="soQ" type="search" placeholder="Cerca un nome utente" autocomplete="off" autocapitalize="off" spellcheck="false" value="${esc(soc.q)}"></label></div>
+    <div class="ph-main" id="soResults">${searchResults()}</div>`;
+}
+function searchResults(){
+  const q=soc.q.trim().replace(/^@/,"").toLowerCase();
+  const ids=tree().nodes.map(n=>n.id).filter(id=>!q || prof(id).username.toLowerCase().includes(q) || displayName(id).toLowerCase().includes(q));
+  if(!ids.length) return `<div class="empty-s">Nessun profilo trovato per «${esc(soc.q)}».</div>`;
+  if(q) ids.sort((a,b)=>(prof(a).username.toLowerCase().startsWith(q)?0:1)-(prof(b).username.toLowerCase().startsWith(q)?0:1));
+  return `${q?"":`<div class="sec-h">Tutti i personaggi</div>`}`+ids.map(id=>rowHTML(id)).join("");
+}
+function rowHTML(id, opts){
+  opts=opts||{}; const a=acting();
+  let right="";
+  if(opts.follow && a && id!==a){ const f=follows(a,id); right=`<button class="sbtn${f?" on":""}" data-a="follow" data-id="${esc(id)}">${f?"Segui già":(follows(id,a)?"Ricambia":"Segui")}</button>`; }
+  if(opts.check) right= id===a ? `<span class="chk">✓</span>` : "";
+  return `<div class="row" data-a="${opts.act||"user"}" data-id="${esc(id)}">${avHTML(id)}
+    <div class="tx">${esc(prof(id).username)}${badgeHTML(id)}<small>${esc(displayName(id))}${opts.sub?" · "+esc(opts.sub):""}</small></div>${right}</div>`;
+}
+function scrActivity(){
+  const a=acting();
+  if(!a) return hd(treeBackBtn(),"Attività")+`<div class="ph-main">${noChars()}</div>`;
+  const ev=[];
+  const short=s=>{ s=String(s||""); return s.length>60?s.slice(0,60)+"…":s; };
+  S().posts.filter(p=>alive(p.author)).forEach(p=>{
+    if(p.author===a){
+      liveLikes(p.likes).forEach(l=>{ if(l.by!==a) ev.push({at:l.at, by:l.by, txt:"ha messo mi piace al tuo post.", post:p}); });
+      liveComments(p).forEach(c=>{ if(c.author!==a) ev.push({at:c.at, by:c.author, txt:"ha commentato: "+short(c.text), post:p, cm:true}); });
+    } else {
+      liveComments(p).forEach(c=>{
+        if(c.author===a) return;
+        const parent=c.replyTo&&p.comments.find(x=>x.id===c.replyTo);
+        if(parent&&parent.author===a) ev.push({at:c.at, by:c.author, txt:"ha risposto al tuo commento: "+short(c.text), post:p, cm:true});
+        else if(new RegExp("@"+prof(a).username.replace(/\./g,"\\.")+"\\b","i").test(c.text)) ev.push({at:c.at, by:c.author, txt:"ti ha menzionato in un commento: "+short(c.text), post:p, cm:true});
+      });
+    }
+    if(p.tags.includes(a) && p.author!==a) ev.push({at:p.at, by:p.author, txt:"ti ha taggato in un post.", post:p});
+    p.comments.forEach(c=>{ if(c.author===a) liveLikes(c.likes).forEach(l=>{ if(l.by!==a) ev.push({at:l.at, by:l.by, txt:"ha messo mi piace al tuo commento: "+short(c.text), post:p, cm:true}); }); });
+  });
+  S().follows.forEach(f=>{ if(f.to===a && alive(f.from)) ev.push({at:f.at, by:f.from, txt:"ha iniziato a seguirti.", follow:true}); });
+  ev.sort((x,y)=>y.at-x.at);
+  const body = ev.length ? ev.slice(0,150).map(e=>{
+      let right="";
+      if(e.follow){ const f=follows(a,e.by); right=`<button class="sbtn${f?" on":""}" data-a="follow" data-id="${esc(e.by)}">${f?"Segui già":"Ricambia"}</button>`; }
+      else if(e.post){ right = e.post.images.length ? imgTag(e.post.images[0],"thumb") : `<span class="thumb" style="display:block;background:linear-gradient(180deg,#f2e8cf,#e6d8b6)"></span>`; }
+      return `<div class="row" data-a="${e.post?(e.cm?"comments":"post"):"user"}" data-id="${esc(e.post?e.post.id:e.by)}">${avHTML(e.by)}
+        <div class="tx"><b>${esc(prof(e.by).username)}</b>${badgeHTML(e.by)} ${esc(e.txt)}</div>${right}</div>`;
+    }).join("")
+    : `<div class="empty-s"><span class="big">♡</span>Nessuna attività per <b>@${esc(prof(a).username)}</b>.<br>Qui compariranno like, commenti, tag e nuovi follower.</div>`;
+  return hd(treeBackBtn(),"Attività",acctBtn()) + `<div class="ph-main">${body}</div>`;
+}
+function noChars(){ return `<div class="empty-s"><span class="big">❦</span>Questo albero non ha ancora personaggi.<br>Aggiungili nell'albero per dar loro un profilo social.</div>`; }
+
+function scrProfile(id, inStack){
+  if(!id) return hd(treeBackBtn(),"Profilo")+`<div class="ph-main">${noChars()}</div>`;
+  const p=prof(id), a=acting(), own=id===a, n=nodeOf(id);
+  const tab=soc.profTab[id]||"grid";
+  const list = tab==="grid" ? postsOf(id) : taggedIn(id);
+  const grid = list.length ? `<div class="grid">${list.map(po=>`<button data-a="post" data-id="${esc(po.id)}">${po.images.length?imgTag(po.images[0]):`<span class="gt">${esc(po.text.slice(0,140))}</span>`}${po.images.length>1?`<span class="multi">❐</span>`:""}</button>`).join("")}</div>`
+    : `<div class="empty-s">${tab==="grid"?(own?"Non hai ancora pubblicato nulla.<br>Tocca <b>＋</b> per il tuo primo post.":"Nessun post."):"Nessun post in cui è taggato."}</div>`;
+  const btns = own
+    ? `<button class="pbtn" data-a="edit-profile" data-id="${esc(id)}">Modifica profilo</button><button class="pbtn" data-a="accounts">Cambia account</button>`
+    : `<button class="pbtn${follows(a,id)?"":" gold"}" data-a="follow" data-id="${esc(id)}">${follows(a,id)?"Segui già":(follows(id,a)?"Ricambia":"Segui")}</button>
+       <button class="pbtn" data-a="act-as" data-id="${esc(id)}">Usa questo account</button>
+       <button class="pbtn" style="flex:none" data-a="edit-profile" data-id="${esc(id)}" title="Modifica profilo">✎</button>`;
+  const web=p.website.trim();
+  const webHref = web ? (/^https?:\/\//i.test(web)?web:"https://"+web) : "";
+  const title=`${esc(p.username)}${badgeHTML(id)}`;
+  const head = inStack ? hd(backBtn(), title, "", true) : `<div class="ph-hd">${treeBackBtn()}<button class="ttl" style="background:none;border:none;cursor:pointer;font-family:var(--ui);font-size:18px;font-weight:700;color:#f0e2c0" data-a="accounts">${title} ${IC.down}</button></div>`;
+  return head + `<div class="ph-main">
+    <div class="pr-top">${avHTML(id,"ring")}<div class="pr-stats">
+      <button data-a="tab-grid" data-id="${esc(id)}"><b>${statVal(p.nPosts, postsOf(id).length)}</b><span>post</span></button>
+      <button data-a="list" data-id="${esc(id)}" data-w="followers"><b>${statVal(p.nFollowers, followersOf(id).length)}</b><span>follower</span></button>
+      <button data-a="list" data-id="${esc(id)}" data-w="following"><b>${statVal(p.nFollowing, followingOf(id).length)}</b><span>seguiti</span></button>
+    </div></div>
+    <div class="pr-info"><div class="nm">${esc(displayName(id))}</div>
+      ${p.bio?`<div class="bio">${richText(p.bio)}</div>`:""}
+      ${web?`<a class="web" href="${esc(webHref)}" target="_blank" rel="noopener">${esc(web)}</a>`:""}
+      ${!own&&a&&follows(id,a)?`<div><span class="fy">Ti segue</span></div>`:""}
+    </div>
+    <div class="pr-btns">${btns}</div>
+    <div class="pr-tabs"><button class="${tab==="grid"?"on":""}" data-a="ptab" data-id="${esc(id)}" data-t="grid" title="Post">${IC.grid}</button>
+      <button class="${tab==="tag"?"on":""}" data-a="ptab" data-id="${esc(id)}" data-t="tag" title="Post in cui è taggato">${IC.tag}</button></div>
+    ${grid}</div>`;
+}
+function scrPost(id){
+  const p=postById(id);
+  if(!p||!alive(p.author)) return hd(backBtn(),"Post","",true)+`<div class="ph-main"><div class="empty-s">Questo post non esiste più.</div></div>`;
+  return hd(backBtn(),"Post","",true)+`<div class="ph-main">${postHTML(p)}</div>`;
+}
+function scrList(id, which, postId){
+  const a=acting();
+  if(which==="likes"){
+    const p=postById(postId); const ids=p?liveLikes(p.likes).map(l=>l.by).reverse():[];
+    return hd(backBtn(),"Mi piace","",true)+`<div class="ph-main">${ids.length?ids.map(x=>rowHTML(x,{follow:true})).join(""):`<div class="empty-s">Ancora nessun mi piace.</div>`}</div>`;
+  }
+  const ids = which==="followers" ? followersOf(id) : followingOf(id);
+  const p=prof(id);
+  const manual = which==="followers" ? p.nFollowers : p.nFollowing;
+  const note = String(manual).trim()!=="" ? `<div class="sec-h" style="font-size:12px;font-weight:500;color:var(--on-ink-muted)">Sul profilo è mostrato ${esc(fmtNum(manual))}. Qui sotto i personaggi del tuo albero.</div>` : "";
+  return hd(backBtn(), esc(p.username), "", true) + `<div class="seg2">
+      <button class="${which==="followers"?"on":""}" data-a="list" data-id="${esc(id)}" data-w="followers" data-rep="1">${followersOf(id).length} follower</button>
+      <button class="${which==="following"?"on":""}" data-a="list" data-id="${esc(id)}" data-w="following" data-rep="1">${followingOf(id).length} seguiti</button></div>
+    <div class="ph-main">${note}${ids.length?ids.map(x=>rowHTML(x,{follow:true})).join(""):`<div class="empty-s">${which==="followers"?"Nessun personaggio lo segue ancora.":"Non segue ancora nessun personaggio."}</div>`}</div>`;
+}
+function scrComments(id){
+  const p=postById(id);
+  if(!p||!alive(p.author)) return hd(backBtn(),"Commenti","",true)+`<div class="ph-main"><div class="empty-s">Questo post non esiste più.</div></div>`;
+  const a=acting(), cms=liveComments(p);
+  const top=cms.filter(c=>!c.replyTo || !cms.find(x=>x.id===c.replyTo));
+  const cmHTML=(c,reply)=>{
+    const lk=liveLikes(c.likes), liked=lk.some(l=>l.by===a);
+    return `<div class="cm${reply?" reply":""}">${avHTML(c.author)}<div class="bd">${unameHTML(c.author)} ${richText(c.text)}
+      <div class="meta">${lk.length?`<span>${lk.length} mi piace</span>`:""}<button data-a="reply" data-id="${esc(c.id)}">Rispondi</button><button data-a="cm-del" data-id="${esc(c.id)}">Elimina</button></div></div>
+      <button class="lk${liked?" liked":""}" data-a="cm-like" data-id="${esc(c.id)}" title="Mi piace">${liked?IC.heartOn:IC.heart}</button></div>`;
+  };
+  let list="";
+  top.forEach(c=>{ list+=cmHTML(c,false); cms.filter(r=>r.replyTo===c.id).forEach(r=>{ list+=cmHTML(r,true); }); });
+  const cap = p.text ? `<div class="cm cap">${avHTML(p.author)}<div class="bd">${unameHTML(p.author)} ${richText(p.text)}${p.date?`<div class="meta"><span>${esc(p.date)}</span></div>`:""}</div></div>` : "";
+  const rp = soc.replyTo && p.comments.find(c=>c.id===soc.replyTo);
+  return hd(backBtn(),"Commenti","",true)+`<div class="ph-main">${cap}${list||`<div class="empty-s" style="padding-top:26px">Ancora nessun commento.<br>Scrivi il primo!</div>`}</div>
+    <div class="cbar">${rp?`<div class="rp"><span>Stai rispondendo a @${esc(prof(rp.author).username)}</span><button data-a="reply-x">×</button></div>`:""}
+      <div class="in"><span data-a="accounts" title="Commenti come @${esc(a?prof(a).username:"")} — tocca per cambiare">${a?avHTML(a):""}</span>
+      <input id="soCm" type="text" maxlength="${SOC_LIM.comment}" placeholder="Commenta come ${esc(a?prof(a).username:"")}…" autocomplete="off">
+      <button class="ib gold txt" data-a="send-cm">Pubblica</button></div></div>`;
+}
+function ufHTML(label, key, val, max, opts){
+  opts=opts||{};
+  const err=opts.err?`<div class="er">${esc(opts.err)}</div>`:"";
+  const field = opts.area
+    ? `<textarea data-f="${key}" maxlength="${max}" rows="3" placeholder="${esc(opts.ph||"")}">${esc(val)}</textarea>`
+    : `<input type="text" data-f="${key}" maxlength="${max}" value="${esc(val)}" placeholder="${esc(opts.ph||"")}" ${opts.num?'inputmode="numeric" pattern="[0-9]*"':""} autocomplete="off" ${opts.noCap?'autocapitalize="off" spellcheck="false"':""}>`;
+  return `<div class="uf${opts.err?" err":""}"><label>${label}</label>${field}<div class="cnt" data-cnt="${key}">${String(val).length}/${max}</div>${opts.hint?`<div class="hint">${esc(opts.hint)}</div>`:""}${err}</div>`;
+}
+function scrEditProfile(){
+  const e=soc.edit; if(!e) return "";
+  const id=e.id, n=nodeOf(id);
+  const avSrc = e.avatar || (n&&n.photo) || null;
+  const col=(n&&n.color)||DEFAULT_COLOR;
+  const av=`<span class="av ring" style="background:${col};color:${on(col)}">${avSrc?imgTag(avSrc):esc(initials(n?n.name:"?"))}</span>`;
+  return hd(`<button class="ib" data-a="back" title="Annulla">${IC.back}</button>`,"Modifica profilo",`<button class="ib gold" data-a="save-profile" title="Salva">${IC.check}</button>`,true)+
+  `<div class="ph-main"><div class="pf">
+    <div class="pf-av">${av}<div class="lnk"><button data-a="pick-avatar">Cambia foto</button>${e.avatar?`<button class="dg" data-a="rm-avatar">${n&&n.photo?"Usa foto dell'albero":"Rimuovi"}</button>`:""}</div></div>
+    ${ufHTML("Nome","name",e.name,SOC_LIM.name,{ph:n?n.name:""})}
+    ${ufHTML("Nome utente","username",e.username,SOC_LIM.username,{noCap:true,err:e.err,hint:"Solo lettere minuscole, numeri, punto e trattino basso."})}
+    ${ufHTML("Sito web","website",e.website,SOC_LIM.website,{noCap:true})}
+    ${ufHTML("Bio","bio",e.bio,SOC_LIM.bio,{area:true})}
+    ${ufHTML("Numero di post","nPosts",e.nPosts,SOC_LIM.num,{num:true,ph:`automatico (${postsOf(id).length})`})}
+    ${ufHTML("Numero di follower","nFollowers",e.nFollowers,SOC_LIM.num,{num:true,ph:`automatico (${followersOf(id).length})`})}
+    ${ufHTML("Numero di seguiti","nFollowing",e.nFollowing,SOC_LIM.num,{num:true,ph:`automatico (${followingOf(id).length})`,hint:"Se lasci vuoto, il numero si conta da solo con i personaggi dell'albero."})}
+    <label class="ck"><input type="checkbox" data-f="verified" ${e.verified?"checked":""}> Segno ufficiale</label>
+  </div></div>`;
+}
+function scrCompose(){
+  const d=soc.draft; if(!d) return "";
+  const a=d.author;
+  const others=tree().nodes.filter(n=>n.id!==a);
+  return hd(`<button class="ib" data-a="back" title="Annulla">${IC.close}</button>`, d.editId?"Modifica post":"Nuovo post",
+      `<button class="ib gold txt" data-a="publish">${d.editId?"Salva":"Condividi"}</button>`, true)+
+  `<div class="ph-main">
+    <div class="cp-who" data-a="${d.editId?"":"accounts"}">${avHTML(a)}<div class="tx">${d.editId?"Post di":"Pubblichi come"} <b>${esc(prof(a).username)}</b>${badgeHTML(a)}</div>${d.editId?"":`<small>Cambia ${IC.down}</small>`}</div>
+    <div class="cp-imgs">${d.images.map((r,i)=>`<div class="it">${imgTag(r)}<button class="x" data-a="rm-img" data-i="${i}" title="Togli">✕</button>${i>0?`<button class="mv" data-a="mv-img" data-i="${i}" title="Sposta a sinistra">◀</button>`:""}</div>`).join("")}
+      ${d.images.length<10?`<button class="add" data-a="pick-imgs"><b>＋</b>Aggiungi foto</button>`:""}</div>
+    <div class="pf" style="padding-top:0">
+      ${ufHTML("Didascalia","text",d.text,SOC_LIM.caption,{area:true,ph:"Scrivi una didascalia… usa @nome per citare qualcuno"})}
+      ${ufHTML("Data","date",d.date,SOC_LIM.date,{ph:"Es. 3° giorno della Luna Rossa, 412 T.E.",hint:"Scrivi la data che vuoi, anche del tuo mondo fantasy."})}
+      <div class="uf"><label>Tagga personaggi</label><div class="chips">${others.length?others.map(n=>`<button class="chip${d.tags.includes(n.id)?" on":""}" data-a="tag-tg" data-id="${esc(n.id)}">${avHTML(n.id)}@${esc(prof(n.id).username)}</button>`).join(""):`<span class="hint">Nessun altro personaggio nell'albero.</span>`}</div></div>
+    </div></div>`;
+}
+function sheetHTML(){
+  const sh=soc.sheet; if(!sh) return "";
+  let inner="";
+  if(sh.k==="accounts"){
+    inner=`<div class="sh-t">Cambia account</div>`+tree().nodes.map(n=>rowHTML(n.id,{check:true, act:"set-acting"})).join("");
+  } else if(sh.k==="post-menu"){
+    const posts=livePosts(), i=posts.findIndex(p=>p.id===sh.id);
+    inner=`<div class="sh-t">Post</div>
+      <button class="opt" data-a="pm-edit" data-id="${esc(sh.id)}">✎ Modifica</button>
+      <button class="opt" data-a="pm-move" data-id="${esc(sh.id)}" data-d="-1" ${i<=0?"disabled":""}>▲ Sposta più in alto nel feed</button>
+      <button class="opt" data-a="pm-move" data-id="${esc(sh.id)}" data-d="1" ${i<0||i>=posts.length-1?"disabled":""}>▼ Sposta più in basso nel feed</button>
+      <button class="opt dg" data-a="pm-del" data-id="${esc(sh.id)}">🗑 Elimina post</button>
+      <button class="opt" data-a="sheet-x">Annulla</button>`;
+  }
+  return `<div class="sheet-bg" data-a="sheet-bg"><div class="sheet"><div class="grab"></div>${inner}</div></div>`;
+}
+
+/* ---------- render ---------- */
+function topScreen(){ return soc.stack[soc.stack.length-1]||null; }
+function viewKey(){ const s=topScreen(); return s ? s.k+":"+(s.id||"")+":"+(s.w||"") : "tab:"+soc.tab; }
+function renderSocial(){
+  const t=tree(); if(!t) return;
+  document.getElementById("soName").textContent=t.name||"Senza titolo";
+  const root=document.getElementById("soScreen");
+  const key=viewKey();
+  const oldMain=root.querySelector(".ph-main");
+  const keep = (oldMain && soc.lastKey===key) ? oldMain.scrollTop : 0;
+  const s=topScreen();
+  let html;
+  if(s){
+    if(s.k==="profile") html=scrProfile(s.id,true);
+    else if(s.k==="post") html=scrPost(s.id);
+    else if(s.k==="list") html=scrList(s.id,s.w,s.post);
+    else if(s.k==="comments") html=scrComments(s.id);
+    else if(s.k==="edit") html=scrEditProfile();
+    else if(s.k==="compose") html=scrCompose();
+  } else {
+    html = soc.tab==="search" ? scrSearch() : soc.tab==="activity" ? scrActivity() : soc.tab==="profile" ? scrProfile(acting(),false) : scrFeed();
+  }
+  const showNav = !(s && (s.k==="edit"||s.k==="compose"||s.k==="comments"));
+  root.innerHTML = statusHTML() + html + (showNav?navHTML():"") + sheetHTML();
+  const m=root.querySelector(".ph-main"); if(m && keep) m.scrollTop=keep;
+  soc.lastKey=key;
+  root.querySelectorAll(".po-track").forEach(tr=>{
+    const id=tr.dataset.car, i=soc.car[id]||0;
+    if(i) requestAnimationFrame(()=>{ tr.scrollLeft=i*tr.clientWidth; });
+    tr.addEventListener("scroll", ()=>{
+      const k=Math.round(tr.scrollLeft/Math.max(1,tr.clientWidth));
+      if(k===soc.car[id]) return; soc.car[id]=k;
+      const box=tr.closest(".po-media"), cnt=box.querySelector(".po-count");
+      if(cnt) cnt.textContent=`${k+1}/${tr.children.length}`;
+      box.nextElementSibling.querySelectorAll("i").forEach((d,j)=>d.classList.toggle("on",j===k));
+    }, {passive:true});
+  });
+  hydrateImgs(root);
+}
+
+/* ---------- navigazione ---------- */
+function openSocial(){
+  flushSave();
+  soc.stack=[]; soc.sheet=null; soc.tab="feed"; soc.lastKey="";
+  showView("social"); renderSocial();
+  const m=document.querySelector("#soScreen .ph-main"); if(m) m.scrollTop=0;
+}
+function closeSocial(){ flushSave(); soc.stack=[]; soc.sheet=null; showView("tree"); }
+function socPush(s){ soc.sheet=null; soc.stack.push(s); renderSocial(); const m=document.querySelector("#soScreen .ph-main"); if(m) m.scrollTop=0; }
+function socBack(){
+  if(soc.sheet){ soc.sheet=null; renderSocial(); return; }
+  const s=soc.stack.pop();
+  if(s && s.k==="compose") soc.draft=null;
+  if(s && s.k==="edit") soc.edit=null;
+  if(s && s.k==="comments") soc.replyTo=null;
+  renderSocial();
+}
+function openUser(id){
+  if(!alive(id)) return;
+  if(!soc.stack.length && soc.tab==="profile" && id===acting()) return;
+  socPush({k:"profile", id});
+}
+
+/* ---------- azioni ---------- */
+function toggleLike(postId, forceOn){
+  const p=postById(postId), a=acting(); if(!p||!a) return false;
+  const i=p.likes.findIndex(l=>l.by===a);
+  if(i>=0){ if(forceOn) return true; p.likes.splice(i,1); }
+  else p.likes.push({by:a, at:Date.now()});
+  save(); return true;
+}
+function toggleFollow(id){
+  const a=acting(); if(!a||id===a) return;
+  const s=S(), i=s.follows.findIndex(f=>f.from===a&&f.to===id);
+  if(i>=0) s.follows.splice(i,1); else s.follows.push({from:a,to:id,at:Date.now()});
+  save(); renderSocial();
+}
+function startCompose(editId){
+  const a=acting(); if(!a){ toast("Aggiungi prima un personaggio all'albero"); return; }
+  if(editId){
+    const p=postById(editId); if(!p) return;
+    soc.draft={editId, author:p.author, images:p.images.slice(), text:p.text, date:p.date, tags:p.tags.slice(), orig:p.images.slice()};
+  } else soc.draft={author:a, images:[], text:"", date:"", tags:[]};
+  socPush({k:"compose"});
+}
+async function publish(){
+  const d=soc.draft; if(!d) return;
+  if(!d.images.length && !d.text.trim()){ toast("Aggiungi almeno una foto o una didascalia"); return; }
+  const imgs=[]; for(const r of d.images) imgs.push(await storeImage(r));
+  const s=S();
+  if(d.editId){
+    const p=postById(d.editId);
+    if(p){
+      const removed=(d.orig||[]).filter(x=>!imgs.includes(x));
+      Object.assign(p,{images:imgs, text:d.text.trim(), date:d.date.trim(), tags:d.tags.filter(alive)});
+      if(removed.length) deleteImages(removed);
+    }
+  } else {
+    s.posts.push({id:uid(), author:d.author, images:imgs, text:d.text.trim(), date:d.date.trim(), at:Date.now(), tags:d.tags.filter(alive), likes:[], comments:[]});
+  }
+  soc.draft=null; soc.stack.pop();
+  if(!d.editId){ soc.stack=[]; soc.tab="feed"; soc.lastKey=""; }
+  save(); renderSocial();
+  if(!d.editId){ const m=document.querySelector("#soScreen .ph-main"); if(m) m.scrollTop=0; }
+  toast(d.editId?"Post aggiornato":"Post pubblicato ✓");
+  if(imgs.some(x=>pendingList().includes(x))) socKickUploads();
+}
+function deletePost(id){
+  const s=S(), p=postById(id); if(!p) return;
+  if(!confirm("Eliminare questo post? Verranno tolti anche like e commenti.")) return;
+  s.posts=s.posts.filter(x=>x.id!==id);
+  deleteImages(p.images);
+  soc.sheet=null;
+  if(topScreen() && (topScreen().k==="post"||topScreen().k==="comments") && topScreen().id===id) soc.stack.pop();
+  save(); renderSocial(); toast("Post eliminato");
+}
+function movePost(id, dir){
+  const posts=livePosts(), i=posts.findIndex(p=>p.id===id), j=i+dir;
+  if(i<0||j<0||j>=posts.length) return;
+  const a=posts[i], b=posts[j]; let t=a.at; a.at=b.at; b.at=t;
+  if(a.at===b.at) a.at += dir<0 ? 1 : -1;
+  soc.sheet=null; save(); renderSocial();
+}
+function openEditProfile(id){
+  const p=prof(id);
+  soc.edit={id, name:p.name, username:p.username, website:p.website, bio:p.bio, nPosts:p.nPosts, nFollowers:p.nFollowers, nFollowing:p.nFollowing, verified:p.verified, avatar:p.avatar, origAvatar:p.avatar, err:""};
+  socPush({k:"edit", id});
+}
+async function saveProfile(){
+  const e=soc.edit; if(!e) return;
+  const u=e.username.trim().toLowerCase();
+  let err="";
+  if(!u) err="Il nome utente non può essere vuoto.";
+  else if(!/^[a-z0-9._]+$/.test(u)) err="Usa solo lettere minuscole, numeri, punto e trattino basso.";
+  else if(usernameTaken(u,e.id)) err="Questo nome utente è già usato da un altro personaggio.";
+  if(err){ e.err=err; renderSocial(); return; }
+  const avatar=await storeImage(e.avatar);
+  const p=prof(e.id);
+  if(e.origAvatar && e.origAvatar!==avatar) deleteImages([e.origAvatar]);
+  Object.assign(p,{name:e.name.trim(), username:u, website:e.website.trim(), bio:e.bio.replace(/\s+$/,""),
+    nPosts:e.nPosts.replace(/\D/g,""), nFollowers:e.nFollowers.replace(/\D/g,""), nFollowing:e.nFollowing.replace(/\D/g,""), verified:!!e.verified, avatar:avatar||null});
+  soc.edit=null; soc.stack.pop(); save(); renderSocial(); toast("Profilo salvato ✓");
+  if(avatar && pendingList().includes(avatar)) socKickUploads();
+}
+function sendComment(){
+  const inp=document.getElementById("soCm"); const txt=(inp&&inp.value||"").trim();
+  const s=topScreen(); if(!txt||!s) return;
+  const p=postById(s.id), a=acting(); if(!p||!a) return;
+  let replyTo=soc.replyTo;
+  const parent=replyTo&&p.comments.find(c=>c.id===replyTo);
+  if(parent&&parent.replyTo) replyTo=parent.replyTo;      // le risposte stanno tutte sotto il commento principale
+  p.comments.push({id:uid(), author:a, text:txt, at:Date.now(), replyTo:replyTo||null, likes:[]});
+  soc.replyTo=null; save(); renderSocial();
+  const m=document.querySelector("#soScreen .ph-main"); if(m && !replyTo) m.scrollTop=m.scrollHeight;
+}
+function findComment(id){ for(const p of S().posts){ const c=p.comments.find(x=>x.id===id); if(c) return {p,c}; } return null; }
+
+let socFilePurpose=null, lastTap={id:null,t:0};
+function socHandleClick(ev){
+  const el=ev.target.closest("[data-a]"); if(!el || !document.getElementById("soScreen").contains(el)) return;
+  const A=el.dataset.a, id=el.dataset.id;
+  switch(A){
+    case "close-social": closeSocial(); break;
+    case "tab": soc.stack=[]; soc.sheet=null;
+      if(soc.tab===el.dataset.t){ const m=document.querySelector("#soScreen .ph-main"); renderSocial(); if(m) document.querySelector("#soScreen .ph-main").scrollTop=0; }
+      else { soc.tab=el.dataset.t; renderSocial(); if(soc.tab==="search"){ const q=document.getElementById("soQ"); if(q && !isMobile()) q.focus(); } }
+      break;
+    case "back": socBack(); break;
+    case "user": if(el.classList.contains("row") && ev.target.closest(".sbtn")) break; openUser(id); break;
+    case "post": socPush({k:"post", id}); break;
+    case "comments": soc.replyTo=null; socPush({k:"comments", id}); break;
+    case "likes": socPush({k:"list", w:"likes", post:id, id}); break;
+    case "list": if(el.dataset.rep){ soc.stack.pop(); } socPush({k:"list", id, w:el.dataset.w}); break;
+    case "like": toggleLike(id); renderSocial(); break;
+    case "media": {
+      const now=Date.now();
+      if(lastTap.id===id && now-lastTap.t<320){
+        lastTap={id:null,t:0};
+        toggleLike(id,true);
+        const h=el.querySelector(".po-heart"); renderSocial();
+        const nh=document.querySelector(`#soScreen .po-media[data-id="${CSS.escape(id)}"] .po-heart`);
+        if(nh){ nh.classList.remove("pop"); void nh.offsetWidth; nh.classList.add("pop"); }
+      } else lastTap={id,t:now};
+      break;
+    }
+    case "follow": ev.stopPropagation(); toggleFollow(id); break;
+    case "act-as": S().acting=id; save(); toast("Ora usi @"+prof(id).username); renderSocial(); break;
+    case "accounts": if(!tree().nodes.length) break; soc.sheet={k:"accounts"}; renderSocial(); break;
+    case "set-acting":
+      S().acting=id; save(); soc.sheet=null;
+      if(soc.draft && !soc.draft.editId){ soc.draft.author=id; soc.draft.tags=soc.draft.tags.filter(x=>x!==id); }
+      renderSocial(); break;
+    case "sheet-bg": if(ev.target===el){ soc.sheet=null; renderSocial(); } break;
+    case "sheet-x": soc.sheet=null; renderSocial(); break;
+    case "post-menu": soc.sheet={k:"post-menu", id}; renderSocial(); break;
+    case "pm-edit": soc.sheet=null; startCompose(id); break;
+    case "pm-move": movePost(id, +el.dataset.d); break;
+    case "pm-del": deletePost(id); break;
+    case "ptab": soc.profTab[id]=el.dataset.t; renderSocial(); break;
+    case "tab-grid": soc.profTab[id]="grid"; renderSocial(); break;
+    case "edit-profile": openEditProfile(id); break;
+    case "save-profile": saveProfile(); break;
+    case "pick-avatar": socFilePurpose="avatar"; pickFiles(false); break;
+    case "rm-avatar": if(soc.edit){ soc.edit.avatar=null; renderSocial(); } break;
+    case "compose": startCompose(); break;
+    case "pick-imgs": socFilePurpose="post"; pickFiles(true); break;
+    case "rm-img": if(soc.draft){ soc.draft.images.splice(+el.dataset.i,1); renderSocial(); } break;
+    case "mv-img": if(soc.draft){ const i=+el.dataset.i, im=soc.draft.images; [im[i-1],im[i]]=[im[i],im[i-1]]; renderSocial(); } break;
+    case "tag-tg": if(soc.draft){ const t=soc.draft.tags, i=t.indexOf(id); if(i>=0) t.splice(i,1); else t.push(id); renderSocial(); } break;
+    case "publish": publish(); break;
+    case "reply": { const f=findComment(id); if(!f) break; soc.replyTo=id; renderSocial();
+      const inp=document.getElementById("soCm"); if(inp){ inp.value="@"+prof(f.c.author).username+" "; inp.focus(); } break; }
+    case "reply-x": soc.replyTo=null; renderSocial(); break;
+    case "send-cm": sendComment(); break;
+    case "cm-like": { const f=findComment(id), a=acting(); if(!f||!a) break;
+      const i=f.c.likes.findIndex(l=>l.by===a); if(i>=0) f.c.likes.splice(i,1); else f.c.likes.push({by:a,at:Date.now()});
+      save(); renderSocial(); break; }
+    case "cm-del": { const f=findComment(id); if(!f) break; if(!confirm("Eliminare questo commento?")) break;
+      f.p.comments=f.p.comments.filter(c=>c.id!==id && c.replyTo!==id); save(); renderSocial(); break; }
+  }
+}
+function pickFiles(multi){ const f=document.getElementById("soFile"); f.multiple=!!multi; f.value=""; f.click(); }
+async function onSocialFiles(ev){
+  const files=[...ev.target.files]; ev.target.value=""; if(!files.length) return;
+  try{
+    if(socFilePurpose==="avatar" && soc.edit){
+      soc.edit.avatar=await readImageFile(files[0], 480); renderSocial();
+    } else if(socFilePurpose==="post" && soc.draft){
+      const room=10-soc.draft.images.length;
+      if(files.length>room) toast(`Massimo 10 foto per post: ne aggiungo ${room}`);
+      for(const f of files.slice(0,room)){ soc.draft.images.push(await readImageFile(f, 1350)); renderSocial(); }
+    }
+  }catch(e){ toast("⚠ "+e.message); }
+}
+function socHandleInput(ev){
+  const el=ev.target;
+  if(el.id==="soQ"){ soc.q=el.value; document.getElementById("soResults").innerHTML=searchResults(); hydrateImgs(document.getElementById("soResults")); return; }
+  const k=el.dataset.f; if(!k) return;
+  const obj = topScreen()&&topScreen().k==="edit" ? soc.edit : soc.draft; if(!obj) return;
+  if(k==="verified"){ obj.verified=el.checked; return; }
+  if(k==="username"){ const v=el.value.toLowerCase().replace(/\s/g,"_").replace(/[^a-z0-9._]/g,""); if(v!==el.value) el.value=v; }
+  if(["nPosts","nFollowers","nFollowing"].includes(k)){ const v=el.value.replace(/\D/g,""); if(v!==el.value) el.value=v; }
+  obj[k]=el.value;
+  const c=document.querySelector(`#soScreen [data-cnt="${k}"]`); if(c) c.textContent=`${el.value.length}/${el.maxLength}`;
+}
+document.getElementById("soScreen").addEventListener("click", socHandleClick);
+document.getElementById("soScreen").addEventListener("input", socHandleInput);
+document.getElementById("soScreen").addEventListener("change", socHandleInput);
+document.getElementById("soScreen").addEventListener("keydown", e=>{ if(e.key==="Enter" && e.target.id==="soCm"){ e.preventDefault(); sendComment(); } });
+document.getElementById("soFile").addEventListener("change", onSocialFiles);
+setInterval(()=>{ if(uiView==="social"){ const st=document.querySelector("#soScreen .ph-status span"); if(st){ const d=new Date(); st.textContent=String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0"); } } }, 30000);
 
 /* ============================================================
    INIT
