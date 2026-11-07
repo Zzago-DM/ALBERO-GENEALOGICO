@@ -895,7 +895,7 @@
   .seg2.kind{margin:0}
   .sv{position:absolute;inset:0;z-index:30;background:#000;display:flex;flex-direction:column;color:#fff;user-select:none}
   .sv-img{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#0b0905}
-  .sv-img img{max-width:100%;max-height:100%;object-fit:contain;display:block}
+  .sv-img img{width:100%;height:100%;object-fit:contain;display:block}
   .sv-shade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.55),transparent 18%,transparent 70%,rgba(0,0,0,.6))}
   .sv-bars{position:relative;display:flex;gap:3px;padding:10px 8px 0;z-index:2}
   .sv-bars i{flex:1;height:2.5px;border-radius:2px;background:rgba(255,255,255,.35);overflow:hidden}
@@ -927,13 +927,13 @@
   .sstory small{display:block;padding:7px 9px;font-size:11.5px;color:var(--on-ink-muted)}
   .msg.me .sstory small{color:#3a2a08}
   .msg.me .bub .sstory{background:rgba(0,0,0,.12)}
-  .sstory img{width:100%;aspect-ratio:9/14;object-fit:cover;display:block;opacity:.9}
+  .sstory img{width:100%;aspect-ratio:9/16;object-fit:cover;display:block;opacity:.9}
   .sstory.gone{padding:12px;font-style:italic;color:var(--on-ink-muted);font-size:12.5px}
 
   /* ---------- Ritaglio quadrato ---------- */
   .cr{position:absolute;inset:0;z-index:28;background:#0e0b06;display:flex;flex-direction:column}
   .cr-box{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:10px 0}
-  .cr-vp{position:relative;width:100%;max-width:min(100%,62vh);aspect-ratio:1;overflow:hidden;background:#000;touch-action:none;cursor:grab;
+  .cr-vp{position:relative;width:300px;height:300px;flex:none;overflow:hidden;background:#000;touch-action:none;cursor:grab;
     box-shadow:0 0 0 1.5px var(--gold)}
   .cr-vp:active{cursor:grabbing}
   .cr-vp img{position:absolute;max-width:none;user-select:none;-webkit-user-drag:none;pointer-events:none}
@@ -3521,7 +3521,7 @@ function scrProfile(id, inStack){
   const tab=soc.profTab[id]||"grid";
   const list = tab==="grid" ? postsOf(id) : tab==="tag" ? taggedIn(id) : [];
   const arch = tab==="arch" ? archivedStories(id) : [];
-  const grid = tab==="arch" ? (arch.length ? `<div class="grid">${arch.map(st=>`<button data-a="story-arch" data-id="${esc(st.id)}" data-u="${esc(id)}" style="aspect-ratio:9/14">${imgTag(st.image)}<span class="sdate">${esc(st.date||new Date(st.at).toLocaleDateString("it-IT"))}</span></button>`).join("")}</div>`
+  const grid = tab==="arch" ? (arch.length ? `<div class="grid">${arch.map(st=>`<button data-a="story-arch" data-id="${esc(st.id)}" data-u="${esc(id)}" style="aspect-ratio:9/16">${imgTag(st.image)}<span class="sdate">${esc(st.date||new Date(st.at).toLocaleDateString("it-IT"))}</span></button>`).join("")}</div>`
       : `<div class="empty-s">Nessuna storia archiviata.<br><small>Le storie finiscono qui 3 ore dopo la pubblicazione.</small></div>`)
     : list.length ? `<div class="grid">${list.map(po=>`<button data-a="post" data-id="${esc(po.id)}">${po.images.length?imgTag(po.images[0]):`<span class="gt">${esc(po.text.slice(0,140))}</span>`}${po.images.length>1?`<span class="multi">❐</span>`:""}</button>`).join("")}</div>`
     : `<div class="empty-s">${tab==="grid"?(own?"Non hai ancora pubblicato nulla.<br>Tocca <b>＋</b> per il tuo primo post.":"Nessun post."):"Nessun post in cui è taggato."}</div>`;
@@ -3631,8 +3631,8 @@ function scrCompose(){
   if(story) return hd(`<button class="ib" data-a="back" title="Annulla">${IC.close}</button>`,"Nuova storia",`<button class="ib gold txt" data-a="publish">Condividi</button>`,true)+kindBar+
   `<div class="ph-main">
     <div class="cp-who">${avHTML(a)}<div class="tx">Pubblichi come <b>${esc(prof(a).username)}</b>${badgeHTML(a)}</div></div>
-    <div class="cp-imgs">${d.images.slice(0,1).map(r=>`<div class="it" style="width:120px;height:186px">${imgTag(r)}<button class="x" data-a="rm-img" data-i="0" title="Togli">✕</button></div>`).join("")}
-      ${d.images.length?"":`<button class="add" data-a="pick-imgs" style="width:120px;height:186px"><b>＋</b>Scegli la foto</button>`}</div>
+    <div class="cp-imgs">${d.images.slice(0,1).map(r=>`<div class="it" style="width:120px;height:213px;cursor:pointer" data-a="crop-img" data-i="0" title="Tocca per sistemare la foto">${imgTag(r)}<button class="x" data-a="rm-img" data-i="0" title="Togli">✕</button><button class="adj" data-a="crop-img" data-i="0" title="Sistema">✎</button></div>`).join("")}
+      ${d.images.length?"":`<button class="add" data-a="pick-imgs" style="width:120px;height:213px"><b>＋</b>Scegli la foto</button>`}</div>
     <div class="pf" style="padding-top:0">
       ${ufHTML("Testo sulla storia (facoltativo)","text",d.text,250,{area:true,ph:"Scrivi qualcosa da mostrare sopra la foto…"})}
       ${ufHTML("Data","date",d.date,SOC_LIM.date,{ph:"Es. 3° giorno della Luna Rossa, 412 T.E.",hint:"La storia resta visibile per 3 ore, poi va in «Storie archiviate» sul profilo."})}
@@ -3918,7 +3918,7 @@ async function onSocialFiles(ev){
     } else if(socFilePurpose==="post" && soc.draft){
       const room=(soc.draft.kind==="story"?1:10)-soc.draft.images.length;
       if(files.length>room) toast(`Massimo 10 foto per post: ne aggiungo ${room}`);
-      if(soc.draft.kind==="story"){ for(const f of files.slice(0,room)){ soc.draft.images.push(await readImageFile(f, 1350)); renderSocial(); } }
+      if(soc.draft.kind==="story"){ const q=[]; for(const f of files.slice(0,room)) q.push({src:await readImageFile(f, 2400), idx:null}); if(q.length) cropStart(q, 9/16); }
       else { const q=[]; for(const f of files.slice(0,room)) q.push({src:await readImageFile(f, 2000), idx:null}); if(q.length) cropStart(q); }
     }
   }catch(e){ toast("⚠ "+e.message); }
@@ -4432,8 +4432,9 @@ function loadImgForCrop(ref){
     img.src=src;
   });
 }
-async function cropStart(queue){
-  soc.crop={queue, i:-1};
+// ar = larghezza/altezza del ritaglio: 1 per i post (quadrato), 9/16 per le storie (verticale)
+async function cropStart(queue, ar){
+  soc.crop={queue, i:-1, ar:ar||1};
   await cropNext();
 }
 async function cropNext(){
@@ -4455,21 +4456,28 @@ function cropHTML(){
       `Sistema la foto${n>1?` (${c.i+1}/${n})`:""}`, `<button class="ib gold txt" data-a="crop-done">Fatto</button>`, true)}
     <div class="cr-box"><div class="cr-vp" id="crVp"><img id="crImg" src="${c.img.src}" alt="" draggable="false"><div class="cr-grid"></div></div></div>
     <div class="cr-zoom"><span>－</span><input id="crZoom" type="range" min="1" max="4" step="0.01" value="${c.zoom}"><span>＋</span></div>
-    <p class="cr-hint">Trascina la foto per scegliere cosa tenere nel quadrato.<br>Usa il cursore${isMobile()?" o due dita":""} per ingrandire.</p>
+    <p class="cr-hint">Trascina la foto per scegliere cosa tenere nel ${c.ar<1?"riquadro verticale della storia":"quadrato"}.<br>Usa il cursore${isMobile()?" o due dita":""} per ingrandire.</p>
   </div>`;
 }
-function cropScale(V){ const c=soc.crop; return Math.max(V/c.w, V/c.h)*c.zoom; }
-function cropClamp(V){
-  const c=soc.crop, sc=cropScale(V), half=V/(2*sc);
-  c.cx=Math.min(Math.max(c.cx, half), c.w-half);
-  c.cy=Math.min(Math.max(c.cy, half), c.h-half);
+function cropScale(Vw,Vh){ const c=soc.crop; return Math.max(Vw/c.w, Vh/c.h)*c.zoom; }
+function cropClamp(Vw,Vh){
+  const c=soc.crop, sc=cropScale(Vw,Vh), hw=Vw/(2*sc), hh=Vh/(2*sc);
+  c.cx=Math.min(Math.max(c.cx, hw), c.w-hw);
+  c.cy=Math.min(Math.max(c.cy, hh), c.h-hh);
+}
+function cropSize(){
+  const c=soc.crop, box=document.querySelector("#soScreen .cr-box"), vp=document.getElementById("crVp");
+  const bw=(box&&box.clientWidth)||300, bh=Math.max(120,((box&&box.clientHeight)||300)-20);
+  const Vw=Math.floor(Math.min(bw, bh*c.ar)), Vh=Math.floor(Vw/c.ar);
+  if(vp){ vp.style.width=Vw+"px"; vp.style.height=Vh+"px"; }
+  return [Vw,Vh];
 }
 function cropApply(){
-  const c=soc.crop, vp=document.getElementById("crVp"), im=document.getElementById("crImg"); if(!c||!vp||!im) return;
-  const V=vp.clientWidth||300; cropClamp(V);
-  const sc=cropScale(V);
+  const c=soc.crop, im=document.getElementById("crImg"); if(!c||!im) return;
+  const [Vw,Vh]=cropSize(); cropClamp(Vw,Vh);
+  const sc=cropScale(Vw,Vh);
   im.style.width=(c.w*sc)+"px"; im.style.height=(c.h*sc)+"px";
-  im.style.left=(V/2-c.cx*sc)+"px"; im.style.top=(V/2-c.cy*sc)+"px";
+  im.style.left=(Vw/2-c.cx*sc)+"px"; im.style.top=(Vh/2-c.cy*sc)+"px";
 }
 function cropBind(){
   const vp=document.getElementById("crVp"); if(!vp) return;
@@ -4480,13 +4488,13 @@ function cropBind(){
   vp.addEventListener("pointermove", e=>{
     if(!pts.has(e.pointerId) || !soc.crop) return;
     const prev=pts.get(e.pointerId); pts.set(e.pointerId,{x:e.clientX,y:e.clientY});
-    const c=soc.crop, V=vp.clientWidth;
+    const c=soc.crop, Vw=vp.clientWidth, Vh=vp.clientHeight;
     if(pts.size>=2 && pinch){
       const [a,b]=[...pts.values()]; const d=Math.hypot(a.x-b.x,a.y-b.y);
       c.zoom=Math.min(4,Math.max(1, pinch.z*d/pinch.d));
       const z=document.getElementById("crZoom"); if(z) z.value=c.zoom;
     } else {
-      const sc=cropScale(V); c.cx-=(e.clientX-prev.x)/sc; c.cy-=(e.clientY-prev.y)/sc;
+      const sc=cropScale(Vw,Vh); c.cx-=(e.clientX-prev.x)/sc; c.cy-=(e.clientY-prev.y)/sc;
     }
     cropApply();
   });
@@ -4497,12 +4505,13 @@ function cropBind(){
   const z=document.getElementById("crZoom");
   if(z) z.addEventListener("input", ()=>{ soc.crop.zoom=+z.value; cropApply(); });
 }
+window.addEventListener("resize", ()=>{ if(soc.crop) cropApply(); });
 function cropRender(){
-  const c=soc.crop, V=1000; cropClamp(V);
-  const sc=cropScale(V), side=V/sc;
-  const cv=document.createElement("canvas"); cv.width=CROP_OUT; cv.height=CROP_OUT;
-  const cx=cv.getContext("2d"); cx.fillStyle="#16120b"; cx.fillRect(0,0,CROP_OUT,CROP_OUT);
-  cx.drawImage(c.img, c.cx-side/2, c.cy-side/2, side, side, 0, 0, CROP_OUT, CROP_OUT);
+  const c=soc.crop, Vw=1000, Vh=1000/c.ar; cropClamp(Vw,Vh);
+  const sc=cropScale(Vw,Vh), sw=Vw/sc, sh=Vh/sc, W=CROP_OUT, H=Math.round(CROP_OUT/c.ar);
+  const cv=document.createElement("canvas"); cv.width=W; cv.height=H;
+  const cx=cv.getContext("2d"); cx.fillStyle="#16120b"; cx.fillRect(0,0,W,H);
+  cx.drawImage(c.img, c.cx-sw/2, c.cy-sh/2, sw, sh, 0, 0, W, H);
   return cv.toDataURL("image/jpeg",0.88);
 }
 function cropDone(){
@@ -4526,7 +4535,7 @@ function cropAction(A, el){
     case "crop-skip": cropNext(); break;
     case "crop-img": { const d=soc.draft, i=+el.dataset.i; if(!d) break;
       const src=(d.srcs&&d.srcs[i])||d.images[i], crop=d.crops&&d.crops[i];
-      cropStart([{src, idx:i, crop}]); break; }
+      cropStart([{src, idx:i, crop}], d.kind==="story"?9/16:1); break; }
   }
 }
 
