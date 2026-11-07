@@ -686,7 +686,7 @@
   .po-media{position:relative;background:#0d0a06}
   .po-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
   .po-track::-webkit-scrollbar{display:none}
-  .po-track img{flex:none;width:100%;aspect-ratio:4/5;object-fit:cover;scroll-snap-align:center;display:block;background:#1d170e;user-select:none;-webkit-user-drag:none}
+  .po-track img{flex:none;width:100%;aspect-ratio:1/1;object-fit:cover;scroll-snap-align:center;display:block;background:#1d170e;user-select:none;-webkit-user-drag:none}
   .po-count{position:absolute;top:10px;right:10px;background:rgba(10,8,4,.7);color:#f0e2c0;font-size:11.5px;font-weight:700;padding:3px 8px;border-radius:999px}
   .po-heart{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(0);color:#f4e7c8;font-size:90px;pointer-events:none;opacity:0;text-shadow:0 4px 20px rgba(0,0,0,.5)}
   .po-heart.pop{animation:heartpop .8s ease-out}
@@ -927,6 +927,23 @@
   .msg.me .bub .sstory{background:rgba(0,0,0,.12)}
   .sstory img{width:100%;aspect-ratio:9/14;object-fit:cover;display:block;opacity:.9}
   .sstory.gone{padding:12px;font-style:italic;color:var(--on-ink-muted);font-size:12.5px}
+
+  /* ---------- Ritaglio quadrato ---------- */
+  .cr{position:absolute;inset:0;z-index:28;background:#0e0b06;display:flex;flex-direction:column}
+  .cr-box{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:10px 0}
+  .cr-vp{position:relative;width:100%;max-width:min(100%,62vh);aspect-ratio:1;overflow:hidden;background:#000;touch-action:none;cursor:grab;
+    box-shadow:0 0 0 1.5px var(--gold)}
+  .cr-vp:active{cursor:grabbing}
+  .cr-vp img{position:absolute;max-width:none;user-select:none;-webkit-user-drag:none;pointer-events:none}
+  .cr-grid{position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(90deg,transparent calc(33.33% - .5px),rgba(255,255,255,.35) calc(33.33% - .5px),rgba(255,255,255,.35) calc(33.33% + .5px),transparent calc(33.33% + .5px),transparent calc(66.66% - .5px),rgba(255,255,255,.35) calc(66.66% - .5px),rgba(255,255,255,.35) calc(66.66% + .5px),transparent calc(66.66% + .5px)),
+      linear-gradient(180deg,transparent calc(33.33% - .5px),rgba(255,255,255,.35) calc(33.33% - .5px),rgba(255,255,255,.35) calc(33.33% + .5px),transparent calc(33.33% + .5px),transparent calc(66.66% - .5px),rgba(255,255,255,.35) calc(66.66% - .5px),rgba(255,255,255,.35) calc(66.66% + .5px),transparent calc(66.66% + .5px))}
+  .cr-zoom{flex:none;display:flex;align-items:center;gap:12px;padding:6px 26px;color:var(--gold-bright);font-weight:700}
+  .cr-zoom input{flex:1;accent-color:var(--gold)}
+  .cr-hint{flex:none;text-align:center;font-size:12.5px;color:var(--on-ink-muted);margin:4px 20px 18px;line-height:1.5}
+  .cp-imgs .it.sq{width:96px;height:96px;cursor:pointer}
+  .cp-imgs .add.sq{width:96px;height:96px}
+  .cp-imgs .it .adj{position:absolute;bottom:4px;right:4px;width:24px;height:24px;border-radius:50%;border:none;background:rgba(10,8,4,.75);color:#fff;cursor:pointer;font-size:11px}
 </style>
 </head>
 <body class="view-library">
@@ -1677,7 +1694,7 @@ window.addEventListener("keydown", e=>{
     if(syncOpen){ closeSyncModal(); return; }
     if(bookOpen){ closeBookModal(); return; }
     if(uiView==="story"){ if(typing) e.target.blur(); else closeStory(); return; }
-    if(uiView==="social"){ if(typing) e.target.blur(); else if(soc.sv) svClose(); else if(soc.sheet||soc.stack.length) socBack(); else closeSocial(); return; }
+    if(uiView==="social"){ if(typing) e.target.blur(); else if(soc.crop) cropNext(); else if(soc.sv) svClose(); else if(soc.sheet||soc.stack.length) socBack(); else closeSocial(); return; }
     if(uiView==="library"){ if(managing) toggleManage(); return; }
     clearSelection(); return;
   }
@@ -3601,8 +3618,8 @@ function scrCompose(){
       `<button class="ib gold txt" data-a="publish">${d.editId?"Salva":"Condividi"}</button>`, true)+kindBar+
   `<div class="ph-main">
     <div class="cp-who" data-a="${d.editId?"":"accounts"}">${avHTML(a)}<div class="tx">${d.editId?"Post di":"Pubblichi come"} <b>${esc(prof(a).username)}</b>${badgeHTML(a)}</div>${d.editId?"":`<small>Cambia ${IC.down}</small>`}</div>
-    <div class="cp-imgs">${d.images.map((r,i)=>`<div class="it">${imgTag(r)}<button class="x" data-a="rm-img" data-i="${i}" title="Togli">✕</button>${i>0?`<button class="mv" data-a="mv-img" data-i="${i}" title="Sposta a sinistra">◀</button>`:""}</div>`).join("")}
-      ${d.images.length<10?`<button class="add" data-a="pick-imgs"><b>＋</b>Aggiungi foto</button>`:""}</div>
+    <div class="cp-imgs">${d.images.map((r,i)=>`<div class="it sq" data-a="crop-img" data-i="${i}" title="Tocca per sistemare la foto">${imgTag(r)}<button class="x" data-a="rm-img" data-i="${i}" title="Togli">✕</button>${i>0?`<button class="mv" data-a="mv-img" data-i="${i}" title="Sposta a sinistra">◀</button>`:""}<button class="adj" data-a="crop-img" data-i="${i}" title="Sistema">✎</button></div>`).join("")}
+      ${d.images.length<10?`<button class="add sq" data-a="pick-imgs"><b>＋</b>Aggiungi foto</button>`:""}</div>
     <div class="pf" style="padding-top:0">
       ${ufHTML("Didascalia","text",d.text,SOC_LIM.caption,{area:true,ph:"Scrivi una didascalia… usa @nome per citare qualcuno"})}
       ${ufHTML("Luogo","place",d.place,SOC_LIM.date,{ph:"Es. Waterdeep, Porto Sud"})}
@@ -3617,7 +3634,7 @@ function sheetHTML(){
   const sh=soc.sheet; if(!sh) return "";
   let inner="";
   if(sh.k==="accounts"){
-    inner=`<div class="sh-t">Cambia account</div>`+tree().nodes.map(n=>rowHTML(n.id,{check:true, act:"set-acting"})).join("");
+    inner=`<div class="sh-t">Cambia account</div>`+groupedRows(null, id=>rowHTML(id,{check:true, act:"set-acting"}));
   } else if(sh.k==="post-menu"){
     const posts=livePosts(), i=posts.findIndex(p=>p.id===sh.id);
     inner=`<div class="sh-t">Post</div>
@@ -3655,7 +3672,8 @@ function renderSocial(){
     html = soc.tab==="search" ? scrSearch() : soc.tab==="activity" ? scrActivity() : soc.tab==="profile" ? scrProfile(acting(),false) : scrFeed();
   }
   const showNav = !(s && (s.k==="edit"||s.k==="compose"||s.k==="comments"||DM_SCREENS[s.k]));
-  root.innerHTML = statusHTML() + html + (showNav?navHTML():"") + sheetHTML() + (soc.sv?svHTML():"");
+  root.innerHTML = statusHTML() + html + (showNav?navHTML():"") + sheetHTML() + (soc.crop?cropHTML():"") + (soc.sv?svHTML():"");
+  if(soc.crop) cropBind();
   const m=root.querySelector(".ph-main"); if(m && keep) m.scrollTop=keep;
   soc.lastKey=key;
   root.querySelectorAll(".po-track").forEach(tr=>{
@@ -3680,9 +3698,10 @@ function openSocial(){
   showView("social"); renderSocial();
   const m=document.querySelector("#soScreen .ph-main"); if(m) m.scrollTop=0;
 }
-function closeSocial(){ flushSave(); clearInterval(svTimer); soc.sv=null; soc.stack=[]; soc.sheet=null; showView("tree"); }
+function closeSocial(){ flushSave(); clearInterval(svTimer); soc.sv=null; soc.crop=null; soc.stack=[]; soc.sheet=null; showView("tree"); }
 function socPush(s){ soc.sheet=null; soc.stack.push(s); renderSocial(); const m=document.querySelector("#soScreen .ph-main"); if(m) m.scrollTop=0; }
 function socBack(){
+  if(soc.crop){ cropNext(); return; }
   if(soc.sheet){ soc.sheet=null; renderSocial(); return; }
   const s=soc.stack.pop();
   if(s && s.k==="compose") soc.draft=null;
@@ -3797,6 +3816,7 @@ function socHandleClick(ev){
   const A=el.dataset.a, id=el.dataset.id;
   if(A.startsWith("dm-") || A==="share"){ dmAction(A, el, ev); return; }
   if(A.startsWith("sv-") || A.startsWith("story-")){ storyAction(A, el); return; }
+  if(A.startsWith("crop-")){ cropAction(A, el); return; }
   switch(A){
     case "close-social": closeSocial(); break;
     case "tab": soc.stack=[]; soc.sheet=null;
@@ -3825,6 +3845,12 @@ function socHandleClick(ev){
     case "act-as": S().acting=id; save(); toast("Ora usi @"+prof(id).username); renderSocial(); break;
     case "accounts": if(!tree().nodes.length) break; soc.sheet={k:"accounts"}; renderSocial(); break;
     case "set-acting":
+      if(!alive(id)){            // personaggio di un altro albero: il social passa a quel libro
+        const t2=charTree(id); flushSave(); currentId=t2.id; socOf(t2).acting=id;
+        soc.stack=soc.stack.filter(x=>x.k==="compose"); soc.profTab={}; soc.car={}; soc.lastKey="";
+        if(soc.draft && !soc.draft.editId){ soc.draft.author=id; soc.draft.tags=[]; }
+        soc.sheet=null; save(); renderAll(); toast("📖 Ora sei nel libro «"+(t2.name||"Senza titolo")+"»", 2600); break;
+      }
       S().acting=id; save(); soc.sheet=null;
       if(soc.draft && !soc.draft.editId){ soc.draft.author=id; soc.draft.tags=soc.draft.tags.filter(x=>x!==id); }
       renderSocial(); break;
@@ -3842,8 +3868,8 @@ function socHandleClick(ev){
     case "rm-avatar": if(soc.edit){ soc.edit.avatar=null; renderSocial(); } break;
     case "compose": startCompose(); break;
     case "pick-imgs": socFilePurpose="post"; pickFiles(!(soc.draft&&soc.draft.kind==="story")); break;
-    case "rm-img": if(soc.draft){ soc.draft.images.splice(+el.dataset.i,1); renderSocial(); } break;
-    case "mv-img": if(soc.draft){ const i=+el.dataset.i, im=soc.draft.images; [im[i-1],im[i]]=[im[i],im[i-1]]; renderSocial(); } break;
+    case "rm-img": if(soc.draft){ const d=soc.draft, i=+el.dataset.i; d.images.splice(i,1); if(d.srcs) d.srcs.splice(i,1); if(d.crops) d.crops.splice(i,1); renderSocial(); } break;
+    case "mv-img": if(soc.draft){ const d=soc.draft, i=+el.dataset.i; [d.images,d.srcs,d.crops].forEach(a=>{ if(a) [a[i-1],a[i]]=[a[i],a[i-1]]; }); renderSocial(); } break;
     case "tag-tg": if(soc.draft){ const t=soc.draft.tags, i=t.indexOf(id); if(i>=0) t.splice(i,1); else t.push(id); renderSocial(); } break;
     case "publish": publish(); break;
     case "reply": { const f=findComment(id); if(!f) break; soc.replyTo=id; renderSocial();
@@ -3868,7 +3894,8 @@ async function onSocialFiles(ev){
     } else if(socFilePurpose==="post" && soc.draft){
       const room=(soc.draft.kind==="story"?1:10)-soc.draft.images.length;
       if(files.length>room) toast(`Massimo 10 foto per post: ne aggiungo ${room}`);
-      for(const f of files.slice(0,room)){ soc.draft.images.push(await readImageFile(f, 1350)); renderSocial(); }
+      if(soc.draft.kind==="story"){ for(const f of files.slice(0,room)){ soc.draft.images.push(await readImageFile(f, 1350)); renderSocial(); } }
+      else { const q=[]; for(const f of files.slice(0,room)) q.push({src:await readImageFile(f, 2000), idx:null}); if(q.length) cropStart(q); }
     }
   }catch(e){ toast("⚠ "+e.message); }
 }
@@ -4362,6 +4389,122 @@ function sharedStoryHTML(ref, mine, authorOfMsg){
 }
 document.getElementById("soScreen").addEventListener("focusin", e=>{ if(e.target.id==="soSvR" && soc.sv){ soc.sv.paused=true; e.target.closest(".sv").classList.add("paused"); } });
 document.getElementById("soScreen").addEventListener("focusout", e=>{ if(e.target.id==="soSvR" && soc.sv){ soc.sv.paused=false; } });
+
+
+/* ============================================================
+   RITAGLIO QUADRATO delle foto dei post (trascina + zoom)
+   soc.crop = { queue:[{src, idx}], i, w, h, zoom, cx, cy }
+============================================================ */
+soc.crop=null;
+const CROP_OUT=1080;
+
+function loadImgForCrop(ref){
+  return new Promise(async (res,rej)=>{
+    let src=ref;
+    if(!ref.startsWith("data:")){ src=socImgMem.get(ref) || await idbGet(ref) || remoteImgUrl(ref); }
+    const img=new Image();
+    if(!src.startsWith("data:")) img.crossOrigin="anonymous";
+    img.onload=()=>res(img); img.onerror=()=>rej(new Error("foto non caricabile"));
+    img.src=src;
+  });
+}
+async function cropStart(queue){
+  soc.crop={queue, i:-1};
+  await cropNext();
+}
+async function cropNext(){
+  const c=soc.crop; if(!c) return;
+  c.i++;
+  if(c.i>=c.queue.length){ soc.crop=null; renderSocial(); return; }
+  const it=c.queue[c.i];
+  try{ c.img=await loadImgForCrop(it.src); }
+  catch(e){ toast("⚠ "+e.message); return cropNext(); }
+  c.w=c.img.naturalWidth; c.h=c.img.naturalHeight; c.zoom=1; c.cx=c.w/2; c.cy=c.h/2;
+  if(it.crop){ Object.assign(c, it.crop); }
+  renderSocial();
+}
+function cropHTML(){
+  const c=soc.crop; if(!c||!c.img) return "";
+  const n=c.queue.length;
+  return `<div class="cr">
+    ${hd(`<button class="ib" data-a="crop-skip" title="${c.queue[c.i].idx==null?"Scarta questa foto":"Annulla"}">${IC.close}</button>`,
+      `Sistema la foto${n>1?` (${c.i+1}/${n})`:""}`, `<button class="ib gold txt" data-a="crop-done">Fatto</button>`, true)}
+    <div class="cr-box"><div class="cr-vp" id="crVp"><img id="crImg" src="${c.img.src}" alt="" draggable="false"><div class="cr-grid"></div></div></div>
+    <div class="cr-zoom"><span>－</span><input id="crZoom" type="range" min="1" max="4" step="0.01" value="${c.zoom}"><span>＋</span></div>
+    <p class="cr-hint">Trascina la foto per scegliere cosa tenere nel quadrato.<br>Usa il cursore${isMobile()?" o due dita":""} per ingrandire.</p>
+  </div>`;
+}
+function cropScale(V){ const c=soc.crop; return Math.max(V/c.w, V/c.h)*c.zoom; }
+function cropClamp(V){
+  const c=soc.crop, sc=cropScale(V), half=V/(2*sc);
+  c.cx=Math.min(Math.max(c.cx, half), c.w-half);
+  c.cy=Math.min(Math.max(c.cy, half), c.h-half);
+}
+function cropApply(){
+  const c=soc.crop, vp=document.getElementById("crVp"), im=document.getElementById("crImg"); if(!c||!vp||!im) return;
+  const V=vp.clientWidth||300; cropClamp(V);
+  const sc=cropScale(V);
+  im.style.width=(c.w*sc)+"px"; im.style.height=(c.h*sc)+"px";
+  im.style.left=(V/2-c.cx*sc)+"px"; im.style.top=(V/2-c.cy*sc)+"px";
+}
+function cropBind(){
+  const vp=document.getElementById("crVp"); if(!vp) return;
+  cropApply();
+  const pts=new Map(); let last=null, pinch=null;
+  vp.addEventListener("pointerdown", e=>{ vp.setPointerCapture(e.pointerId); pts.set(e.pointerId,{x:e.clientX,y:e.clientY});
+    if(pts.size===2){ const [a,b]=[...pts.values()]; pinch={d:Math.hypot(a.x-b.x,a.y-b.y), z:soc.crop.zoom}; } });
+  vp.addEventListener("pointermove", e=>{
+    if(!pts.has(e.pointerId) || !soc.crop) return;
+    const prev=pts.get(e.pointerId); pts.set(e.pointerId,{x:e.clientX,y:e.clientY});
+    const c=soc.crop, V=vp.clientWidth;
+    if(pts.size>=2 && pinch){
+      const [a,b]=[...pts.values()]; const d=Math.hypot(a.x-b.x,a.y-b.y);
+      c.zoom=Math.min(4,Math.max(1, pinch.z*d/pinch.d));
+      const z=document.getElementById("crZoom"); if(z) z.value=c.zoom;
+    } else {
+      const sc=cropScale(V); c.cx-=(e.clientX-prev.x)/sc; c.cy-=(e.clientY-prev.y)/sc;
+    }
+    cropApply();
+  });
+  const up=e=>{ pts.delete(e.pointerId); if(pts.size<2) pinch=null; };
+  vp.addEventListener("pointerup", up); vp.addEventListener("pointercancel", up);
+  vp.addEventListener("wheel", e=>{ e.preventDefault(); const c=soc.crop; c.zoom=Math.min(4,Math.max(1,c.zoom*(e.deltaY<0?1.08:0.93)));
+    const z=document.getElementById("crZoom"); if(z) z.value=c.zoom; cropApply(); }, {passive:false});
+  const z=document.getElementById("crZoom");
+  if(z) z.addEventListener("input", ()=>{ soc.crop.zoom=+z.value; cropApply(); });
+}
+function cropRender(){
+  const c=soc.crop, V=1000; cropClamp(V);
+  const sc=cropScale(V), side=V/sc;
+  const cv=document.createElement("canvas"); cv.width=CROP_OUT; cv.height=CROP_OUT;
+  const cx=cv.getContext("2d"); cx.fillStyle="#16120b"; cx.fillRect(0,0,CROP_OUT,CROP_OUT);
+  cx.drawImage(c.img, c.cx-side/2, c.cy-side/2, side, side, 0, 0, CROP_OUT, CROP_OUT);
+  return cv.toDataURL("image/jpeg",0.88);
+}
+function cropDone(){
+  const c=soc.crop, d=soc.draft; if(!c) return;
+  const it=c.queue[c.i];
+  if(d){
+    let out;
+    try{ out=cropRender(); }
+    catch(e){ toast("⚠ Non riesco a ritagliare questa foto (è salvata solo su GitHub). Riprova dopo averla ricaricata."); return cropNext(); }
+    if(!d.srcs) d.srcs=d.images.slice();
+    if(!d.crops) d.crops=d.images.map(()=>null);
+    const crop={zoom:c.zoom, cx:c.cx, cy:c.cy};
+    if(it.idx==null){ d.images.push(out); d.srcs.push(it.src); d.crops.push(crop); }
+    else { d.images[it.idx]=out; d.srcs[it.idx]=it.src; d.crops[it.idx]=crop; }
+  }
+  cropNext();
+}
+function cropAction(A, el){
+  switch(A){
+    case "crop-done": cropDone(); break;
+    case "crop-skip": cropNext(); break;
+    case "crop-img": { const d=soc.draft, i=+el.dataset.i; if(!d) break;
+      const src=(d.srcs&&d.srcs[i])||d.images[i], crop=d.crops&&d.crops[i];
+      cropStart([{src, idx:i, crop}]); break; }
+  }
+}
 
 /* ============================================================
    INIT
