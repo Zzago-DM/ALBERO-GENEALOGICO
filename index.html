@@ -3432,7 +3432,7 @@ function postHTML(p){
   const nC=String(p.nComments||"").trim()!=="" ? parseInt(p.nComments,10)||0 : cms.length;
   const tags=p.tags.filter(exists);
   return `<article class="po">
-    <div class="po-hd">${avStoryHTML(p.author)}<div class="who">${unameHTML(p.author)}${p.place?`<small>📍 ${esc(p.place)}</small>`:""}</div>
+    <div class="po-hd">${avStoryHTML(p.author)}<div class="who">${unameHTML(p.author)}${p.place?`<small>${esc(p.place)}</small>`:""}</div>
       <button class="ib" data-a="post-menu" data-id="${esc(p.id)}" title="Opzioni">${IC.more}</button></div>
     ${media}
     <div class="po-act">
