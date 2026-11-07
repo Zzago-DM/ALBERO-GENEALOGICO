@@ -946,6 +946,55 @@
   .cp-imgs .it.sq{width:96px;height:96px;cursor:pointer}
   .cp-imgs .add.sq{width:96px;height:96px}
   .cp-imgs .it .adj{position:absolute;bottom:4px;right:4px;width:24px;height:24px;border-radius:50%;border:none;background:rgba(10,8,4,.75);color:#fff;cursor:pointer;font-size:11px}
+
+  /* ---------- Social da computer: telefono appoggiato su un libro aperto ---------- */
+  .so-body{position:relative;overflow:hidden}
+  .so-body .phone{z-index:2;height:min(820px,calc(100% - 40px));
+    box-shadow:0 0 0 1.5px var(--gold),0 0 0 6px #120e08,0 0 0 7.5px rgba(184,146,63,.45),0 18px 30px rgba(0,0,0,.45),14px 40px 70px rgba(0,0,0,.55)}
+  .so-book{--bc:#6b1f1f;position:absolute;left:50%;top:50%;z-index:1;pointer-events:none;
+    height:min(720px,calc(100% - 100px));aspect-ratio:1.5;
+    transform:translate(-50%,-50%) rotate(-3.5deg)}
+  .bk-cover{position:absolute;inset:-16px -22px;border-radius:10px;
+    background:radial-gradient(ellipse at 30% 20%,rgba(255,255,255,.12),transparent 55%),
+      linear-gradient(90deg,rgba(0,0,0,.35),transparent 8%,transparent 46%,rgba(0,0,0,.45) 50%,transparent 54%,transparent 92%,rgba(0,0,0,.35)),var(--bc);
+    box-shadow:0 30px 70px rgba(0,0,0,.65),inset 0 0 0 2px rgba(214,173,82,.35),inset 0 0 30px rgba(0,0,0,.45)}
+  .bk-cover::before{content:"";position:absolute;inset:7px;border-radius:7px;border:1px solid rgba(214,173,82,.4)}
+  .bk-pages{position:absolute;inset:0;display:flex}
+  .pg{position:relative;flex:1;overflow:hidden;
+    box-shadow:0 1px 0 #cfc09a,0 2px 0 #e6dab9,0 3px 0 #c9b98f,0 4px 0 #e2d5b2,0 5px 0 #bfae83,0 7px 10px rgba(0,0,0,.35)}
+  .pg.l{border-radius:6px 2px 2px 6px;
+    background:linear-gradient(90deg,#e6d9b8 0%,#f1e7cf 6%,#f3ead3 70%,#e2d3ae 90%,#b9a57a 100%);
+    box-shadow:-1px 0 0 #d4c59f,-2px 1px 0 #e8ddbf,-3px 2px 0 #c8b78c,-4px 3px 0 #e2d5b2,-5px 4px 0 #bfae83,-6px 7px 10px rgba(0,0,0,.35)}
+  .pg.r{border-radius:2px 6px 6px 2px;
+    background:linear-gradient(270deg,#e6d9b8 0%,#f1e7cf 6%,#f3ead3 70%,#e2d3ae 90%,#b9a57a 100%);
+    box-shadow:1px 0 0 #d4c59f,2px 1px 0 #e8ddbf,3px 2px 0 #c8b78c,4px 3px 0 #e2d5b2,5px 4px 0 #bfae83,6px 7px 10px rgba(0,0,0,.35)}
+  .pg::after{content:"";position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(ellipse at 50% 40%,transparent 55%,rgba(120,90,40,.16));mix-blend-mode:multiply}
+  .pg-frame{position:absolute;inset:7% 9% 7% 9%;border:1.5px solid rgba(184,146,63,.55);outline:1px solid rgba(184,146,63,.35);outline-offset:4px;
+    display:flex;flex-direction:column;align-items:center;padding:4% 7%;color:#5a4528}
+  .pg.l .pg-frame{left:max(5%,calc(100% - 225px - 330px));right:225px}
+  .pg.r .pg-frame{right:max(5%,calc(100% - 225px - 330px));left:225px}
+  .pg-orn{font-size:34px;color:#a6802f;line-height:1;margin-top:2%}
+  .pg-orn.sm{font-size:22px;margin-top:auto}
+  .pg-title{font-family:var(--display);font-style:italic;font-weight:600;font-size:clamp(17px,1.9vw,30px);text-align:center;color:#4a2f18;
+    margin:8px 0 6px;line-height:1.15;max-width:100%;overflow-wrap:anywhere}
+  .pg-title.long{font-size:clamp(14px,1.35vw,23px)}
+  .pg-rule{color:#b8923f;font-size:11px;letter-spacing:6px;margin-bottom:6%}
+  .pg-text{width:100%;display:flex;flex-direction:column;gap:11px;position:relative}
+  .pg-text .par{display:block;height:calc(var(--n) * 14px);position:relative;
+    background:repeating-linear-gradient(180deg,rgba(74,55,30,.26) 0 3px,transparent 3px 14px);
+    -webkit-mask:linear-gradient(90deg,#000 0 100%) top/100% calc(100% - 14px) no-repeat,linear-gradient(90deg,#000 0 100%) bottom left/var(--l) 14px no-repeat;
+            mask:linear-gradient(90deg,#000 0 100%) top/100% calc(100% - 14px) no-repeat,linear-gradient(90deg,#000 0 100%) bottom left/var(--l) 14px no-repeat;
+    opacity:.85;filter:blur(.3px)}
+  .pg-cap{position:absolute;left:0;top:-6px;font-family:var(--display);font-size:46px;font-weight:700;color:#7d3a36;line-height:1;
+    background:#f3ead3;padding:0 8px 2px 0}
+  .pg.r .pg-text{margin-top:4%}
+  .pg-num{font-family:var(--display);font-style:italic;font-size:12px;color:#8a7350;margin-top:auto;padding-top:8px}
+  .pg-orn.sm+.pg-num{margin-top:6px}
+  .bk-ribbon{position:absolute;left:calc(50% + 26px);top:-18px;width:16px;height:calc(100% + 64px);z-index:1;
+    background:linear-gradient(90deg,#8a2a22,#b8432f 45%,#7a2219);clip-path:polygon(0 0,100% 0,100% 100%,50% calc(100% - 12px),0 100%);
+    box-shadow:2px 0 4px rgba(0,0,0,.3);filter:drop-shadow(2px 3px 3px rgba(0,0,0,.35))}
+  body.mode-mobile .so-book{display:none}
 </style>
 </head>
 <body class="view-library">
@@ -1089,7 +1138,27 @@
       <div class="st-title"><small>Social</small><span id="soName"></span></div>
       <button class="st-btn" onclick="goLibrary()" title="Torna alla biblioteca">📚 <span class="lbl">Biblioteca</span></button>
     </header>
-    <div class="so-body"><div class="phone"><div class="ph-screen" id="soScreen"></div></div></div>
+    <div class="so-body">
+      <div class="so-book" id="soBook" aria-hidden="true">
+        <div class="bk-cover"></div>
+        <div class="bk-pages">
+          <div class="pg l"><div class="pg-frame">
+            <div class="pg-orn">❦</div>
+            <div class="pg-title" id="soBookTitle"></div>
+            <div class="pg-rule">✦ ✦ ✦</div>
+            <div class="pg-text"><i class="par" style="--n:5;--l:62%"></i><i class="par" style="--n:7;--l:38%"></i><i class="par" style="--n:4;--l:81%"></i><i class="par" style="--n:6;--l:45%"></i></div>
+            <div class="pg-num">— xii —</div>
+          </div></div>
+          <div class="pg r"><div class="pg-frame">
+            <div class="pg-text"><span class="pg-cap">C</span><i class="par" style="--n:6;--l:54%"></i><i class="par" style="--n:5;--l:72%"></i><i class="par" style="--n:7;--l:30%"></i><i class="par" style="--n:5;--l:66%"></i><i class="par" style="--n:4;--l:48%"></i></div>
+            <div class="pg-orn sm">❦</div>
+            <div class="pg-num">— xiii —</div>
+          </div></div>
+        </div>
+        <div class="bk-ribbon"></div>
+      </div>
+      <div class="phone"><div class="ph-screen" id="soScreen"></div></div>
+    </div>
     <input type="file" id="soFile" accept="image/*" multiple style="display:none">
   </section>
 
@@ -3677,6 +3746,7 @@ function viewKey(){ const s=topScreen(); return s ? s.k+":"+(s.id||"")+":"+(s.w|
 function renderSocial(){
   const t=tree(); if(!t) return;
   document.getElementById("soName").textContent=t.name||"Senza titolo";
+  const bk=document.getElementById("soBook"); if(bk){ bk.style.setProperty("--bc", t.cover||"#6b1f1f"); const bt=document.getElementById("soBookTitle"); bt.textContent=t.name||"Senza titolo"; bt.classList.toggle("long", bt.textContent.length>16); }
   const root=document.getElementById("soScreen");
   const key=viewKey();
   const oldMain=root.querySelector(".ph-main");
