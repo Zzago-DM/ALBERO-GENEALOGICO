@@ -993,6 +993,19 @@
     background:linear-gradient(90deg,#8a2a22,#b8432f 45%,#7a2219);clip-path:polygon(0 0,100% 0,100% 100%,50% calc(100% - 12px),0 100%);
     box-shadow:2px 0 4px rgba(0,0,0,.3);filter:drop-shadow(2px 3px 3px rgba(0,0,0,.35))}
   body.mode-mobile .so-book{display:none}
+
+  /* ---------- Passaggi animati Social ⇄ Storia ---------- */
+  #trBlock{position:fixed;inset:0;z-index:90;display:none;cursor:pointer;background:transparent}
+  .so-book .bk-pages{perspective:2400px}
+  .bk-flap{position:absolute;left:50%;top:0;width:50%;height:100%;transform-origin:0 50%;transform-style:preserve-3d;z-index:3}
+  .bk-flap>div{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+  .fl-front{border-radius:2px 6px 6px 2px;background:linear-gradient(270deg,#e6d9b8 0%,#f1e7cf 6%,#f3ead3 70%,#e2d3ae 90%,#b9a57a 100%);
+    box-shadow:inset 0 0 40px rgba(120,90,40,.18)}
+  .fl-back{transform:rotateY(180deg);border-radius:6px 10px 10px 6px;margin:-16px -22px -16px 0;
+    background:radial-gradient(ellipse at 60% 30%,rgba(255,255,255,.14),transparent 60%),var(--bc);
+    box-shadow:inset 0 0 0 2px rgba(214,173,82,.4),inset 0 0 30px rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center}
+  .fl-back span{color:#d6ad52;font-size:64px;opacity:.85;text-shadow:0 2px 6px rgba(0,0,0,.5)}
+  .fl-back::before{content:"";position:absolute;inset:12px;border:1px solid rgba(214,173,82,.45);border-radius:6px}
 </style>
 </head>
 <body class="view-library">
@@ -1124,6 +1137,7 @@
         <button data-m="read" onclick="setStoryMode('read')">📖 Leggi</button>
         <button data-m="write" onclick="setStoryMode('write')">✎ Scrivi</button>
       </div>
+      <button class="st-btn" onclick="storyToSocial()" title="Apri il Social">📱 <span class="lbl">Social</span></button>
       <button class="st-btn" onclick="goLibrary()" title="Torna alla biblioteca">📚 <span class="lbl">Biblioteca</span></button>
     </header>
     <div class="st-body" id="stBody"></div>
@@ -1134,6 +1148,7 @@
     <header class="st-bar">
       <button class="st-btn" onclick="closeSocial()" title="Torna all'albero">← <span class="lbl">Albero</span></button>
       <div class="st-title"><small>Social</small><span id="soName"></span></div>
+      <button class="st-btn" onclick="socialToStory()" title="Apri la Storia">📖 <span class="lbl">Storia</span></button>
       <button class="st-btn" onclick="goLibrary()" title="Torna alla biblioteca">📚 <span class="lbl">Biblioteca</span></button>
     </header>
     <div class="so-body">
@@ -4612,6 +4627,112 @@ function cropAction(A, el){
       const src=(d.srcs&&d.srcs[i])||d.images[i], crop=d.crops&&d.crops[i];
       cropStart([{src, idx:i, crop}], d.kind==="story"?9/16:1); break; }
   }
+}
+
+
+/* ============================================================
+   PASSAGGI SOCIAL ⇄ STORIA
+   Computer: animazione (telefono che scivola via e "telecamera" che entra nel libro;
+   al ritorno il libro si chiude, si riapre e il telefono viene appoggiato sopra).
+   Telefono: passaggio diretto.
+============================================================ */
+let trBusy=false, trSkip=false, trAnims=[];
+function trCanAnimate(){
+  if(isMobile()) return false;
+  if(!Element.prototype.animate) return false;
+  if(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return false;
+  return true;
+}
+function trAnim(el, frames, ms, easing, extra){
+  if(!el) return Promise.resolve();
+  const a=el.animate(frames, Object.assign({duration:trSkip?0:ms, easing:easing||"ease-in-out", fill:"forwards"}, extra||{}));
+  trAnims.push(a);
+  return a.finished.catch(()=>{});
+}
+function trWait(ms){ return trSkip ? Promise.resolve() : new Promise(r=>setTimeout(r,ms)); }
+function trBlocker(on){
+  let b=document.getElementById("trBlock");
+  if(on){
+    if(!b){ b=document.createElement("div"); b.id="trBlock"; document.body.appendChild(b);
+      b.addEventListener("pointerdown", trDoSkip); }
+    b.style.display="block"; window.addEventListener("keydown", trDoSkip, true);
+  } else { if(b) b.style.display="none"; window.removeEventListener("keydown", trDoSkip, true); }
+}
+function trDoSkip(e){ if(e){ e.preventDefault(); e.stopPropagation(); } trSkip=true; trAnims.forEach(a=>{ try{ a.finish(); }catch(_){} }); }
+function trCleanup(){ trAnims.forEach(a=>{ try{ a.cancel(); }catch(_){} }); trAnims=[]; trBusy=false; trSkip=false; trBlocker(false);
+  const fl=document.getElementById("bkFlap"); if(fl) fl.remove();
+  document.querySelectorAll("#soBook .pg.r").forEach(p=>p.style.visibility="");
+}
+// quanto ingrandire il libro perché riempia lo schermo
+function trBookZoom(){
+  const bk=document.getElementById("soBook"); if(!bk) return 2;
+  const w=bk.offsetWidth||1000, h=bk.offsetHeight||660;
+  return Math.max(innerWidth/w, innerHeight/h)*1.18;
+}
+const BK_REST="translate(-50%,-50%) rotate(-3.5deg) scale(1)";
+function bkZoomed(){ return `translate(-50%,-50%) rotate(0deg) scale(${trBookZoom()})`; }
+
+async function socialToStory(){
+  if(trBusy) return;
+  if(!trCanAnimate()){ closeSocial(); openStory(); return; }
+  trBusy=true; trBlocker(true);
+  flushSave(); clearInterval(svTimer); soc.sv=null; soc.crop=null; soc.sheet=null; renderSocial();
+  const phone=document.querySelector("#socialView .phone"), book=document.getElementById("soBook"), bar=document.querySelector("#socialView .st-bar");
+  try{
+    // 1. il telefono scivola via
+    await trAnim(phone, [{transform:"translate(0,0) rotate(0)", opacity:1},{transform:"translate(70vw,8vh) rotate(14deg)", opacity:0}], 550, "cubic-bezier(.5,0,.75,0)");
+    // 2. la telecamera entra nel libro
+    trAnim(bar, [{opacity:1},{opacity:0}], 400);
+    await trAnim(book, [{transform:BK_REST},{transform:bkZoomed()}], 950, "cubic-bezier(.55,.05,.35,1)");
+    // 3. le pagine diventano la Storia
+    soc.stack=[]; showView("story"); openStory();
+    const sv=document.getElementById("storyView");
+    await trAnim(sv, [{opacity:0, transform:"scale(1.04)"},{opacity:1, transform:"scale(1)"}], 380, "ease-out");
+  } finally { trCleanup(); }
+}
+async function storyToSocial(){
+  if(trBusy) return;
+  if(!trCanAnimate()){ flushStorySave(); openSocial(); return; }
+  trBusy=true; trBlocker(true);
+  flushStorySave();
+  const sv=document.getElementById("storyView");
+  // il social si prepara sotto la Storia: libro "da vicino", telefono fuori schermo
+  soc.stack=[]; soc.sheet=null; soc.tab="feed"; soc.lastKey="";
+  document.body.classList.add("view-social"); uiView="social"; renderSocial();
+  const phone=document.querySelector("#socialView .phone"), book=document.getElementById("soBook"), bar=document.querySelector("#socialView .st-bar");
+  try{
+    trAnim(phone, [{transform:"translateY(-120vh) rotate(-6deg)", opacity:1},{transform:"translateY(-120vh) rotate(-6deg)", opacity:1}], 1);
+    trAnim(bar, [{opacity:0},{opacity:0}], 1);
+    trAnim(book, [{transform:bkZoomed()},{transform:bkZoomed()}], 1);
+    // 1. la Storia sfuma: siamo "dentro" il libro
+    await trAnim(sv, [{opacity:1, transform:"scale(1)"},{opacity:0, transform:"scale(1.04)"}], 380, "ease-in");
+    showView("social"); renderSocial();
+    // 2. la telecamera si allontana
+    trAnim(bar, [{opacity:0},{opacity:1}], 600);
+    await trAnim(book, [{transform:bkZoomed()},{transform:BK_REST}], 850, "cubic-bezier(.55,.05,.35,1)");
+    // 3. il libro si chiude e si riapre
+    await bookCloseOpen();
+    // 4. il telefono viene appoggiato sul libro
+    await trAnim(phone, [
+      {transform:"translateY(-120vh) rotate(-6deg) scale(1.06)"},
+      {transform:"translateY(2.5vh) rotate(0.6deg) scale(1.02)", offset:.72},
+      {transform:"translateY(-0.6vh) rotate(0) scale(1)", offset:.87},
+      {transform:"translateY(0) rotate(0) scale(1)"}], 820, "cubic-bezier(.3,.6,.35,1)");
+    const m=document.querySelector("#soScreen .ph-main"); if(m) m.scrollTop=0;
+  } finally { trCleanup(); }
+}
+// la metà destra si ribalta sopra la sinistra (si vede la copertina) e poi torna giù
+async function bookCloseOpen(){
+  const pages=document.querySelector("#soBook .bk-pages"), right=document.querySelector("#soBook .pg.r");
+  if(!pages||!right) return;
+  const fl=document.createElement("div"); fl.id="bkFlap"; fl.className="bk-flap";
+  fl.innerHTML=`<div class="fl-front"></div><div class="fl-back"><span>❦</span></div>`;
+  pages.appendChild(fl);
+  right.style.visibility="hidden";
+  await trAnim(fl, [{transform:"rotateY(0deg)"},{transform:"rotateY(-180deg)"}], 520, "cubic-bezier(.45,0,.55,1)");
+  await trWait(160);
+  await trAnim(fl, [{transform:"rotateY(-180deg)"},{transform:"rotateY(0deg)"}], 560, "cubic-bezier(.45,0,.55,1)");
+  right.style.visibility=""; fl.remove();
 }
 
 /* ============================================================
