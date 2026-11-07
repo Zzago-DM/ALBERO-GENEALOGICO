@@ -409,7 +409,7 @@
             "nFollowing": "",
             "verified": false,
             "avatar": null,
-            "created": false
+            "created": true
           },
           "de63ca54-993e-4a7b-abab-7a15345ec82a": {
             "username": "gale_dekarios",
@@ -878,7 +878,7 @@
       }
     }
   ],
-  "currentId": "ce880fc1-fb1b-4407-b369-4a24799b5474",
+  "currentId": "050ce71b-d79c-42dc-a82e-332a30526afb",
   "dms": {
     "threads": [
       {
