@@ -619,7 +619,8 @@
             "years": true,
             "pronouns": true,
             "notes": false
-          }
+          },
+          "main": true
         }
       ],
       "edges": [],
