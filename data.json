@@ -474,7 +474,21 @@
           }
         },
         "follows": [],
-        "posts": [],
+        "posts": [
+          {
+            "id": "fb14e4e0-f0e7-4708-b332-90621720e92e",
+            "author": "a4784486-8866-4daf-837f-74c7ac1a323c",
+            "images": [
+              "social/ce880fc1-70fb7bbff40d41.jpg"
+            ],
+            "text": "late night quiet energy",
+            "date": "",
+            "at": 1794075604428,
+            "tags": [],
+            "likes": [],
+            "comments": []
+          }
+        ],
         "acting": "a4784486-8866-4daf-837f-74c7ac1a323c"
       }
     },
