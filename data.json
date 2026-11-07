@@ -479,6 +479,21 @@
       "story": {
         "chapters": []
       }
+    },
+    {
+      "id": "c0f780bb-007c-4cf7-a869-4c1e586ad1b9",
+      "name": "GEA",
+      "nodes": [],
+      "edges": [],
+      "view": {
+        "panX": 0,
+        "panY": 0,
+        "zoom": 1
+      },
+      "cover": "#1d2c4a",
+      "story": {
+        "chapters": []
+      }
     }
   ],
   "currentId": "ce880fc1-fb1b-4407-b369-4a24799b5474"
