@@ -977,8 +977,7 @@
   .pg-orn{font-size:34px;color:#a6802f;line-height:1;margin-top:2%}
   .pg-orn.sm{font-size:22px;margin-top:auto}
   .pg-title{font-family:var(--display);font-style:italic;font-weight:600;font-size:clamp(17px,1.9vw,30px);text-align:center;color:#4a2f18;
-    margin:8px 0 6px;line-height:1.15;max-width:100%;overflow-wrap:anywhere}
-  .pg-title.long{font-size:clamp(14px,1.35vw,23px)}
+    margin:8px 0 6px;line-height:1.15;width:100%;overflow-wrap:normal;word-break:keep-all;hyphens:none;-webkit-hyphens:none}
   .pg-rule{color:#b8923f;font-size:11px;letter-spacing:6px;margin-bottom:6%}
   .pg-text{width:100%;display:flex;flex-direction:column;gap:11px;position:relative}
   .pg-text .par{display:block;height:calc(var(--n) * 14px);position:relative;
@@ -3746,7 +3745,7 @@ function viewKey(){ const s=topScreen(); return s ? s.k+":"+(s.id||"")+":"+(s.w|
 function renderSocial(){
   const t=tree(); if(!t) return;
   document.getElementById("soName").textContent=t.name||"Senza titolo";
-  const bk=document.getElementById("soBook"); if(bk){ bk.style.setProperty("--bc", t.cover||"#6b1f1f"); const bt=document.getElementById("soBookTitle"); bt.textContent=t.name||"Senza titolo"; bt.classList.toggle("long", bt.textContent.length>16); }
+  const bk=document.getElementById("soBook"); if(bk){ bk.style.setProperty("--bc", t.cover||"#6b1f1f"); document.getElementById("soBookTitle").textContent=t.name||"Senza titolo"; fitBookTitle(); }
   const root=document.getElementById("soScreen");
   const key=viewKey();
   const oldMain=root.querySelector(".ph-main");
@@ -3784,6 +3783,14 @@ function renderSocial(){
   if(s && s.k==="chat"){ const m=root.querySelector(".ph-main"); if(m && (soc.dmStick || !keep)){ m.scrollTop=m.scrollHeight; soc.dmStick=false; } }
 }
 
+// il nome del libro sulla pagina: va a capo solo tra le parole e si rimpicciolisce finché ogni parola ci sta (max 3 righe)
+function fitBookTitle(){
+  const el=document.getElementById("soBookTitle"); if(!el || isMobile() || !el.clientWidth) return;
+  let size=30; el.style.fontSize=size+"px";
+  const lh=()=>parseFloat(getComputedStyle(el).lineHeight)||size*1.15;
+  while(size>11 && (el.scrollWidth>el.clientWidth+1 || el.scrollHeight>lh()*3+2)){ size-=1; el.style.fontSize=size+"px"; }
+}
+window.addEventListener("resize", ()=>{ if(uiView==="social") fitBookTitle(); });
 /* ---------- navigazione ---------- */
 function openSocial(){
   flushSave();
