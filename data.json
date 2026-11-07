@@ -553,7 +553,13 @@
             "avatar": null
           }
         },
-        "follows": [],
+        "follows": [
+          {
+            "from": "dcdaa1e3-6c21-4288-b951-7ce9d4543701",
+            "to": "a4784486-8866-4daf-837f-74c7ac1a323c",
+            "at": 1794081674369
+          }
+        ],
         "posts": [
           {
             "id": "fa9f8062-b6f5-491b-8fb6-1f1d7c68be67",
@@ -661,7 +667,12 @@
             "nLikes": "4862",
             "nComments": "156",
             "tags": [],
-            "likes": [],
+            "likes": [
+              {
+                "by": "dcdaa1e3-6c21-4288-b951-7ce9d4543701",
+                "at": 1794081678345
+              }
+            ],
             "comments": []
           }
         ],
@@ -846,7 +857,7 @@
       }
     }
   ],
-  "currentId": "ce880fc1-fb1b-4407-b369-4a24799b5474",
+  "currentId": "050ce71b-d79c-42dc-a82e-332a30526afb",
   "dms": {
     "threads": [
       {
