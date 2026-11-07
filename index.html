@@ -814,6 +814,70 @@
   .sheet .opt:hover{background:#ffffff08}
   .sheet .opt.dg{color:#e08a76}
   .sheet .opt:disabled{opacity:.35;cursor:default}
+
+  /* ---------- Messaggi ---------- */
+  .main-chip{width:100%;font-weight:600}
+  .star{color:var(--gold-bright);margin-right:4px}
+  .ttl-btn{background:none;border:none;cursor:pointer;font-family:var(--ui);font-size:17px;font-weight:700;color:#f0e2c0;display:inline-flex;align-items:center;gap:4px;max-width:100%}
+  .bk-h{padding:14px 14px 4px;font-size:11.5px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);font-weight:700;font-family:var(--ui)}
+  .row .t1{font-weight:700;color:#f0e2c0}
+  .rchk{width:22px;height:22px;border-radius:50%;border:1.5px solid #5a4c30;flex:none;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#1e1a10}
+  .rchk.on{background:var(--gold-bright);border-color:var(--gold-bright)}
+  .gav{position:relative;width:44px;height:44px;flex:none;display:inline-block}
+  .gav .av{position:absolute;width:32px!important;height:32px!important;font-size:12px!important;box-shadow:0 0 0 2px #16120b}
+  .gav .av:first-child{top:0;right:0}
+  .gav .av:nth-child(2){bottom:0;left:0}
+  .gav.sm{width:34px;height:34px}.gav.sm .av{width:24px!important;height:24px!important;font-size:9px!important}
+  .av.sm{width:34px;height:34px}
+  .av.big-av,.gav.big-av{width:84px!important;height:84px!important;font-size:30px}
+  .gav.big-av .av{width:60px!important;height:60px!important;font-size:22px!important}
+  .to-bar{flex:none;display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:8px 14px;border-bottom:1px solid #2a2215}
+  .to-bar .to{font-weight:700;color:#f0e2c0;font-size:14px}
+  .to-bar input{flex:1;min-width:140px;background:none;border:none;color:#f0e2c0;font-size:14.5px;padding:6px 2px;outline:none;font-family:var(--ui)}
+  .chat-ttl{display:flex;align-items:center;gap:9px;cursor:pointer;min-width:0;font-family:var(--ui)}
+  .chat-ttl .ct{display:flex;flex-direction:column;min-width:0;line-height:1.15}
+  .chat-ttl b{font-size:15px;color:#f0e2c0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .chat-ttl small{font-size:11.5px;color:var(--on-ink-muted);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .chat-main{padding:8px 10px 10px;background:radial-gradient(ellipse at 50% 0%, rgba(214,173,82,.05), transparent 60%)}
+  .dsep{display:flex;justify-content:center;margin:14px 0 8px}
+  .dsep span{font-family:var(--display);font-style:italic;font-size:12px;color:#c8b48a;background:#241d12;border:1px solid #3a2f1c;padding:3px 12px;border-radius:999px;max-width:85%;text-align:center}
+  .msg{display:flex;align-items:flex-end;gap:7px;margin:2px 0}
+  .msg.last{margin-bottom:9px}
+  .msg.me{justify-content:flex-end}
+  .mav{width:26px;flex:none}
+  .mav .av{width:26px;height:26px;font-size:10px}
+  .mcol{max-width:76%;display:flex;flex-direction:column;align-items:flex-start;min-width:0}
+  .msg.me .mcol{align-items:flex-end}
+  .mname{font-size:11px;color:var(--on-ink-muted);margin:4px 0 2px 10px;font-weight:600}
+  .bub{background:#2c2416;color:#f0e2c0;border-radius:18px;padding:8px 13px;font-size:14.5px;line-height:1.38;cursor:pointer;word-break:break-word;white-space:pre-wrap;max-width:100%}
+  .msg.me .bub{background:linear-gradient(160deg,#c9a14a,#a77f32);color:#1e1a10}
+  .msg.me .bub .mention{color:#3a2a08;text-decoration:underline}
+  .bub.media{padding:4px;overflow:hidden}
+  .bub.media .mtx{padding:5px 8px 4px}
+  .mimgs{display:grid;gap:3px;border-radius:14px;overflow:hidden;width:220px;max-width:100%}
+  .mimgs.n1{grid-template-columns:1fr}.mimgs.n2,.mimgs.n3,.mimgs.n4{grid-template-columns:1fr 1fr}
+  .mimgs img{width:100%;aspect-ratio:1;object-fit:cover;display:block;background:#1d170e}
+  .mimgs.n1 img{aspect-ratio:auto;max-height:300px}
+  .mlk{font-size:11px;background:#2c2416;border:1.5px solid #16120b;color:#e06a5a;border-radius:999px;padding:1px 7px;margin-top:-6px;position:relative;cursor:pointer}
+  .msg.me .mlk{margin-right:6px}.msg:not(.me) .mlk{margin-left:6px}
+  .spost{width:220px;max-width:100%;background:#1b150c;border-radius:14px;overflow:hidden;color:#f0e2c0;cursor:pointer;white-space:normal}
+  .spost.gone{padding:14px;font-style:italic;color:var(--on-ink-muted);font-size:13px}
+  .sp-hd{display:flex;align-items:center;gap:7px;padding:8px 10px;font-size:13px}
+  .sp-hd .av{width:24px;height:24px;font-size:9px}
+  .sp-img{width:100%;aspect-ratio:1;object-fit:cover;display:block}
+  .sp-txt{margin:0 8px 8px;padding:16px 12px;border-radius:6px;font-family:var(--display);font-size:14px;line-height:1.4;color:#2c2417;background:linear-gradient(180deg,#f2e8cf,#e6d8b6)}
+  .sp-cap{padding:7px 10px 9px;font-size:12.5px;line-height:1.35;color:#e2d4b4}
+  .dm-att{display:flex;gap:6px;overflow-x:auto;padding:0 2px 8px}
+  .dm-att .it{position:relative;flex:none;width:62px;height:62px;border-radius:8px;overflow:hidden}
+  .dm-att img{width:100%;height:100%;object-fit:cover}
+  .dm-att .x{position:absolute;top:2px;right:2px;width:20px;height:20px;border-radius:50%;border:none;background:rgba(10,8,4,.75);color:#fff;font-size:10px;cursor:pointer}
+  .dm-date{display:flex;align-items:center;gap:8px;padding:0 4px 8px;color:var(--gold-bright)}
+  .dm-date svg{width:18px;height:18px;display:block}
+  .dm-date input{flex:1;min-width:0;background:#241d12;border:1px solid var(--gold);border-radius:9px;padding:7px 10px;color:#f0e2c0;font-size:14px;font-family:var(--display);font-style:italic;outline:none}
+  .dm-date button{background:none;border:none;color:var(--on-ink-muted);cursor:pointer;font-size:14px}
+  .cbar .in .ib{padding:4px}
+  .cbar .in .ib svg{width:22px;height:22px}
+  .cbar .in .ib.txt{padding:6px 4px}
 </style>
 </head>
 <body class="view-library">
@@ -1095,6 +1159,10 @@
         </div>
 
         <div class="field">
+          <label class="schip main-chip"><input type="checkbox" id="fMain"> ★ Personaggio principale di questo albero</label>
+        </div>
+
+        <div class="field">
           <label>Note</label>
           <textarea id="fNotes" placeholder="Storia, legami, segreti…"></textarea>
         </div>
@@ -1242,6 +1310,7 @@ function normalize(s){
     }
   }));
   s.trees.forEach(t=>t.edges.forEach(e=>{ if(e.type==="generic") e.type="other"; }));
+  s.dms = normDms(s.dms);
   return s;
 }
 
@@ -1259,7 +1328,7 @@ function save(){
   saveLocalOnly();
   if(typeof autoSyncOn==="function" && autoSyncOn()) scheduleGhPush();
 }
-function persistState(){ return { trees:state.trees, currentId }; }
+function persistState(){ return { trees:state.trees, currentId, dms:DM() }; }
 function flashSaved(){
   const p = document.getElementById("savedPill");
   p.innerHTML = '<span class="chk">✓</span> Salvato';
@@ -2039,6 +2108,7 @@ function openForm(id){
 
   const show = n ? Object.assign(defaultShow(), n.show||{}) : defaultShow();
   document.querySelectorAll("#showGrid input").forEach(cb=>{ cb.checked = !!show[cb.dataset.k]; });
+  document.getElementById("fMain").checked = !!(n && n.main);
 
   document.getElementById("overlay").classList.add("show");
   setTimeout(()=>document.getElementById("fName").focus(),40);
@@ -2065,15 +2135,18 @@ function saveForm(){
     photo: formPhoto,
     scale: parseFloat(document.getElementById("fSize").value)||1,
     show: show,
+    main: document.getElementById("fMain").checked,
   };
   if(!data.name && !data.role && !data.classes.length){ toast("Dai almeno un nome al personaggio"); return; }
 
+  let savedId=editingId;
   if(editingId){
     const n=t.nodes.find(x=>x.id===editingId); Object.assign(n,data);
   } else {
-    const c=viewportCenterWorld();
-    t.nodes.push(Object.assign({id:uid(), x:c.x-95+(Math.random()*40-20), y:c.y-50+(Math.random()*40-20)}, data));
+    const c=viewportCenterWorld(); savedId=uid();
+    t.nodes.push(Object.assign({id:savedId, x:c.x-95+(Math.random()*40-20), y:c.y-50+(Math.random()*40-20)}, data));
   }
+  if(data.main) t.nodes.forEach(x=>{ if(x.id!==savedId) x.main=false; });   // un solo principale per albero
   save(); closeForm(); renderSidebar(); renderNodes(); renderEdges();
 }
 function deleteCurrent(){
@@ -2978,6 +3051,12 @@ const IC={
   comment:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><path d="M20.5 11.5a8.5 8.5 0 0 1-12.6 7.4L3.5 20.5l1.6-4.3A8.5 8.5 0 1 1 20.5 11.5z"/></svg>',
   tag:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c.8-3.7 3.8-6 7.5-6s6.7 2.3 7.5 6"/></svg>',
   grid:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3.5" y="3.5" width="17" height="17" rx="1.5"/><path d="M9.2 3.5v17M14.8 3.5v17M3.5 9.2h17M3.5 14.8h17"/></svg>',
+  send:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><path d="M21 3.5 3.5 10.6l7 2.9 2.9 7z"/><path d="m21 3.5-10.5 10"/></svg>',
+  dm:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><path d="M12 3.5c-4.9 0-8.5 3.5-8.5 8 0 2.3 1 4.3 2.6 5.8l-.4 3.2 3.1-1.6c1 .4 2.1.6 3.2.6 4.9 0 8.5-3.5 8.5-8s-3.6-8-8.5-8z"/><path d="m7.5 13.5 3-3 2.5 2 3.5-3.5"/></svg>',
+  edit:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><path d="M4 20h4L19.5 8.5l-4-4L4 16z"/><path d="m13.5 6.5 4 4"/></svg>',
+  cam:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><path d="M3.5 8.5a2 2 0 0 1 2-2h2l1.5-2h6l1.5 2h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/><circle cx="12" cy="13" r="3.5"/></svg>',
+  cal:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>',
+  info:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5M12 7.6v.1"/></svg>',
   back:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>',
   close:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>',
   check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12.5l5 5 10-11"/></svg>',
@@ -3001,7 +3080,8 @@ function normSocial(s){
   const likeArr=a=>(Array.isArray(a)?a:[]).map(x=>typeof x==="string"?{by:x,at:0}:x).filter(x=>x&&x.by).map(x=>({by:x.by, at:+x.at||0}));
   const posts=(Array.isArray(s.posts)?s.posts:[]).filter(p=>p&&p.author).map(p=>({
     id:p.id||uid(), author:p.author, images:(Array.isArray(p.images)?p.images:[]).filter(x=>typeof x==="string"&&x),
-    text:String(p.text||""), date:String(p.date||""), at:+p.at||Date.now(),
+    text:String(p.text||""), date:String(p.date||""), place:String(p.place||""), at:+p.at||Date.now(),
+    nLikes:String(p.nLikes??""), nComments:String(p.nComments??""),
     tags:(Array.isArray(p.tags)?p.tags:[]).filter(x=>typeof x==="string"),
     likes:likeArr(p.likes),
     comments:(Array.isArray(p.comments)?p.comments:[]).filter(c=>c&&c.author).map(c=>({
@@ -3009,20 +3089,25 @@ function normSocial(s){
   }));
   return { profiles, follows, posts, acting:(typeof s.acting==="string"?s.acting:null) };
 }
-function S(){ const t=tree(); if(!t.social || !t.social.profiles) t.social=normSocial(t.social); return t.social; }
-function nodeOf(id){ return tree().nodes.find(n=>n.id===id); }
-function alive(id){ return !!nodeOf(id); }
+function socOf(t){ if(!t.social || !t.social.profiles) t.social=normSocial(t.social); return t.social; }
+function S(){ return socOf(tree()); }
+function charRef(id){ const c=tree(); if(c){ const n=c.nodes.find(n=>n.id===id); if(n) return {t:c,n}; }
+  for(const t of state.trees){ const n=t.nodes.find(n=>n.id===id); if(n) return {t,n}; } return null; }
+function nodeOf(id){ const r=charRef(id); return r&&r.n; }
+function exists(id){ return !!charRef(id); }
+function alive(id){ return tree().nodes.some(n=>n.id===id); }
 function slugName(name){
   let s=String(name||"").normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase().replace(/\s+/g,"_").replace(/[^a-z0-9._]/g,"");
   s=s.replace(/^[._]+|[._]+$/g,"").slice(0,26);
   return s||"personaggio";
 }
-function usernameTaken(u, exceptId){
-  const ps=S().profiles; u=u.toLowerCase();
-  return tree().nodes.some(n=>n.id!==exceptId && ps[n.id] && ps[n.id].username.toLowerCase()===u);
+function usernameTaken(u, exceptId, t){
+  t=t||(charRef(exceptId)||{t:tree()}).t;
+  const ps=socOf(t).profiles; u=u.toLowerCase();
+  return t.nodes.some(n=>n.id!==exceptId && ps[n.id] && ps[n.id].username.toLowerCase()===u);
 }
 function prof(id){
-  const s=S(); let p=s.profiles[id];
+  const r=charRef(id); const s=socOf(r?r.t:tree()); let p=s.profiles[id];
   if(!p){ p=s.profiles[id]={username:"",name:"",website:"",bio:"",nPosts:"",nFollowers:"",nFollowing:"",verified:false,avatar:null}; }
   if(!p.username){
     const n=nodeOf(id); const base=slugName(n&&n.name); let u=base, i=2;
@@ -3239,25 +3324,29 @@ function postHTML(p){
     media=`<div class="po-media" data-a="media" data-id="${esc(p.id)}" style="background:none"><div class="po-text">${richText(p.text)||"…"}</div><span class="po-heart">♥</span></div><div class="po-dots"></div>`;
   }
   let likeLine="";
+  const manL=String(p.nLikes||"").trim()!=="", nL=manL?parseInt(p.nLikes,10)||0:likes.length;
   if(likes.length){
-    const first=likes[likes.length-1].by;
-    likeLine=`<div class="po-likes" data-a="likes" data-id="${esc(p.id)}">Piace a <b>${esc(prof(first).username)}</b>${likes.length>1?` e <b>altri ${likes.length-1}</b>`:""}</div>`;
-  }
+    const first=likes[likes.length-1].by, others=Math.max(0,nL-1);
+    likeLine=`<div class="po-likes" data-a="likes" data-id="${esc(p.id)}">Piace a <b>${esc(prof(first).username)}</b>${others>0?` e <b>altri ${fmtNum(others)}</b>`:""}</div>`;
+  } else if(nL>0) likeLine=`<div class="po-likes" data-a="likes" data-id="${esc(p.id)}">${fmtNum(nL)} mi piace</div>`;
+  const nC=String(p.nComments||"").trim()!=="" ? parseInt(p.nComments,10)||0 : cms.length;
   const tags=p.tags.filter(alive);
   return `<article class="po">
-    <div class="po-hd">${avHTML(p.author)}<div class="who">${unameHTML(p.author)}${p.date?`<small>${esc(p.date)}</small>`:""}</div>
+    <div class="po-hd">${avHTML(p.author)}<div class="who">${unameHTML(p.author)}${p.place?`<small>📍 ${esc(p.place)}</small>`:""}</div>
       <button class="ib" data-a="post-menu" data-id="${esc(p.id)}" title="Opzioni">${IC.more}</button></div>
     ${media}
     <div class="po-act">
       <button class="ib${liked?" liked":""}" data-a="like" data-id="${esc(p.id)}" title="Mi piace">${liked?IC.heartOn:IC.heart}</button>
       <button class="ib" data-a="comments" data-id="${esc(p.id)}" title="Commenta">${IC.comment}</button>
+      <button class="ib" data-a="share" data-id="${esc(p.id)}" title="Invia in un messaggio">${IC.send}</button>
       <span class="sp"></span>
     </div>
     ${likeLine}
     ${imgs.length&&p.text?`<div class="po-cap">${unameHTML(p.author)} ${richText(p.text)}</div>`:""}
     ${tags.length?`<div class="po-tags">con ${tags.map(id=>`<span class="mention" data-a="user" data-id="${esc(id)}">@${esc(prof(id).username)}</span>`).join(", ")}</div>`:""}
-    ${cms.length?`<button class="po-more" data-a="comments" data-id="${esc(p.id)}">${cms.length===1?"Mostra 1 commento":`Mostra tutti i ${cms.length} commenti`}</button>`:
+    ${nC>0?`<button class="po-more" data-a="comments" data-id="${esc(p.id)}">${nC===1?"Mostra 1 commento":`Mostra tutti i ${fmtNum(nC)} commenti`}</button>`:
       `<button class="po-more" data-a="comments" data-id="${esc(p.id)}">Aggiungi un commento…</button>`}
+    ${p.date?`<div class="po-date">${esc(p.date)}</div>`:""}
   </article>`;
 }
 
@@ -3266,7 +3355,7 @@ function scrFeed(){
   const t=tree(), posts=livePosts();
   const body = posts.length ? posts.map(postHTML).join("")
     : `<div class="empty-s"><span class="big">❦</span>Ancora nessun post in questo mondo.<br>Tocca <b>＋</b> in basso per pubblicare il primo.</div>`;
-  return hd(treeBackBtn(), `<span class="crest">❦</span> ${esc(t.name||"Social")}`, acctBtn()) + `<div class="ph-main">${body}</div>`;
+  return hd(treeBackBtn()+`<button class="ib" data-a="dm-inbox" title="Messaggi">${IC.dm}${dmUnreadDot()}</button>`, `<span class="crest">❦</span> ${esc(t.name||"Social")}`, acctBtn()) + `<div class="ph-main">${body}</div>`;
 }
 function scrSearch(){
   return `<div class="ph-hd">${treeBackBtn()}<label class="search">${IC.search}<input id="soQ" type="search" placeholder="Cerca un nome utente" autocomplete="off" autocapitalize="off" spellcheck="false" value="${esc(soc.q)}"></label></div>
@@ -3362,7 +3451,8 @@ function scrList(id, which, postId){
   const a=acting();
   if(which==="likes"){
     const p=postById(postId); const ids=p?liveLikes(p.likes).map(l=>l.by).reverse():[];
-    return hd(backBtn(),"Mi piace","",true)+`<div class="ph-main">${ids.length?ids.map(x=>rowHTML(x,{follow:true})).join(""):`<div class="empty-s">Ancora nessun mi piace.</div>`}</div>`;
+    const nt=(p&&String(p.nLikes||"").trim()!=="")?`<div class="sec-h" style="font-size:12px;font-weight:500;color:var(--on-ink-muted)">Sul post sono mostrati ${esc(fmtNum(p.nLikes))} mi piace. Qui sotto i personaggi del tuo albero.</div>`:"";
+    return hd(backBtn(),"Mi piace","",true)+`<div class="ph-main">${nt}${ids.length?ids.map(x=>rowHTML(x,{follow:true})).join(""):`<div class="empty-s">Ancora nessun mi piace.</div>`}</div>`;
   }
   const ids = which==="followers" ? followersOf(id) : followingOf(id);
   const p=prof(id);
@@ -3388,7 +3478,8 @@ function scrComments(id){
   top.forEach(c=>{ list+=cmHTML(c,false); cms.filter(r=>r.replyTo===c.id).forEach(r=>{ list+=cmHTML(r,true); }); });
   const cap = p.text ? `<div class="cm cap">${avHTML(p.author)}<div class="bd">${unameHTML(p.author)} ${richText(p.text)}${p.date?`<div class="meta"><span>${esc(p.date)}</span></div>`:""}</div></div>` : "";
   const rp = soc.replyTo && p.comments.find(c=>c.id===soc.replyTo);
-  return hd(backBtn(),"Commenti","",true)+`<div class="ph-main">${cap}${list||`<div class="empty-s" style="padding-top:26px">Ancora nessun commento.<br>Scrivi il primo!</div>`}</div>
+  const cnote=String(p.nComments||"").trim()!==""?`<div class="sec-h" style="font-size:12px;font-weight:500;color:var(--on-ink-muted)">Sul post sono mostrati ${esc(fmtNum(p.nComments))} commenti. Qui sotto quelli dei tuoi personaggi.</div>`:"";
+  return hd(backBtn(),"Commenti","",true)+`<div class="ph-main">${cap}${cnote}${list||`<div class="empty-s" style="padding-top:26px">Ancora nessun commento.<br>Scrivi il primo!</div>`}</div>
     <div class="cbar">${rp?`<div class="rp"><span>Stai rispondendo a @${esc(prof(rp.author).username)}</span><button data-a="reply-x">×</button></div>`:""}
       <div class="in"><span data-a="accounts" title="Commenti come @${esc(a?prof(a).username:"")} — tocca per cambiare">${a?avHTML(a):""}</span>
       <input id="soCm" type="text" maxlength="${SOC_LIM.comment}" placeholder="Commenta come ${esc(a?prof(a).username:"")}…" autocomplete="off">
@@ -3433,7 +3524,11 @@ function scrCompose(){
       ${d.images.length<10?`<button class="add" data-a="pick-imgs"><b>＋</b>Aggiungi foto</button>`:""}</div>
     <div class="pf" style="padding-top:0">
       ${ufHTML("Didascalia","text",d.text,SOC_LIM.caption,{area:true,ph:"Scrivi una didascalia… usa @nome per citare qualcuno"})}
+      ${ufHTML("Luogo","place",d.place,SOC_LIM.date,{ph:"Es. Waterdeep, Porto Sud"})}
       ${ufHTML("Data","date",d.date,SOC_LIM.date,{ph:"Es. 3° giorno della Luna Rossa, 412 T.E.",hint:"Scrivi la data che vuoi, anche del tuo mondo fantasy."})}
+      ${(()=>{ const po=d.editId&&postById(d.editId); const rl=po?liveLikes(po.likes).length:0, rc=po?liveComments(po).length:0;
+        return ufHTML("Numero di mi piace","nLikes",d.nLikes,SOC_LIM.num,{num:true,ph:`automatico (${rl})`})+
+               ufHTML("Numero di commenti","nComments",d.nComments,SOC_LIM.num,{num:true,ph:`automatico (${rc})`,hint:"Se lasci vuoto, il numero si conta da solo con i like e i commenti dei tuoi personaggi."}); })()}
       <div class="uf"><label>Tagga personaggi</label><div class="chips">${others.length?others.map(n=>`<button class="chip${d.tags.includes(n.id)?" on":""}" data-a="tag-tg" data-id="${esc(n.id)}">${avHTML(n.id)}@${esc(prof(n.id).username)}</button>`).join(""):`<span class="hint">Nessun altro personaggio nell'albero.</span>`}</div></div>
     </div></div>`;
 }
@@ -3451,6 +3546,7 @@ function sheetHTML(){
       <button class="opt dg" data-a="pm-del" data-id="${esc(sh.id)}">🗑 Elimina post</button>
       <button class="opt" data-a="sheet-x">Annulla</button>`;
   }
+  else if(DM_SHEETS[sh.k]) inner=DM_SHEETS[sh.k](sh);
   return `<div class="sheet-bg" data-a="sheet-bg"><div class="sheet"><div class="grab"></div>${inner}</div></div>`;
 }
 
@@ -3473,10 +3569,11 @@ function renderSocial(){
     else if(s.k==="comments") html=scrComments(s.id);
     else if(s.k==="edit") html=scrEditProfile();
     else if(s.k==="compose") html=scrCompose();
+    else if(DM_SCREENS[s.k]) html=DM_SCREENS[s.k](s);
   } else {
     html = soc.tab==="search" ? scrSearch() : soc.tab==="activity" ? scrActivity() : soc.tab==="profile" ? scrProfile(acting(),false) : scrFeed();
   }
-  const showNav = !(s && (s.k==="edit"||s.k==="compose"||s.k==="comments"));
+  const showNav = !(s && (s.k==="edit"||s.k==="compose"||s.k==="comments"||DM_SCREENS[s.k]));
   root.innerHTML = statusHTML() + html + (showNav?navHTML():"") + sheetHTML();
   const m=root.querySelector(".ph-main"); if(m && keep) m.scrollTop=keep;
   soc.lastKey=key;
@@ -3492,6 +3589,7 @@ function renderSocial(){
     }, {passive:true});
   });
   hydrateImgs(root);
+  if(s && s.k==="chat"){ const m=root.querySelector(".ph-main"); if(m && (soc.dmStick || !keep)){ m.scrollTop=m.scrollHeight; soc.dmStick=false; } }
 }
 
 /* ---------- navigazione ---------- */
@@ -3535,8 +3633,8 @@ function startCompose(editId){
   const a=acting(); if(!a){ toast("Aggiungi prima un personaggio all'albero"); return; }
   if(editId){
     const p=postById(editId); if(!p) return;
-    soc.draft={editId, author:p.author, images:p.images.slice(), text:p.text, date:p.date, tags:p.tags.slice(), orig:p.images.slice()};
-  } else soc.draft={author:a, images:[], text:"", date:"", tags:[]};
+    soc.draft={editId, author:p.author, images:p.images.slice(), text:p.text, date:p.date, place:p.place||"", nLikes:p.nLikes||"", nComments:p.nComments||"", tags:p.tags.slice(), orig:p.images.slice()};
+  } else soc.draft={author:a, images:[], text:"", date:"", place:"", nLikes:"", nComments:"", tags:[]};
   socPush({k:"compose"});
 }
 async function publish(){
@@ -3548,11 +3646,11 @@ async function publish(){
     const p=postById(d.editId);
     if(p){
       const removed=(d.orig||[]).filter(x=>!imgs.includes(x));
-      Object.assign(p,{images:imgs, text:d.text.trim(), date:d.date.trim(), tags:d.tags.filter(alive)});
+      Object.assign(p,{images:imgs, text:d.text.trim(), date:d.date.trim(), place:d.place.trim(), nLikes:d.nLikes.replace(/\D/g,""), nComments:d.nComments.replace(/\D/g,""), tags:d.tags.filter(alive)});
       if(removed.length) deleteImages(removed);
     }
   } else {
-    s.posts.push({id:uid(), author:d.author, images:imgs, text:d.text.trim(), date:d.date.trim(), at:Date.now(), tags:d.tags.filter(alive), likes:[], comments:[]});
+    s.posts.push({id:uid(), author:d.author, images:imgs, text:d.text.trim(), date:d.date.trim(), place:d.place.trim(), nLikes:d.nLikes.replace(/\D/g,""), nComments:d.nComments.replace(/\D/g,""), at:Date.now(), tags:d.tags.filter(alive), likes:[], comments:[]});
   }
   soc.draft=null; soc.stack.pop();
   if(!d.editId){ soc.stack=[]; soc.tab="feed"; soc.lastKey=""; }
@@ -3615,6 +3713,7 @@ let socFilePurpose=null, lastTap={id:null,t:0};
 function socHandleClick(ev){
   const el=ev.target.closest("[data-a]"); if(!el || !document.getElementById("soScreen").contains(el)) return;
   const A=el.dataset.a, id=el.dataset.id;
+  if(A.startsWith("dm-") || A==="share"){ dmAction(A, el, ev); return; }
   switch(A){
     case "close-social": closeSocial(); break;
     case "tab": soc.stack=[]; soc.sheet=null;
@@ -3681,6 +3780,8 @@ async function onSocialFiles(ev){
   try{
     if(socFilePurpose==="avatar" && soc.edit){
       soc.edit.avatar=await readImageFile(files[0], 480); renderSocial();
+    } else if(socFilePurpose==="dm"){
+      for(const f of files.slice(0,10)){ soc.dmImgs.push(await readImageFile(f, 1350)); } soc.dmStick=true; renderSocial();
     } else if(socFilePurpose==="post" && soc.draft){
       const room=10-soc.draft.images.length;
       if(files.length>room) toast(`Massimo 10 foto per post: ne aggiungo ${room}`);
@@ -3690,21 +3791,329 @@ async function onSocialFiles(ev){
 }
 function socHandleInput(ev){
   const el=ev.target;
+  if(dmInput(el)) return;
   if(el.id==="soQ"){ soc.q=el.value; document.getElementById("soResults").innerHTML=searchResults(); hydrateImgs(document.getElementById("soResults")); return; }
   const k=el.dataset.f; if(!k) return;
   const obj = topScreen()&&topScreen().k==="edit" ? soc.edit : soc.draft; if(!obj) return;
   if(k==="verified"){ obj.verified=el.checked; return; }
   if(k==="username"){ const v=el.value.toLowerCase().replace(/\s/g,"_").replace(/[^a-z0-9._]/g,""); if(v!==el.value) el.value=v; }
-  if(["nPosts","nFollowers","nFollowing"].includes(k)){ const v=el.value.replace(/\D/g,""); if(v!==el.value) el.value=v; }
+  if(["nPosts","nFollowers","nFollowing","nLikes","nComments"].includes(k)){ const v=el.value.replace(/\D/g,""); if(v!==el.value) el.value=v; }
   obj[k]=el.value;
   const c=document.querySelector(`#soScreen [data-cnt="${k}"]`); if(c) c.textContent=`${el.value.length}/${el.maxLength}`;
 }
 document.getElementById("soScreen").addEventListener("click", socHandleClick);
 document.getElementById("soScreen").addEventListener("input", socHandleInput);
 document.getElementById("soScreen").addEventListener("change", socHandleInput);
-document.getElementById("soScreen").addEventListener("keydown", e=>{ if(e.key==="Enter" && e.target.id==="soCm"){ e.preventDefault(); sendComment(); } });
+document.getElementById("soScreen").addEventListener("keydown", e=>{
+  if(e.key==="Enter" && e.target.id==="soCm"){ e.preventDefault(); sendComment(); }
+  if(e.key==="Enter" && e.target.id==="soDmTxt" && !e.shiftKey){ e.preventDefault(); dmSend(); }
+});
 document.getElementById("soFile").addEventListener("change", onSocialFiles);
 setInterval(()=>{ if(uiView==="social"){ const st=document.querySelector("#soScreen .ph-status span"); if(st){ const d=new Date(); st.textContent=String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0"); } } }, 30000);
+
+
+/* ============================================================
+   MESSAGGI (Direct) — in comune a tutti gli alberi
+   state.dms = { threads:[{id,name,group,members:[nodeId],at,msgs:[{id,from,text,images,post,date,at,likes}]}], acting }
+============================================================ */
+soc.dmImgs=[]; soc.dmQ=""; soc.dmNew=null; soc.dmDateOpen=false; soc.dmDate=""; soc.dmStick=false;
+
+function normDms(d){
+  d=(d&&typeof d==="object")?d:{};
+  const threads=(Array.isArray(d.threads)?d.threads:[]).filter(t=>t&&Array.isArray(t.members)).map(t=>{
+    const members=[...new Set(t.members.filter(x=>typeof x==="string"&&x))];
+    return { id:t.id||uid(), name:String(t.name||""), group:!!t.group || members.length>2, members, at:+t.at||0,
+      msgs:(Array.isArray(t.msgs)?t.msgs:[]).filter(m=>m&&m.from).map(m=>({
+        id:m.id||uid(), from:m.from, text:String(m.text||""),
+        images:(Array.isArray(m.images)?m.images:[]).filter(x=>typeof x==="string"&&x),
+        post:(m.post&&m.post.id)?{tree:String(m.post.tree||""), id:String(m.post.id)}:null,
+        date:String(m.date||""), at:+m.at||0,
+        likes:[...new Set((Array.isArray(m.likes)?m.likes:[]).filter(x=>typeof x==="string"))] })) };
+  });
+  return { threads, acting:(typeof d.acting==="string"?d.acting:null) };
+}
+function DM(){ if(!state.dms || !Array.isArray(state.dms.threads)) state.dms=normDms(state.dms); return state.dms; }
+function allCharIds(){ const out=[]; state.trees.forEach(t=>t.nodes.forEach(n=>out.push(n.id))); return out; }
+function dmActing(){
+  const d=DM();
+  if(!d.acting || !exists(d.acting)) d.acting = acting() || allCharIds()[0] || null;
+  return d.acting;
+}
+function threadById(id){ return DM().threads.find(t=>t.id===id); }
+function lastAt(t){ const m=t.msgs[t.msgs.length-1]; return m?m.at:t.at; }
+function myThreads(a){ return DM().threads.filter(t=>t.members.includes(a)).sort((x,y)=>lastAt(y)-lastAt(x)); }
+function liveMembers(t){ return t.members.filter(exists); }
+function threadTitle(t,a){
+  if(t.group) return t.name || liveMembers(t).filter(x=>x!==a).map(x=>prof(x).username).join(", ") || "Gruppo";
+  const o=t.members.find(x=>x!==a); return o&&exists(o) ? prof(o).username : "Account eliminato";
+}
+function threadAv(t,a,cls){
+  const others=liveMembers(t).filter(x=>x!==a);
+  if(!t.group) return others[0] ? avHTML(others[0],cls) : `<span class="av${cls?" "+cls:""}">?</span>`;
+  return `<span class="gav${cls?" "+cls:""}">${others.slice(0,2).map(x=>avHTML(x)).join("")||avHTML(a)}</span>`;
+}
+function runningDate(t, idx){ for(let i=Math.min(idx,t.msgs.length-1);i>=0;i--) if(t.msgs[i].date) return t.msgs[i].date; return ""; }
+function treeNameOf(id){ const r=charRef(id); return r ? (r.t.name||"Senza titolo") : ""; }
+function isMain(id){ const n=nodeOf(id); return !!(n&&n.main); }
+function star(id){ return isMain(id) ? `<span class="star" title="Personaggio principale">★</span>` : ""; }
+function dmUnreadDot(){ return ""; }
+// personaggi di tutti gli alberi, divisi per libro: il libro aperto per primo, in ogni libro il principale in cima
+function charsGrouped(filter){
+  const cur=tree();
+  return state.trees.slice().sort((a,b)=>(a===cur?-1:b===cur?1:0)).map(t=>{
+    let ns=t.nodes.slice().sort((a,b)=>(b.main?1:0)-(a.main?1:0));
+    if(filter) ns=ns.filter(n=>filter(n.id));
+    return {t, ids:ns.map(n=>n.id)};
+  }).filter(g=>g.ids.length);
+}
+function gRow(id, opts){
+  opts=opts||{};
+  return `<div class="row" data-a="${opts.act}" data-id="${esc(id)}"${opts.extra||""}>${avHTML(id)}
+    <div class="tx">${star(id)}${esc(prof(id).username)}${badgeHTML(id)}<small>${esc(displayName(id))}${opts.sub?" · "+esc(opts.sub):""}</small></div>${opts.right||""}</div>`;
+}
+function groupedRows(filter, rowFn){
+  const gs=charsGrouped(filter);
+  if(!gs.length) return `<div class="empty-s">Nessun personaggio trovato.</div>`;
+  return gs.map(g=>`<div class="bk-h">📖 ${esc(g.t.name||"Senza titolo")}</div>`+g.ids.map(rowFn).join("")).join("");
+}
+function matchQ(id,q){ q=q.trim().replace(/^@/,"").toLowerCase(); return !q || prof(id).username.toLowerCase().includes(q) || displayName(id).toLowerCase().includes(q); }
+
+/* ---------- schermate ---------- */
+function scrInbox(){
+  const a=dmActing();
+  if(!a) return hd(backBtn(),"Messaggi","",true)+`<div class="ph-main">${noChars()}</div>`;
+  return hd(backBtn(), `<button class="ttl-btn" data-a="dm-acc">${star(a)}${esc(prof(a).username)}${badgeHTML(a)} ${IC.down}</button>`,
+      `<button class="ib" data-a="dm-new" title="Nuovo messaggio">${IC.edit}</button>`, true)+
+    `<div class="ph-hd" style="border-bottom:none;padding-top:8px"><label class="search">${IC.search}<input id="soDmQ" type="search" placeholder="Cerca nelle chat" autocomplete="off" autocapitalize="off" spellcheck="false" value="${esc(soc.dmQ)}"></label></div>
+    <div class="ph-main" id="soDmList">${inboxList()}</div>`;
+}
+function inboxList(){
+  const a=dmActing(), q=soc.dmQ.trim().toLowerCase();
+  const ts=myThreads(a).filter(t=>!q || threadTitle(t,a).toLowerCase().includes(q) || liveMembers(t).some(x=>displayName(x).toLowerCase().includes(q)));
+  if(!ts.length) return q ? `<div class="empty-s">Nessuna chat trovata.</div>`
+    : `<div class="empty-s"><span class="big">✉</span>Nessun messaggio per <b>@${esc(prof(a).username)}</b>.<br>Tocca ✎ in alto per iniziare una chat, anche con personaggi di altri alberi.</div>`;
+  return `<div class="sec-h">Messaggi</div>`+ts.map(t=>{
+    const m=t.msgs[t.msgs.length-1];
+    let prev="Nessun messaggio";
+    if(m){
+      const who = m.from===a ? "Tu: " : (t.group && exists(m.from) ? prof(m.from).username+": " : "");
+      prev = who + (m.text ? m.text : m.post ? "↗ Ha condiviso un post" : m.images.length ? "📷 Foto" : "");
+    }
+    const d=m?runningDate(t,t.msgs.length-1):"";
+    const sub = !t.group ? (()=>{ const o=t.members.find(x=>x!==a); const tn=o&&treeNameOf(o); return tn && tn!==(tree().name) ? " · 📖 "+tn : ""; })() : "";
+    return `<div class="row" data-a="dm-open" data-id="${esc(t.id)}">${threadAv(t,a)}
+      <div class="tx"><span class="t1">${esc(threadTitle(t,a))}</span><small>${esc(prev.length>48?prev.slice(0,48)+"…":prev)}${d?" · "+esc(d):""}${esc(sub)}</small></div></div>`;
+  }).join("");
+}
+function scrNewChat(){
+  const n=soc.dmNew; if(!n) return "";
+  const a=dmActing();
+  const adding = n.mode==="add" && threadById(n.thread);
+  const btnLbl = adding ? "Aggiungi" : n.share ? "Invia" : "Chat";
+  return hd(backBtn(), adding?"Aggiungi persone":"Nuovo messaggio", `<button class="ib gold txt" data-a="dm-create" ${n.sel.length?"":"disabled"}>${btnLbl}</button>`, true)+
+  `<div class="to-bar"><span class="to">A:</span>${n.sel.map(id=>`<button class="chip on" data-a="dm-unsel" data-id="${esc(id)}">${avHTML(id)}${esc(prof(id).username)} ✕</button>`).join("")}
+     <input id="soDmNewQ" type="search" placeholder="Cerca personaggi di tutti gli alberi…" autocomplete="off" autocapitalize="off" spellcheck="false" value="${esc(n.q)}"></div>
+   ${!adding && n.sel.length>1?`<div class="pf" style="padding-top:0;padding-bottom:4px">${ufHTML("Nome del gruppo (facoltativo)","dmGroupName",n.name,40,{ph:"Es. Consiglio di Waterdeep"})}</div>`:""}
+   <div class="ph-main" id="soDmNewRes">${newChatResults()}</div>`;
+}
+function newChatResults(){
+  const n=soc.dmNew, a=dmActing();
+  const th = n.mode==="add" ? threadById(n.thread) : null;
+  return groupedRows(id=>id!==a && !(th&&th.members.includes(id)) && matchQ(id,n.q), id=>gRow(id,{act:"dm-sel",
+    right:`<span class="rchk${n.sel.includes(id)?" on":""}">${n.sel.includes(id)?"✓":""}</span>`}));
+}
+function scrChat(s){
+  const t=threadById(s.id);
+  if(!t) return hd(backBtn(),"Chat","",true)+`<div class="ph-main"><div class="empty-s">Questa chat non esiste più.</div></div>`;
+  const a=dmActing();
+  const mem=liveMembers(t);
+  const sub = t.group ? `${mem.length} partecipanti` : (()=>{ const o=t.members.find(x=>x!==a); return o&&exists(o) ? displayName(o)+" · 📖 "+treeNameOf(o) : ""; })();
+  const title=`<span class="chat-ttl" data-a="dm-info" data-id="${esc(t.id)}">${threadAv(t,a,"sm")}<span class="ct"><b>${esc(threadTitle(t,a))}</b>${!t.group?badgeHTML(t.members.find(x=>x!==a)||a):""}<small>${esc(sub)}</small></span></span>`;
+  let body="", run="";
+  t.msgs.forEach((m,i)=>{
+    if(m.date && m.date!==run){ body+=`<div class="dsep"><span>${esc(m.date)}</span></div>`; run=m.date; }
+    const mine=m.from===a, prev=t.msgs[i-1], next=t.msgs[i+1];
+    const firstRun=!prev || prev.from!==m.from || (m.date&&m.date!==runningDate(t,i-1));
+    const lastRun=!next || next.from!==m.from || (next.date && next.date!==run);
+    let inner="";
+    if(m.post) inner+=sharedPostHTML(m.post);
+    if(m.images.length) inner+=`<div class="mimgs n${Math.min(m.images.length,4)}">${m.images.map(r=>imgTag(r)).join("")}</div>`;
+    if(m.text) inner+=`<div class="mtx">${richText(m.text)}</div>`;
+    const lk=m.likes.filter(exists);
+    body+=`<div class="msg${mine?" me":""}${lastRun?" last":""}">
+      ${mine?"":`<span class="mav">${lastRun?avHTML(m.from):""}</span>`}
+      <div class="mcol">${t.group&&!mine&&firstRun?`<div class="mname">${esc(exists(m.from)?prof(m.from).username:"?")}</div>`:""}
+        <div class="bub${m.text&&!m.images.length&&!m.post?"":" media"}" data-a="dm-msg" data-id="${esc(m.id)}">${inner}</div>
+        ${lk.length?`<div class="mlk" data-a="dm-msg" data-id="${esc(m.id)}">♥${lk.length>1?" "+lk.length:""}</div>`:""}
+      </div></div>`;
+  });
+  if(!t.msgs.length) body=`<div class="empty-s" style="padding-top:60px">${threadAv(t,a,"big-av")}<br><b>${esc(threadTitle(t,a))}</b><br>Scrivi il primo messaggio.</div>`;
+  const run2=runningDate(t,t.msgs.length-1);
+  const can = t.members.includes(a);
+  return hd(backBtn(), title, `<button class="ib" data-a="dm-info" data-id="${esc(t.id)}" title="Dettagli">${IC.info}</button>`)+
+    `<div class="ph-main chat-main">${body}</div>
+    <div class="cbar">
+      ${soc.dmImgs.length?`<div class="dm-att">${soc.dmImgs.map((r,i)=>`<div class="it">${imgTag(r)}<button class="x" data-a="dm-rmimg" data-i="${i}">✕</button></div>`).join("")}</div>`:""}
+      ${soc.dmDateOpen?`<div class="dm-date"><span>${IC.cal}</span><input id="soDmDate" type="text" maxlength="${SOC_LIM.date}" placeholder="Data del messaggio, anche fantasy" value="${esc(soc.dmDate)}" autocomplete="off"><button data-a="dm-date-x" title="Chiudi">✕</button></div>`
+        : (run2?`<div class="rp"><span>📅 ${esc(run2)}</span></div>`:"")}
+      ${can?`<div class="in">
+        <span data-a="dm-speaker" data-id="${esc(t.id)}" title="Scrivi come @${esc(prof(a).username)} — tocca per cambiare">${avHTML(a)}</span>
+        <button class="ib" data-a="dm-pick" title="Foto">${IC.cam}</button>
+        <input id="soDmTxt" type="text" maxlength="2000" placeholder="Messaggio come ${esc(prof(a).username)}…" autocomplete="off" value="${esc(soc.dmTxt||"")}">
+        <button class="ib${soc.dmDateOpen?" gold":""}" data-a="dm-date" title="Data del messaggio">${IC.cal}</button>
+        <button class="ib gold txt" data-a="dm-send">Invia</button></div>`
+      : `<div class="rp" style="justify-content:center"><button class="pbtn" data-a="dm-speaker" data-id="${esc(t.id)}">Scegli chi scrive in questa chat</button></div>`}
+    </div>`;
+}
+function sharedPostHTML(ref){
+  const t=state.trees.find(x=>x.id===ref.tree), p=t && socOf(t).posts.find(x=>x.id===ref.id);
+  if(!p || !t.nodes.some(n=>n.id===p.author)) return `<div class="spost gone">Post non più disponibile</div>`;
+  return `<div class="spost" data-a="dm-post" data-t="${esc(ref.tree)}" data-id="${esc(ref.id)}">
+    <div class="sp-hd">${avHTML(p.author)}<b>${esc(prof(p.author).username)}</b>${badgeHTML(p.author)}</div>
+    ${p.images.length?imgTag(p.images[0],"sp-img"):`<div class="sp-txt">${esc(p.text.slice(0,160))}</div>`}
+    ${p.images.length&&p.text?`<div class="sp-cap"><b>${esc(prof(p.author).username)}</b> ${esc(p.text.slice(0,90))}${p.text.length>90?"…":""}</div>`:""}</div>`;
+}
+function scrDmInfo(s){
+  const t=threadById(s.id); if(!t) return hd(backBtn(),"Dettagli","",true)+`<div class="ph-main"><div class="empty-s">Questa chat non esiste più.</div></div>`;
+  const a=dmActing();
+  const mem=liveMembers(t);
+  return hd(backBtn(),"Dettagli","",true)+`<div class="ph-main">
+    <div class="pf-av" style="padding-top:18px">${threadAv(t,a,"big-av")}<div style="font-weight:700;color:#f0e2c0;font-size:16px">${esc(threadTitle(t,a))}</div></div>
+    ${t.group?`<div class="pf" style="padding-top:0">${ufHTML("Nome del gruppo","dmRename",t.name,40,{ph:"Senza nome"})}</div>`:""}
+    <div class="sec-h">${t.group?"Partecipanti":"Persone"}</div>
+    ${mem.map(id=>gRow(id,{act:"dm-noop", sub:"📖 "+treeNameOf(id),
+      right: t.group && mem.length>2 ? `<button class="sbtn on" data-a="dm-kick" data-id="${esc(id)}" data-th="${esc(t.id)}">Rimuovi</button>` : ""})).join("")}
+    ${t.group?`<div class="sheet" style="background:none;box-shadow:none;max-height:none"><button class="opt" data-a="dm-addppl" data-id="${esc(t.id)}">＋ Aggiungi persone</button></div>`:""}
+    <div class="sheet" style="background:none;box-shadow:none;max-height:none"><button class="opt dg" data-a="dm-del" data-id="${esc(t.id)}">🗑 Elimina chat</button></div>
+  </div>`;
+}
+const DM_SCREENS={ inbox:scrInbox, newchat:scrNewChat, chat:scrChat, dminfo:scrDmInfo };
+
+/* ---------- fogli ---------- */
+const DM_SHEETS={
+  dmacc(){ const a=dmActing();
+    return `<div class="sh-t">Cambia account</div>`+groupedRows(null, id=>gRow(id,{act:"dm-setacc", right:id===a?`<span class="chk">✓</span>`:""})); },
+  speaker(sh){ const t=threadById(sh.id), a=dmActing(); if(!t) return "";
+    return `<div class="sh-t">Chi scrive?</div>`+liveMembers(t).map(id=>gRow(id,{act:"dm-setacc", sub:"📖 "+treeNameOf(id), right:id===a?`<span class="chk">✓</span>`:""})).join(""); },
+  share(sh){ const a=acting(); if(!a) return "";
+    const ts=myThreads(a);
+    return `<div class="sh-t">Invia come @${esc(prof(a).username)}</div>
+      <button class="opt" data-a="dm-share-new" data-id="${esc(sh.id)}">✎ Nuovo messaggio…</button>`+
+      ts.map(t=>`<div class="row" data-a="dm-share-to" data-id="${esc(t.id)}" data-p="${esc(sh.id)}">${threadAv(t,a)}<div class="tx">${esc(threadTitle(t,a))}<small>${t.group?"Gruppo":"📖 "+esc(treeNameOf(t.members.find(x=>x!==a)||a))}</small></div><span class="sbtn">Invia</span></div>`).join("")+
+      `<button class="opt" data-a="sheet-x">Annulla</button>`; },
+  msg(sh){ const t=threadById(sh.th), m=t&&t.msgs.find(x=>x.id===sh.id), a=dmActing(); if(!m) return "";
+    const liked=m.likes.includes(a), lk=m.likes.filter(exists);
+    return `<div class="sh-t">Messaggio di @${esc(exists(m.from)?prof(m.from).username:"?")}</div>
+      <button class="opt" data-a="dm-like" data-id="${esc(m.id)}" data-th="${esc(t.id)}">${liked?"💔 Togli il cuore":"♥ Metti un cuore"} <small style="color:var(--on-ink-muted)">come @${esc(prof(a).username)}</small></button>
+      ${lk.length?`<div class="sec-h" style="font-size:12px;color:var(--on-ink-muted);font-weight:500;padding-top:4px">♥ ${lk.map(x=>"@"+esc(prof(x).username)).join(", ")}</div>`:""}
+      <button class="opt" data-a="dm-editdate" data-id="${esc(m.id)}" data-th="${esc(t.id)}">📅 ${m.date?"Cambia data ("+esc(m.date)+")":"Imposta una data da qui in poi"}</button>
+      <button class="opt dg" data-a="dm-delmsg" data-id="${esc(m.id)}" data-th="${esc(t.id)}">🗑 Elimina messaggio</button>
+      <button class="opt" data-a="sheet-x">Annulla</button>`; },
+};
+
+/* ---------- azioni ---------- */
+function openThreadWith(ids, name, share){
+  const a=dmActing(); const d=DM();
+  let t=null;
+  if(ids.length===1) t=d.threads.find(x=>!x.group && x.members.length===2 && x.members.includes(a) && x.members.includes(ids[0]));
+  if(!t){ t={id:uid(), name:ids.length>1?String(name||"").trim():"", group:ids.length>1, members:[a,...ids], at:Date.now(), msgs:[]}; d.threads.push(t); }
+  if(share) t.msgs.push({id:uid(), from:a, text:"", images:[], post:share, date:"", at:Date.now(), likes:[]});
+  save();
+  return t;
+}
+async function dmSend(){
+  const s=topScreen(); if(!s||s.k!=="chat") return;
+  const t=threadById(s.id), a=dmActing(); if(!t||!t.members.includes(a)) return;
+  const inp=document.getElementById("soDmTxt"); const txt=(inp&&inp.value||"").trim();
+  if(!txt && !soc.dmImgs.length){ if(inp) inp.focus(); return; }
+  const imgs=[]; for(const r of soc.dmImgs) imgs.push(await storeImage(r));
+  let date="";
+  if(soc.dmDateOpen){ const v=soc.dmDate.trim(); if(v && v!==runningDate(t,t.msgs.length-1)) date=v; }
+  t.msgs.push({id:uid(), from:a, text:txt, images:imgs, post:null, date, at:Date.now(), likes:[]});
+  soc.dmImgs=[]; soc.dmDateOpen=false; soc.dmStick=true; soc.dmTxt="";
+  save(); renderSocial();
+  const ni=document.getElementById("soDmTxt"); if(ni && !isMobile()) ni.focus();
+  if(imgs.length) socKickUploads();
+}
+function dmOpenPost(treeId, postId){
+  const t=state.trees.find(x=>x.id===treeId); if(!t) return;
+  if(t.id!==currentId){
+    currentId=t.id; flushSave(); renderAll(); toast("📖 Ora sei nel libro «"+(t.name||"Senza titolo")+"»", 2600);
+  }
+  socPush({k:"post", id:postId});
+}
+function dmAction(A, el, ev){
+  const id=el.dataset.id;
+  switch(A){
+    case "dm-inbox": {
+      const a=acting(); if(a) DM().acting=a;
+      if(!dmActing()){ toast("Aggiungi prima dei personaggi a un albero"); break; }
+      soc.dmQ=""; socPush({k:"inbox"}); break;
+    }
+    case "dm-acc": soc.sheet={k:"dmacc"}; renderSocial(); break;
+    case "dm-setacc": DM().acting=id; save(); soc.sheet=null; renderSocial(); break;
+    case "dm-speaker": soc.sheet={k:"speaker", id}; renderSocial(); break;
+    case "dm-new": soc.dmNew={sel:[], q:"", name:"", share:null}; socPush({k:"newchat"}); break;
+    case "dm-sel": { const n=soc.dmNew; if(!n) break; const i=n.sel.indexOf(id); if(i>=0) n.sel.splice(i,1); else n.sel.push(id); n.q="";
+      renderSocial(); const q=document.getElementById("soDmNewQ"); if(q && !isMobile()) q.focus(); break; }
+    case "dm-unsel": { const n=soc.dmNew; if(!n) break; n.sel=n.sel.filter(x=>x!==id); renderSocial(); break; }
+    case "dm-create": {
+      const n=soc.dmNew; if(!n||!n.sel.length) break;
+      if(n.mode==="add"){ const t=threadById(n.thread); if(t){ n.sel.forEach(x=>{ if(!t.members.includes(x)) t.members.push(x); }); t.group=true; save(); }
+        soc.dmNew=null; soc.stack.pop(); renderSocial(); break; }
+      const t=openThreadWith(n.sel, n.name, n.share);
+      soc.dmNew=null; soc.stack.pop();
+      if(n.share){ toast("↗ Post inviato"); renderSocial(); break; }
+      soc.dmTxt=""; soc.dmImgs=[]; soc.dmDateOpen=false; soc.dmStick=true; socPush({k:"chat", id:t.id}); break;
+    }
+    case "dm-open": soc.dmTxt=""; soc.dmImgs=[]; soc.dmDateOpen=false; soc.dmStick=true; socPush({k:"chat", id}); break;
+    case "dm-info": socPush({k:"dminfo", id}); break;
+    case "dm-pick": socFilePurpose="dm"; pickFiles(true); break;
+    case "dm-rmimg": soc.dmImgs.splice(+el.dataset.i,1); renderSocial(); break;
+    case "dm-date": {
+      const s=topScreen(), t=s&&threadById(s.id);
+      soc.dmDateOpen=!soc.dmDateOpen; if(soc.dmDateOpen) soc.dmDate=t?runningDate(t,t.msgs.length-1):"";
+      renderSocial(); if(soc.dmDateOpen){ const d=document.getElementById("soDmDate"); if(d) d.focus(); } break;
+    }
+    case "dm-date-x": soc.dmDateOpen=false; renderSocial(); break;
+    case "dm-send": dmSend(); break;
+    case "dm-msg": soc.sheet={k:"msg", id, th:topScreen().id}; renderSocial(); break;
+    case "dm-like": { const t=threadById(el.dataset.th), m=t&&t.msgs.find(x=>x.id===id), a=dmActing(); if(!m) break;
+      const i=m.likes.indexOf(a); if(i>=0) m.likes.splice(i,1); else m.likes.push(a); soc.sheet=null; save(); renderSocial(); break; }
+    case "dm-editdate": { const t=threadById(el.dataset.th), m=t&&t.msgs.find(x=>x.id===id); if(!m) break;
+      const v=prompt("Data di questo messaggio (vale anche per i successivi finché non ne scrivi un'altra). Lascia vuoto per toglierla.", m.date||runningDate(t,t.msgs.indexOf(m)));
+      if(v===null) break; m.date=v.trim(); soc.sheet=null; save(); renderSocial(); break; }
+    case "dm-delmsg": { const t=threadById(el.dataset.th), m=t&&t.msgs.find(x=>x.id===id); if(!m) break;
+      if(!confirm("Eliminare questo messaggio?")) break;
+      t.msgs=t.msgs.filter(x=>x.id!==id); deleteImages(m.images); soc.sheet=null; save(); renderSocial(); break; }
+    case "dm-post": dmOpenPost(el.dataset.t, id); break;
+    case "dm-kick": { ev.stopPropagation(); const t=threadById(el.dataset.th); if(!t) break;
+      if(!confirm("Togliere @"+prof(id).username+" dal gruppo?")) break;
+      t.members=t.members.filter(x=>x!==id); if(DM().acting===id) DM().acting=t.members.find(exists)||null; save(); renderSocial(); break; }
+    case "dm-addppl": soc.dmNew={sel:[], q:"", name:"", mode:"add", thread:id}; socPush({k:"newchat"}); break;
+    case "dm-del": { const t=threadById(id); if(!t) break;
+      if(!confirm("Eliminare questa chat e tutti i suoi messaggi?")) break;
+      DM().threads=DM().threads.filter(x=>x.id!==id); deleteImages(t.msgs.flatMap(m=>m.images));
+      save(); while(soc.stack.length && soc.stack[soc.stack.length-1].k!=="inbox") soc.stack.pop(); renderSocial(); toast("Chat eliminata"); break; }
+    case "share": if(!acting()) break; soc.sheet={k:"share", id}; renderSocial(); break;
+    case "dm-share-to": { const t=threadById(id), a=acting(); if(!t||!a) break;
+      DM().acting=a; t.msgs.push({id:uid(), from:a, text:"", images:[], post:{tree:tree().id, id:el.dataset.p}, date:"", at:Date.now(), likes:[]});
+      soc.sheet=null; save(); renderSocial(); toast("↗ Inviato a "+threadTitle(t,a)); break; }
+    case "dm-share-new": { const a=acting(); if(!a) break; DM().acting=a;
+      soc.dmNew={sel:[], q:"", name:"", share:{tree:tree().id, id}}; socPush({k:"newchat"}); break; }
+    case "dm-noop": break;
+  }
+}
+function dmInput(el){
+  if(el.id==="soDmQ"){ soc.dmQ=el.value; const L=document.getElementById("soDmList"); L.innerHTML=inboxList(); hydrateImgs(L); return true; }
+  if(el.id==="soDmNewQ"){ if(soc.dmNew){ soc.dmNew.q=el.value; const L=document.getElementById("soDmNewRes"); L.innerHTML=newChatResults(); hydrateImgs(L); } return true; }
+  if(el.id==="soDmDate"){ soc.dmDate=el.value; return true; }
+  if(el.id==="soDmTxt"){ soc.dmTxt=el.value; return true; }
+  if(el.dataset && el.dataset.f==="dmGroupName"){ if(soc.dmNew) soc.dmNew.name=el.value; const c=document.querySelector('#soScreen [data-cnt="dmGroupName"]'); if(c) c.textContent=`${el.value.length}/40`; return true; }
+  if(el.dataset && el.dataset.f==="dmRename"){ const s=topScreen(), t=s&&threadById(s.id); if(t){ t.name=el.value; saveSoon(); }
+    const c=document.querySelector('#soScreen [data-cnt="dmRename"]'); if(c) c.textContent=`${el.value.length}/40`; return true; }
+  return false;
+}
 
 /* ============================================================
    INIT
