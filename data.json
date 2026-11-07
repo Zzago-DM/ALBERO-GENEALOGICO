@@ -509,6 +509,21 @@
       "story": {
         "chapters": []
       }
+    },
+    {
+      "id": "ea5949a0-a640-453b-811e-9a4cec241d0a",
+      "name": "ALYSSA",
+      "nodes": [],
+      "edges": [],
+      "view": {
+        "panX": 0,
+        "panY": 0,
+        "zoom": 1
+      },
+      "cover": "#6b1f1f",
+      "story": {
+        "chapters": []
+      }
     }
   ],
   "currentId": "ce880fc1-fb1b-4407-b369-4a24799b5474"
