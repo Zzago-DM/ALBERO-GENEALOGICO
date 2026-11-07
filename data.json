@@ -568,7 +568,12 @@
             "nLikes": "6537",
             "nComments": "1654",
             "tags": [],
-            "likes": [],
+            "likes": [
+              {
+                "by": "a4784486-8866-4daf-837f-74c7ac1a323c",
+                "at": 1794081648695
+              }
+            ],
             "comments": []
           }
         ],
@@ -635,7 +640,13 @@
             "avatar": "social/ce880fc1-b4091b3c63e84b.jpg"
           }
         },
-        "follows": [],
+        "follows": [
+          {
+            "from": "a4784486-8866-4daf-837f-74c7ac1a323c",
+            "to": "dcdaa1e3-6c21-4288-b951-7ce9d4543701",
+            "at": 1794081645817
+          }
+        ],
         "posts": [
           {
             "id": "fb14e4e0-f0e7-4708-b332-90621720e92e",
