@@ -824,7 +824,19 @@
   ],
   "currentId": "050ce71b-d79c-42dc-a82e-332a30526afb",
   "dms": {
-    "threads": [],
-    "acting": "a4784486-8866-4daf-837f-74c7ac1a323c"
+    "threads": [
+      {
+        "id": "f6c33cd3-77fb-4a42-8f72-f2e7e97cf4e2",
+        "name": "",
+        "group": false,
+        "members": [
+          "dcdaa1e3-6c21-4288-b951-7ce9d4543701",
+          "a4784486-8866-4daf-837f-74c7ac1a323c"
+        ],
+        "at": 1794077042701,
+        "msgs": []
+      }
+    ],
+    "acting": "dcdaa1e3-6c21-4288-b951-7ce9d4543701"
   }
 }
