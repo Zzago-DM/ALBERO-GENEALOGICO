@@ -602,7 +602,17 @@
             "comments": []
           }
         ],
-        "stories": [],
+        "stories": [
+          {
+            "id": "f44b67fd-47f0-4ff5-a4d9-5f88aa202363",
+            "author": "dcdaa1e3-6c21-4288-b951-7ce9d4543701",
+            "image": "social/050ce71b-1827d62c6ba146.jpg",
+            "text": "with you, for my eternity",
+            "date": "",
+            "at": 1794094110758,
+            "likes": []
+          }
+        ],
         "acting": "dcdaa1e3-6c21-4288-b951-7ce9d4543701"
       }
     },
