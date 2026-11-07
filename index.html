@@ -3455,7 +3455,7 @@ function scrFeed(){
   const t=tree(), posts=feedPosts();
   const body = storyBarHTML() + (posts.length ? posts.map(postHTML).join("")
     : `<div class="empty-s"><span class="big">❦</span>Ancora nessun post in questo mondo.<br>Tocca <b>＋</b> in basso per pubblicare il primo.</div>`);
-  return hd(treeBackBtn()+`<button class="ib" data-a="dm-inbox" title="Messaggi">${IC.dm}${dmUnreadDot()}</button>`, `<span class="crest">❦</span> ${acting()?esc(prof(acting()).username)+badgeHTML(acting()):esc(t.name||"Social")}`, acctBtn()) + `<div class="ph-main">${body}</div>`;
+  return hd(treeBackBtn()+`<button class="ib" data-a="dm-inbox" title="Messaggi">${IC.dm}${dmUnreadDot()}</button>`, `<span class="crest">❦</span> ${acting()?esc(prof(acting()).username)+badgeHTML(acting()):esc(t.name||"Social")}`, "") + `<div class="ph-main">${body}</div>`;
 }
 function scrSearch(){
   return `<div class="ph-hd">${treeBackBtn()}<label class="search">${IC.search}<input id="soQ" type="search" placeholder="Cerca in tutti gli alberi" autocomplete="off" autocapitalize="off" spellcheck="false" value="${esc(soc.q)}"></label></div>
@@ -3511,7 +3511,7 @@ function scrActivity(){
         <div class="tx"><b>${esc(prof(e.by).username)}</b>${badgeHTML(e.by)} ${esc(e.txt)}</div>${right}</div>`;
     }).join("")
     : `<div class="empty-s"><span class="big">♡</span>Nessuna attività per <b>@${esc(prof(a).username)}</b>.<br>Qui compariranno like, commenti, tag e nuovi follower.</div>`;
-  return hd(treeBackBtn(),"Attività",acctBtn()) + `<div class="ph-main">${body}</div>`;
+  return hd(treeBackBtn(),"Attività","") + `<div class="ph-main">${body}</div>`;
 }
 function noChars(){ return `<div class="empty-s"><span class="big">❦</span>Questo albero non ha ancora personaggi.<br>Aggiungili nell'albero per dar loro un profilo social.</div>`; }
 
@@ -3630,7 +3630,7 @@ function scrCompose(){
   const kindBar = d.editId ? "" : `<div class="seg2 kind"><button class="${story?"":"on"}" data-a="story-kind" data-k="post">Post</button><button class="${story?"on":""}" data-a="story-kind" data-k="story">Storia</button></div>`;
   if(story) return hd(`<button class="ib" data-a="back" title="Annulla">${IC.close}</button>`,"Nuova storia",`<button class="ib gold txt" data-a="publish">Condividi</button>`,true)+kindBar+
   `<div class="ph-main">
-    <div class="cp-who" data-a="accounts">${avHTML(a)}<div class="tx">Pubblichi come <b>${esc(prof(a).username)}</b>${badgeHTML(a)}</div><small>Cambia ${IC.down}</small></div>
+    <div class="cp-who">${avHTML(a)}<div class="tx">Pubblichi come <b>${esc(prof(a).username)}</b>${badgeHTML(a)}</div></div>
     <div class="cp-imgs">${d.images.slice(0,1).map(r=>`<div class="it" style="width:120px;height:186px">${imgTag(r)}<button class="x" data-a="rm-img" data-i="0" title="Togli">✕</button></div>`).join("")}
       ${d.images.length?"":`<button class="add" data-a="pick-imgs" style="width:120px;height:186px"><b>＋</b>Scegli la foto</button>`}</div>
     <div class="pf" style="padding-top:0">
@@ -3640,7 +3640,7 @@ function scrCompose(){
   return hd(`<button class="ib" data-a="back" title="Annulla">${IC.close}</button>`, d.editId?"Modifica post":"Nuovo post",
       `<button class="ib gold txt" data-a="publish">${d.editId?"Salva":"Condividi"}</button>`, true)+kindBar+
   `<div class="ph-main">
-    <div class="cp-who" data-a="${d.editId?"":"accounts"}">${avHTML(a)}<div class="tx">${d.editId?"Post di":"Pubblichi come"} <b>${esc(prof(a).username)}</b>${badgeHTML(a)}</div>${d.editId?"":`<small>Cambia ${IC.down}</small>`}</div>
+    <div class="cp-who">${avHTML(a)}<div class="tx">${d.editId?"Post di":"Pubblichi come"} <b>${esc(prof(a).username)}</b>${badgeHTML(a)}</div></div>
     <div class="cp-imgs">${d.images.map((r,i)=>`<div class="it sq" data-a="crop-img" data-i="${i}" title="Tocca per sistemare la foto">${imgTag(r)}<button class="x" data-a="rm-img" data-i="${i}" title="Togli">✕</button>${i>0?`<button class="mv" data-a="mv-img" data-i="${i}" title="Sposta a sinistra">◀</button>`:""}<button class="adj" data-a="crop-img" data-i="${i}" title="Sistema">✎</button></div>`).join("")}
       ${d.images.length<10?`<button class="add sq" data-a="pick-imgs"><b>＋</b>Aggiungi foto</button>`:""}</div>
     <div class="pf" style="padding-top:0">
