@@ -494,6 +494,21 @@
       "story": {
         "chapters": []
       }
+    },
+    {
+      "id": "cecc8f69-f76a-4873-82e3-c4f5f2efd43e",
+      "name": "KRONO",
+      "nodes": [],
+      "edges": [],
+      "view": {
+        "panX": 0,
+        "panY": 0,
+        "zoom": 1
+      },
+      "cover": "#2e4a4a",
+      "story": {
+        "chapters": []
+      }
     }
   ],
   "currentId": "ce880fc1-fb1b-4407-b369-4a24799b5474"
