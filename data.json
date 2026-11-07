@@ -75,7 +75,8 @@
             "years": false,
             "pronouns": false,
             "notes": false
-          }
+          },
+          "main": true
         },
         {
           "id": "de63ca54-993e-4a7b-abab-7a15345ec82a",
@@ -104,7 +105,8 @@
             "years": false,
             "pronouns": true,
             "notes": false
-          }
+          },
+          "main": false
         },
         {
           "id": "1f4d21e0-a4e0-4c14-b89f-93d8544119e2",
@@ -133,7 +135,8 @@
             "years": false,
             "pronouns": true,
             "notes": false
-          }
+          },
+          "main": false
         },
         {
           "id": "131b6a66-fba1-4f0d-82b1-a3f4b95cbb11",
@@ -162,7 +165,8 @@
             "years": false,
             "pronouns": true,
             "notes": false
-          }
+          },
+          "main": false
         },
         {
           "id": "97548225-9386-4730-a906-4e007b74c320",
@@ -191,7 +195,8 @@
             "years": false,
             "pronouns": true,
             "notes": false
-          }
+          },
+          "main": false
         },
         {
           "id": "dec97f66-71c9-4975-9fad-cda841c8b047",
@@ -218,7 +223,8 @@
             "years": false,
             "pronouns": false,
             "notes": false
-          }
+          },
+          "main": false
         },
         {
           "id": "73a262ea-3120-4e61-8d80-69c1e45f0296",
@@ -245,7 +251,8 @@
             "years": false,
             "pronouns": false,
             "notes": false
-          }
+          },
+          "main": false
         },
         {
           "id": "6ab0cbb0-8117-4688-b833-bf5655f334eb",
@@ -270,7 +277,8 @@
             "years": false,
             "pronouns": false,
             "notes": false
-          }
+          },
+          "main": false
         },
         {
           "id": "22c61c7c-a99f-4b3a-8dac-9bb50cea5877",
@@ -297,7 +305,8 @@
             "years": false,
             "pronouns": false,
             "notes": false
-          }
+          },
+          "main": false
         }
       ],
       "edges": [
