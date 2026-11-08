@@ -1006,6 +1006,55 @@
     box-shadow:inset 0 0 0 2px rgba(214,173,82,.4),inset 0 0 30px rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center}
   .fl-back span{color:#d6ad52;font-size:64px;opacity:.85;text-shadow:0 2px 6px rgba(0,0,0,.5)}
   .fl-back::before{content:"";position:absolute;inset:12px;border:1px solid rgba(214,173,82,.45);border-radius:6px}
+
+  /* ---------- Tag posizionati e testo delle storie ---------- */
+  .po-slide{position:relative;flex:none;width:100%;aspect-ratio:1/1;scroll-snap-align:center;overflow:hidden;background:#1d170e}
+  .po-slide>img{width:100%;height:100%;object-fit:cover;display:block;user-select:none;-webkit-user-drag:none}
+  .tg-ic{position:absolute;left:10px;bottom:10px;width:26px;height:26px;border-radius:50%;background:rgba(10,8,4,.75);color:#f4e7c8;display:flex;align-items:center;justify-content:center;z-index:2}
+  .tg-ic svg{width:15px;height:15px}
+  .tgs{position:absolute;transform:translate(-50%,0);margin-top:7px;z-index:3;white-space:nowrap;font-family:var(--ui);font-size:12.5px;font-weight:700;
+    background:rgba(16,12,6,.86);color:#f4e7c8;padding:5px 10px;border-radius:8px;border:1px solid rgba(214,173,82,.6);cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.4)}
+  .tgs::before{content:"";position:absolute;left:50%;top:-6px;margin-left:-6px;border:6px solid transparent;border-top:0;border-bottom-color:rgba(214,173,82,.75)}
+  .po-slide .tgs{opacity:0;pointer-events:none;transition:opacity .2s}
+  .po-slide.show-tags .tgs{opacity:1;pointer-events:auto}
+  .tgs.ed{cursor:grab;touch-action:none;padding-right:6px}
+  .tgs.ed b{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;margin-left:6px;border-radius:50%;background:#3a2f1c;font-size:10px;cursor:pointer;vertical-align:1px}
+  .tge{position:absolute;inset:0;z-index:19;background:#0e0b06;display:flex;flex-direction:column}
+  .tge-box{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;gap:4px;padding:10px 6px}
+  .tge-frame{position:relative;width:100%;max-width:340px;aspect-ratio:1;touch-action:none;cursor:crosshair;box-shadow:0 0 0 1.5px var(--gold)}
+  .tge-frame>img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;user-select:none}
+  .tge-nav{flex:none}
+  .tg-btn{display:inline-flex;align-items:center;gap:6px}
+  /* storie: riquadro 9:16 con testo e adesivi */
+  .stf{position:relative;container-type:inline-size;aspect-ratio:9/16;overflow:hidden;background:#0b0905}
+  .stf>img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;pointer-events:none;user-select:none}
+  .stf.prev{width:210px;margin:0 auto;border-radius:12px;box-shadow:0 0 0 1.5px var(--gold),0 10px 30px rgba(0,0,0,.5);touch-action:none;cursor:crosshair}
+  .stf-wrap{padding:14px 16px 4px}
+  .stf-tools{display:flex;gap:6px;justify-content:center;margin-top:10px}
+  .stf-tools .pbtn{flex:none;padding:6px 12px;font-size:12.5px}
+  .stx{position:absolute;transform:translate(-50%,-50%);max-width:88%;width:max-content;white-space:pre-wrap;word-break:break-word;
+    font-family:var(--display);font-weight:600;line-height:1.25;font-size:calc(var(--fs) * 100cqw / 360);z-index:2}
+  .stx.bg-box{padding:.3em .6em;border-radius:.45em;box-shadow:0 4px 14px rgba(0,0,0,.35)}
+  .stx[data-drag]{cursor:grab;touch-action:none}
+  .stx .mention{color:inherit;text-decoration:underline}
+  .stf .tgs{font-size:calc(12.5 * 100cqw / 360);padding:.4em .8em}
+  .stf.prev .tgs{font-size:11px}
+  .seg3{display:inline-flex;border:1px solid #4a3f2a;border-radius:9px;overflow:hidden;margin-top:6px}
+  .seg3 button{background:none;border:none;color:#e2d4b4;padding:7px 12px;font-size:13px;cursor:pointer;font-family:var(--ui);border-right:1px solid #4a3f2a}
+  .seg3 button:last-child{border-right:none}
+  .seg3 button.on{background:var(--gold);color:#1e1a10;font-weight:700}
+  .tcol{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+  .tcol button{width:28px;height:28px;border-radius:50%;border:2px solid #4a3f2a;cursor:pointer;padding:0;flex:none}
+  .tcol button.on{box-shadow:0 0 0 2px #16120b,0 0 0 4px var(--gold-bright)}
+  .szrow{display:flex;align-items:center;gap:8px;margin-top:6px;color:#e2d4b4;font-family:var(--display);flex-wrap:wrap}
+  .szrow input{flex:1;min-width:110px;accent-color:var(--gold);border:none!important;padding:0!important;width:auto!important}
+  .szrow .seg3{margin-top:0}
+  /* visualizzatore: foto e livello di testo/adesivi allineati */
+  .sv-img{container-type:size}
+  .sv-img .stf,.sv-tags .stf{width:min(100cqw, calc(100cqh * 9 / 16))}
+  .sv-tags{position:absolute;inset:0;z-index:2;display:flex;align-items:center;justify-content:center;container-type:size;pointer-events:none}
+  .sv-tags .stf{background:none;pointer-events:none}
+  .sv-tags .tgs{pointer-events:auto}
 </style>
 </head>
 <body class="view-library">
@@ -3234,6 +3283,7 @@ function normSocial(s){
     text:String(p.text||""), date:String(p.date||""), place:String(p.place||""), at:+p.at||Date.now(),
     nLikes:String(p.nLikes??""), nComments:String(p.nComments??""),
     tags:(Array.isArray(p.tags)?p.tags:[]).filter(x=>typeof x==="string"),
+    tagPos:normTagPos(p.tagPos),
     likes:likeArr(p.likes),
     comments:(Array.isArray(p.comments)?p.comments:[]).filter(c=>c&&c.author).map(c=>({
       id:c.id||uid(), author:c.author, text:String(c.text||""), at:+c.at||0, replyTo:c.replyTo||null, likes:likeArr(c.likes) }))
@@ -3289,7 +3339,11 @@ function accountsHTML(act, cur, rowFn){
     (rest?`<div class="sec-h acc-sep">Non ancora aggiunti<small>Tocca un personaggio per creargli il profilo social</small></div>`+groupedRows(id=>!used.has(id), rowFn):"");
 }
 function displayName(id){ const p=prof(id), n=nodeOf(id); return p.name || (n&&n.name) || ""; }
-function byUsername(u){ u=String(u||"").toLowerCase(); const n=tree().nodes.find(n=>prof(n.id).username.toLowerCase()===u); return n?n.id:null; }
+function byUsername(u){ u=String(u||"").toLowerCase(); if(!u) return null;
+  let n=tree().nodes.find(n=>prof(n.id).username.toLowerCase()===u); if(n) return n.id;
+  const a=acting(); if(a){ const f=followingOf(a).find(id=>prof(id).username.toLowerCase()===u); if(f) return f; }
+  for(const t of state.trees){ n=t.nodes.find(n=>{ const p=socOf(t).profiles[n.id]; return p&&p.username.toLowerCase()===u; }); if(n) return n.id; }
+  return null; }
 function acting(){
   const s=S(), t=tree();
   if(!s.acting || !alive(s.acting)) s.acting = t.nodes[0] ? t.nodes[0].id : null;
@@ -3311,7 +3365,7 @@ function follows(a,b){ return allFollows().some(f=>f.from===a && f.to===b); }
 function followersOf(id){ return [...new Set(allFollows().filter(f=>f.to===id && exists(f.from)).map(f=>f.from))]; }
 function followingOf(id){ return [...new Set(allFollows().filter(f=>f.from===id && exists(f.to)).map(f=>f.to))]; }
 function postsOf(id){ return treePosts(charTree(id)).filter(p=>p.author===id).sort((a,b)=>b.at-a.at); }
-function taggedIn(id){ return treePosts(charTree(id)).filter(p=>p.tags.includes(id)).sort((a,b)=>b.at-a.at); }
+function taggedIn(id){ return state.trees.flatMap(t=>treePosts(t)).filter(p=>p.tags.includes(id)).sort((a,b)=>b.at-a.at); }
 function liveLikes(arr){ return arr.filter(l=>exists(l.by)); }
 function liveComments(p){ return p.comments.filter(c=>exists(c.author)); }
 function fmtNum(v){
@@ -3498,7 +3552,7 @@ function postHTML(p){
   let media;
   if(imgs.length){
     media=`<div class="po-media" data-a="media" data-id="${esc(p.id)}">
-      <div class="po-track" data-car="${esc(p.id)}">${imgs.map(r=>imgTag(r)).join("")}</div>
+      <div class="po-track" data-car="${esc(p.id)}">${slidesHTML(p)}</div>
       ${imgs.length>1?`<span class="po-count">${(soc.car[p.id]||0)+1}/${imgs.length}</span>`:""}
       <span class="po-heart">♥</span></div>
       <div class="po-dots">${imgs.length>1?imgs.map((_,i)=>`<i class="${i===(soc.car[p.id]||0)?"on":""}"></i>`).join(""):""}</div>`;
@@ -3512,7 +3566,8 @@ function postHTML(p){
     likeLine=`<div class="po-likes" data-a="likes" data-id="${esc(p.id)}">Piace a <b>${esc(prof(first).username)}</b>${others>0?` e <b>altri ${fmtNum(others)}</b>`:""}</div>`;
   } else if(nL>0) likeLine=`<div class="po-likes" data-a="likes" data-id="${esc(p.id)}">${fmtNum(nL)} mi piace</div>`;
   const nC=String(p.nComments||"").trim()!=="" ? parseInt(p.nComments,10)||0 : cms.length;
-  const tags=p.tags.filter(exists);
+  const placed=new Set(normTagPos(p.tagPos).map(t=>t.id));
+  const tags=p.tags.filter(exists).filter(id=>!(imgs.length && placed.has(id)));
   return `<article class="po">
     <div class="po-hd">${avStoryHTML(p.author)}<div class="who">${unameHTML(p.author)}${p.place?`<small>${esc(p.place)}</small>`:""}</div>
       <button class="ib" data-a="post-menu" data-id="${esc(p.id)}" title="Opzioni">${IC.more}</button></div>
@@ -3578,10 +3633,13 @@ function scrActivity(){
         else if(new RegExp("@"+prof(a).username.replace(/\./g,"\\.")+"\\b","i").test(c.text)) ev.push({at:c.at, by:c.author, txt:"ti ha menzionato in un commento: "+short(c.text), post:p, cm:true});
       });
     }
-    if(p.tags.includes(a) && p.author!==a) ev.push({at:p.at, by:p.author, txt:"ti ha taggato in un post.", post:p});
     p.comments.forEach(c=>{ if(c.author===a) liveLikes(c.likes).forEach(l=>{ if(l.by!==a) ev.push({at:l.at, by:l.by, txt:"ha messo mi piace al tuo commento: "+short(c.text), post:p, cm:true}); }); });
   });
   socOf(tree()).stories.forEach(st=>{ if(st.author===a) st.likes.forEach(l=>{ if(l.by!==a && exists(l.by)) ev.push({at:l.at, by:l.by, txt:"ha messo mi piace alla tua storia.", story:st}); }); });
+  state.trees.forEach(t=>{
+    treePosts(t).forEach(p=>{ if(p.tags.includes(a) && p.author!==a) ev.push({at:p.at, by:p.author, txt:"ti ha taggato in un post.", post:p}); });
+    socOf(t).stories.forEach(st=>{ if((st.tags||[]).some(x=>x.id===a) && st.author!==a && exists(st.author)) ev.push({at:st.at, by:st.author, txt:"ti ha taggato in una storia.", story:st}); });
+  });
   allFollows().forEach(f=>{ if(f.to===a && exists(f.from)) ev.push({at:f.at, by:f.from, txt:"ha iniziato a seguirti.", follow:true}); });
   ev.sort((x,y)=>y.at-x.at);
   const body = ev.length ? ev.slice(0,150).map(e=>{
@@ -3713,12 +3771,7 @@ function scrCompose(){
   if(story) return hd(`<button class="ib" data-a="back" title="Annulla">${IC.close}</button>`,"Nuova storia",`<button class="ib gold txt" data-a="publish">Condividi</button>`,true)+kindBar+
   `<div class="ph-main">
     <div class="cp-who">${avHTML(a)}<div class="tx">Pubblichi come <b>${esc(prof(a).username)}</b>${badgeHTML(a)}</div></div>
-    <div class="cp-imgs">${d.images.slice(0,1).map(r=>`<div class="it" style="width:120px;height:213px;cursor:pointer" data-a="crop-img" data-i="0" title="Tocca per sistemare la foto">${imgTag(r)}<button class="x" data-a="rm-img" data-i="0" title="Togli">✕</button><button class="adj" data-a="crop-img" data-i="0" title="Sistema">✎</button></div>`).join("")}
-      ${d.images.length?"":`<button class="add" data-a="pick-imgs" style="width:120px;height:213px"><b>＋</b>Scegli la foto</button>`}</div>
-    <div class="pf" style="padding-top:0">
-      ${ufHTML("Testo sulla storia (facoltativo)","text",d.text,250,{area:true,ph:"Scrivi qualcosa da mostrare sopra la foto…"})}
-      ${ufHTML("Data","date",d.date,SOC_LIM.date,{ph:"Es. 3° giorno della Luna Rossa, 412 T.E.",hint:"La storia resta visibile per 3 ore, poi va in «Storie archiviate» sul profilo."})}
-    </div></div>`;
+    ${storyEditorHTML(d)}</div>`;
   return hd(`<button class="ib" data-a="back" title="Annulla">${IC.close}</button>`, d.editId?"Modifica post":"Nuovo post",
       `<button class="ib gold txt" data-a="publish">${d.editId?"Salva":"Condividi"}</button>`, true)+kindBar+
   `<div class="ph-main">
@@ -3732,7 +3785,15 @@ function scrCompose(){
       ${(()=>{ const po=d.editId&&postById(d.editId); const rl=po?liveLikes(po.likes).length:0, rc=po?liveComments(po).length:0;
         return ufHTML("Numero di mi piace","nLikes",d.nLikes,SOC_LIM.num,{num:true,ph:`automatico (${rl})`})+
                ufHTML("Numero di commenti","nComments",d.nComments,SOC_LIM.num,{num:true,ph:`automatico (${rc})`,hint:"Se lasci vuoto, il numero si conta da solo con i like e i commenti dei tuoi personaggi."}); })()}
-      <div class="uf"><label>Tagga personaggi</label><div class="chips">${others.length?others.map(n=>`<button class="chip${d.tags.includes(n.id)?" on":""}" data-a="tag-tg" data-id="${esc(n.id)}">${avHTML(n.id)}@${esc(prof(n.id).username)}</button>`).join(""):`<span class="hint">Nessun altro personaggio nell'albero.</span>`}</div></div>
+      ${(()=>{
+        if(d.images.length){ const tp=(d.tagPos||[]).filter(t=>t.img<d.images.length && exists(t.id));
+          return `<div class="uf"><label>Tag</label><button class="pbtn tg-btn" style="flex:none;margin-top:6px" data-a="tg-open">${IC.tag} Tagga persone${tp.length?` (${tp.length})`:""}</button>
+            ${tp.length?`<div class="hint">${[...new Set(tp.map(t=>t.id))].map(id=>"@"+esc(prof(id).username)).join(", ")}</div>`:`<div class="hint">Tocca la foto nel punto in cui vuoi il tag. Puoi taggare il tuo libro e i profili che segui.</div>`}</div>`; }
+        const g=taggableGroups(a,"");
+        const chip=id=>`<button class="chip${d.tags.includes(id)?" on":""}" data-a="tag-tg" data-id="${esc(id)}">${avHTML(id)}@${esc(prof(id).username)}</button>`;
+        return `<div class="uf"><label>Tagga personaggi</label>${g.book.length?`<div class="hint">Da questo libro</div><div class="chips">${g.book.map(chip).join("")}</div>`:""}
+          ${g.fol.length?`<div class="hint" style="margin-top:8px">Profili che segui</div><div class="chips">${g.fol.map(chip).join("")}</div>`:""}
+          ${!g.book.length&&!g.fol.length?`<span class="hint">Nessun profilo da taggare.</span>`:""}</div>`; })()}
     </div></div>`;
 }
 function sheetHTML(){
@@ -3778,7 +3839,8 @@ function renderSocial(){
     html = soc.tab==="search" ? scrSearch() : soc.tab==="activity" ? scrActivity() : soc.tab==="profile" ? scrProfile(acting(),false) : scrFeed();
   }
   const showNav = !(s && (s.k==="edit"||s.k==="compose"||s.k==="comments"||DM_SCREENS[s.k]));
-  root.innerHTML = statusHTML() + html + (showNav?navHTML():"") + sheetHTML() + (soc.crop?cropHTML():"") + (soc.sv?svHTML():"");
+  root.innerHTML = statusHTML() + html + (showNav?navHTML():"") + (soc.tagEd?tagEdHTML():"") + sheetHTML() + (soc.crop?cropHTML():"") + (soc.sv?svHTML():"");
+  bindTagFrames();
   if(soc.crop) cropBind();
   const m=root.querySelector(".ph-main"); if(m && keep) m.scrollTop=keep;
   soc.lastKey=key;
@@ -3816,8 +3878,10 @@ function socPush(s){ soc.sheet=null; soc.stack.push(s); renderSocial(); const m=
 function socBack(){
   if(soc.crop){ cropNext(); return; }
   if(soc.sheet){ soc.sheet=null; renderSocial(); return; }
+  if(soc.tagEd){ soc.tagEd=null; renderSocial(); return; }
+  if(soc.sheet){ soc.sheet=null; renderSocial(); return; }
   const s=soc.stack.pop();
-  if(s && s.k==="compose") soc.draft=null;
+  if(s && s.k==="compose"){ soc.draft=null; soc.tagEd=null; }
   if(s && s.k==="edit") soc.edit=null;
   if(s && s.k==="comments") soc.replyTo=null;
   renderSocial();
@@ -3846,8 +3910,8 @@ function startCompose(editId){
   const a=acting(); if(!a){ toast("Aggiungi prima un personaggio all'albero"); return; }
   if(editId){
     const p=postById(editId); if(!p) return;
-    soc.draft={editId, author:p.author, images:p.images.slice(), text:p.text, date:p.date, place:p.place||"", nLikes:p.nLikes||"", nComments:p.nComments||"", tags:p.tags.slice(), orig:p.images.slice()};
-  } else soc.draft={author:a, images:[], text:"", date:"", place:"", nLikes:"", nComments:"", tags:[]};
+    soc.draft={editId, author:p.author, images:p.images.slice(), text:p.text, date:p.date, place:p.place||"", nLikes:p.nLikes||"", nComments:p.nComments||"", tags:p.tags.slice(), tagPos:normTagPos(p.tagPos), orig:p.images.slice()};
+  } else soc.draft={author:a, images:[], text:"", date:"", place:"", nLikes:"", nComments:"", tags:[], tagPos:[]};
   socPush({k:"compose"});
 }
 async function publish(){
@@ -3856,15 +3920,17 @@ async function publish(){
   if(!d.images.length && !d.text.trim()){ toast("Aggiungi almeno una foto o una didascalia"); return; }
   const imgs=[]; for(const r of d.images) imgs.push(await storeImage(r));
   const s=S();
+  const tagPos=normTagPos(d.tagPos).filter(t=>t.img<imgs.length && exists(t.id));
+  if(imgs.length) d.tags=[...new Set(tagPos.map(t=>t.id))];
   if(d.editId){
     const p=postById(d.editId);
     if(p){
       const removed=(d.orig||[]).filter(x=>!imgs.includes(x));
-      Object.assign(p,{images:imgs, text:d.text.trim(), date:d.date.trim(), place:d.place.trim(), nLikes:d.nLikes.replace(/\D/g,""), nComments:d.nComments.replace(/\D/g,""), tags:d.tags.filter(alive)});
+      Object.assign(p,{images:imgs, text:d.text.trim(), date:d.date.trim(), place:d.place.trim(), nLikes:d.nLikes.replace(/\D/g,""), nComments:d.nComments.replace(/\D/g,""), tags:d.tags.filter(exists), tagPos});
       if(removed.length) deleteImages(removed);
     }
   } else {
-    s.posts.push({id:uid(), author:d.author, images:imgs, text:d.text.trim(), date:d.date.trim(), place:d.place.trim(), nLikes:d.nLikes.replace(/\D/g,""), nComments:d.nComments.replace(/\D/g,""), at:Date.now(), tags:d.tags.filter(alive), likes:[], comments:[]});
+    s.posts.push({id:uid(), author:d.author, images:imgs, text:d.text.trim(), date:d.date.trim(), place:d.place.trim(), nLikes:d.nLikes.replace(/\D/g,""), nComments:d.nComments.replace(/\D/g,""), at:Date.now(), tags:d.tags.filter(exists), tagPos, likes:[], comments:[]});
   }
   soc.draft=null; soc.stack.pop();
   if(!d.editId){ soc.stack=[]; soc.tab="feed"; soc.lastKey=""; }
@@ -3930,6 +3996,7 @@ function socHandleClick(ev){
   if(A.startsWith("dm-") || A==="share"){ dmAction(A, el, ev); return; }
   if(A.startsWith("sv-") || A.startsWith("story-")){ storyAction(A, el); return; }
   if(A.startsWith("crop-")){ cropAction(A, el); return; }
+  if(A.startsWith("tg-")){ tagAction(A, el, ev); return; }
   switch(A){
     case "close-social": closeSocial(); break;
     case "tab": soc.stack=[]; soc.sheet=null;
@@ -3943,17 +4010,7 @@ function socHandleClick(ev){
     case "likes": socPush({k:"list", w:"likes", post:id, id}); break;
     case "list": if(el.dataset.rep){ soc.stack.pop(); } socPush({k:"list", id, w:el.dataset.w}); break;
     case "like": toggleLike(id); renderSocial(); break;
-    case "media": {
-      const now=Date.now();
-      if(lastTap.id===id && now-lastTap.t<320){
-        lastTap={id:null,t:0};
-        toggleLike(id,true);
-        const h=el.querySelector(".po-heart"); renderSocial();
-        const nh=document.querySelector(`#soScreen .po-media[data-id="${CSS.escape(id)}"] .po-heart`);
-        if(nh){ nh.classList.remove("pop"); void nh.offsetWidth; nh.classList.add("pop"); }
-      } else lastTap={id,t:now};
-      break;
-    }
+    case "media": postMediaTap(id, el); break;
     case "follow": ev.stopPropagation(); toggleFollow(id); break;
     case "act-as": prof(id).created=true; S().acting=id; save(); toast("Ora usi @"+prof(id).username); renderSocial(); break;
     case "accounts": if(!tree().nodes.length) break; soc.sheet={k:"accounts"}; renderSocial(); break;
@@ -3982,8 +4039,10 @@ function socHandleClick(ev){
     case "rm-avatar": if(soc.edit){ soc.edit.avatar=null; renderSocial(); } break;
     case "compose": startCompose(); break;
     case "pick-imgs": socFilePurpose="post"; pickFiles(!(soc.draft&&soc.draft.kind==="story")); break;
-    case "rm-img": if(soc.draft){ const d=soc.draft, i=+el.dataset.i; d.images.splice(i,1); if(d.srcs) d.srcs.splice(i,1); if(d.crops) d.crops.splice(i,1); renderSocial(); } break;
-    case "mv-img": if(soc.draft){ const d=soc.draft, i=+el.dataset.i; [d.images,d.srcs,d.crops].forEach(a=>{ if(a) [a[i-1],a[i]]=[a[i],a[i-1]]; }); renderSocial(); } break;
+    case "rm-img": if(soc.draft){ const d=soc.draft, i=+el.dataset.i; d.images.splice(i,1);
+      if(d.tagPos) d.tagPos=d.tagPos.filter(t=>t.img!==i).map(t=>({...t, img:t.img>i?t.img-1:t.img})); if(d.srcs) d.srcs.splice(i,1); if(d.crops) d.crops.splice(i,1); renderSocial(); } break;
+    case "mv-img": if(soc.draft){ const d=soc.draft, i=+el.dataset.i; [d.images,d.srcs,d.crops].forEach(a=>{ if(a) [a[i-1],a[i]]=[a[i],a[i-1]]; });
+      if(d.tagPos) d.tagPos.forEach(t=>{ if(t.img===i) t.img=i-1; else if(t.img===i-1) t.img=i; }); renderSocial(); } break;
     case "tag-tg": if(soc.draft){ const t=soc.draft.tags, i=t.indexOf(id); if(i>=0) t.splice(i,1); else t.push(id); renderSocial(); } break;
     case "publish": publish(); break;
     case "reply": { const f=findComment(id); if(!f) break; soc.replyTo=id; renderSocial();
@@ -4016,6 +4075,7 @@ async function onSocialFiles(ev){
 function socHandleInput(ev){
   const el=ev.target;
   if(dmInput(el)) return;
+  if(tagInput(el)) return;
   if(el.id==="soQ"){ soc.q=el.value; document.getElementById("soResults").innerHTML=searchResults(); hydrateImgs(document.getElementById("soResults")); return; }
   const k=el.dataset.f; if(!k) return;
   const obj = topScreen()&&topScreen().k==="edit" ? soc.edit : soc.draft; if(!obj) return;
@@ -4355,6 +4415,7 @@ soc.sv=null; let svTimer=null;
 function normStories(arr){
   return (Array.isArray(arr)?arr:[]).filter(s=>s&&s.author&&typeof s.image==="string"&&s.image).map(s=>({
     id:s.id||uid(), author:s.author, image:s.image, text:String(s.text||""), date:String(s.date||""), at:+s.at||0,
+    tags:normStoryTags(s.tags), ts:normTs(s.ts),
     likes:(Array.isArray(s.likes)?s.likes:[]).map(x=>typeof x==="string"?{by:x,at:0}:x).filter(x=>x&&x.by).map(x=>({by:x.by,at:+x.at||0})) }));
 }
 function storiesOf(id){ return socOf(charTree(id)).stories.filter(s=>s.author===id).sort((a,b)=>a.at-b.at); }
@@ -4401,13 +4462,14 @@ function svHTML(){
   const bars=c.list.map((x,i)=>`<i><b style="width:${i<v.si?100:i===v.si?Math.min(100,v.el/STORY_DUR*100):0}%"></b></i>`).join("");
   const when = s.date ? esc(s.date) : esc(timeAgo(s.at));
   return `<div class="sv${v.paused?" paused":""}">
-    <div class="sv-img">${imgTag(s.image)}</div>
+    <div class="sv-img"><div class="stf">${imgTag(s.image)}</div></div>
     <div class="sv-shade"></div>
     <div class="sv-bars">${bars}</div>
     <div class="sv-hd">${avHTML(s.author)}<span class="sv-who"><b>${esc(prof(s.author).username)}</b>${badgeHTML(s.author)} <small>${when}${v.mode==="arch"?" · archiviata":""}</small></span>
       <span class="sp"></span><button class="ib" data-a="sv-menu" title="Opzioni">${IC.more}</button><button class="ib" data-a="sv-close" title="Chiudi">${IC.close}</button></div>
     <div class="sv-tap l" data-a="sv-prev"></div><div class="sv-tap r" data-a="sv-next"></div>
-    ${s.text?`<div class="sv-txt">${richText(s.text)}</div>`:""}
+    ${s.text&&!s.ts?`<div class="sv-txt">${richText(s.text)}</div>`:""}
+    ${(s.ts&&s.text)||(s.tags||[]).length?`<div class="sv-tags"><div class="stf">${s.ts?stxHTML(s.text,s.ts,false):""}${(s.tags||[]).filter(t=>exists(t.id)).map(t=>stickerHTML(t.id,t.x,t.y,{act:"sv-user"})).join("")}</div></div>`:""}
     ${v.menu?`<div class="sv-menu"><button data-a="sv-del">🗑 Elimina storia</button><button data-a="sv-menu">Annulla</button></div>`:""}
     <div class="sv-ft">${mine||!a
       ? `<div class="sv-own" data-a="sv-likes">♥ ${lk.length} ${lk.length===1?"mi piace":"mi piace"}${lk.length?": "+lk.slice(-3).map(l=>"@"+esc(prof(l.by).username)).join(", "):""}</div>`
@@ -4454,7 +4516,9 @@ async function publishStory(){
   const d=soc.draft;
   if(!d.images.length){ toast("Aggiungi una foto per la storia"); return; }
   const img=await storeImage(d.images[0]);
-  socOf(charTree(d.author)).stories.push({id:uid(), author:d.author, image:img, text:d.text.trim().slice(0,250), date:d.date.trim(), at:Date.now(), likes:[]});
+  const txt=d.text.trim().slice(0,250);
+  socOf(charTree(d.author)).stories.push({id:uid(), author:d.author, image:img, text:txt, date:d.date.trim(), at:Date.now(), likes:[],
+    tags:normStoryTags(d.stags).filter(t=>exists(t.id)), ts:txt?normTs(d.ts||TS_DEFAULT):null});
   soc.draft=null; soc.stack=[]; soc.tab="feed"; soc.lastKey="";
   save(); renderSocial(); toast("Storia pubblicata ✓ — visibile per 3 ore");
   if(pendingList().includes(img)) socKickUploads();
@@ -4472,6 +4536,7 @@ function storyAction(A, el){
     case "sv-prev": svPrev(); break;
     case "sv-menu": if(v){ v.menu=!v.menu; renderSocial(); } break;
     case "sv-likes": break;
+    case "sv-user": svClose(); openUser(id); break;
     case "sv-like": { const c=svCurrent(), a=acting(); if(!c||!a) break;
       const i=c.s.likes.findIndex(l=>l.by===a); if(i>=0) c.s.likes.splice(i,1); else c.s.likes.push({by:a,at:Date.now()});
       save(); renderSocial(); break; }
@@ -4746,6 +4811,212 @@ async function bookCloseOpen(){
   if(ribbon){ ribbon.style.zIndex=""; ribbon.style.left=""; }
   pages.style.zIndex=""; pages.style.position="";
 }
+
+/* ============================================================
+   TAG POSIZIONATI (post e storie) + TESTO DELLE STORIE PERSONALIZZABILE
+   post.tagPos = [{id, img, x, y}]      (x,y = 0..1 sulla foto)
+   story.tags  = [{id, x, y}]
+   story.ts    = {x, y, bg:"box"|"outline"|"plain", color, size, align}
+============================================================ */
+const TS_DEFAULT={x:.5, y:.74, bg:"box", color:"#f2e8cf", size:22, align:"center"};
+const TS_COLORS=["#ffffff","#1e1a10","#f2e8cf","#d6ad52","#c0392b","#e58fb0","#e67e22","#3f6b4a","#2f5d8a","#6b3f8a"];
+soc.showTags=new Set(); soc.tagEd=null;
+let tapTimer=null;
+
+function clamp01(v){ v=+v; return isNaN(v)?.5:Math.min(.97,Math.max(.03,v)); }
+function normTagPos(arr){ return (Array.isArray(arr)?arr:[]).filter(t=>t&&typeof t.id==="string").map(t=>({id:t.id, img:Math.max(0,parseInt(t.img,10)||0), x:clamp01(t.x), y:clamp01(t.y)})); }
+function normStoryTags(arr){ return (Array.isArray(arr)?arr:[]).filter(t=>t&&typeof t.id==="string").map(t=>({id:t.id, x:clamp01(t.x), y:clamp01(t.y)})); }
+function normTs(ts){
+  if(!ts||typeof ts!=="object") return null;
+  return { x:clamp01(ts.x??TS_DEFAULT.x), y:clamp01(ts.y??TS_DEFAULT.y), bg:["box","outline","plain"].includes(ts.bg)?ts.bg:"box",
+    color:/^#[0-9a-f]{6}$/i.test(ts.color||"")?ts.color:TS_DEFAULT.color, size:Math.min(48,Math.max(12,+ts.size||22)),
+    align:["left","center","right"].includes(ts.align)?ts.align:"center" };
+}
+// chi può essere taggato da "author": i personaggi del libro + i profili che segue (anche di altri alberi)
+function taggableGroups(author, q){
+  const t=charTree(author), inBook=new Set(t.nodes.map(n=>n.id));
+  const ok=id=>id!==author && exists(id) && matchQ(id, q||"");
+  const book=t.nodes.map(n=>n.id).filter(ok);
+  const fol=followingOf(author).filter(id=>!inBook.has(id)).filter(ok);
+  return {book, fol};
+}
+function stickerHTML(id, x, y, opts){
+  opts=opts||{};
+  const name=exists(id)?prof(id).username:"?";
+  const attrs = opts.edit ? `data-drag="${opts.kind}" data-i="${opts.i}"` : `data-a="${opts.act||"user"}" data-id="${esc(id)}"`;
+  return `<span class="tgs${opts.edit?" ed":""}" style="left:${x*100}%;top:${y*100}%" ${attrs}>@${esc(name)}${opts.edit?`<b data-a="tg-rm" data-k="${opts.kind}" data-i="${opts.i}" title="Togli">✕</b>`:""}</span>`;
+}
+function stxStyle(ts){
+  const c=ts.color, o=on(c);
+  let st=`left:${ts.x*100}%;top:${ts.y*100}%;text-align:${ts.align};--fs:${ts.size};`;
+  if(ts.bg==="box") st+=`background:${c};color:${o};`;
+  else if(ts.bg==="outline"){ const k=o; st+=`color:${c};text-shadow:${[[-1,-1],[1,-1],[-1,1],[1,1],[0,-1.4],[0,1.4],[-1.4,0],[1.4,0]].map(([a,b])=>`${a*.045}em ${b*.045}em 0 ${k}`).join(",")};`; }
+  else st+=`color:${c};text-shadow:0 1px 6px rgba(0,0,0,.65),0 0 2px rgba(0,0,0,.5);`;
+  return st;
+}
+function stxHTML(text, ts, edit){
+  if(!text) return "";
+  return `<div class="stx bg-${ts.bg}" style="${stxStyle(ts)}" ${edit?`data-drag="text"`:""}>${edit?esc(text):richText(text)}</div>`;
+}
+
+/* ---------- post: diapositive con adesivi nascosti ---------- */
+function slidesHTML(p){
+  const tp=normTagPos(p.tagPos).filter(t=>exists(t.id));
+  const shown=soc.showTags.has(p.id);
+  return p.images.map((r,i)=>{
+    const mine=tp.filter(t=>t.img===i);
+    return `<div class="po-slide${shown?" show-tags":""}">${imgTag(r)}
+      ${mine.length?`<span class="tg-ic" title="Persone taggate">${IC.tag}</span>${mine.map(t=>stickerHTML(t.id,t.x,t.y)).join("")}`:""}</div>`;
+  }).join("");
+}
+
+/* ---------- editor dei tag per i post ---------- */
+function tagEdHTML(){
+  const e=soc.tagEd, d=soc.draft; if(!e||!d||!d.images.length) return "";
+  const i=Math.min(e.img, d.images.length-1), n=d.images.length;
+  const tags=(d.tagPos||[]).map((t,k)=>({...t,k})).filter(t=>t.img===i && exists(t.id));
+  return `<div class="tge">
+    ${hd("", `Tagga persone${n>1?` (${i+1}/${n})`:""}`, `<button class="ib gold txt" data-a="tg-done">Fatto</button>`, true)}
+    <div class="tge-box">
+      ${n>1?`<button class="ib tge-nav l" data-a="tg-img" data-d="-1" ${i>0?"":"disabled"}>${IC.back}</button>`:""}
+      <div class="tge-frame" data-tframe="post">${imgTag(d.images[i])}${tags.map(t=>stickerHTML(t.id,t.x,t.y,{edit:true,kind:"ptag",i:t.k})).join("")}</div>
+      ${n>1?`<button class="ib tge-nav r" data-a="tg-img" data-d="1" ${i<n-1?"":"disabled"} style="transform:scaleX(-1)">${IC.back}</button>`:""}
+    </div>
+    <p class="cr-hint">Tocca la foto nel punto in cui vuoi il tag e scegli chi taggare.<br>Trascina gli adesivi per spostarli, ✕ per toglierli.</p>
+  </div>`;
+}
+
+/* ---------- storia: anteprima modificabile ---------- */
+function storyEditorHTML(d){
+  if(!d.ts) d.ts={...TS_DEFAULT};
+  if(!d.stags) d.stags=[];
+  const ts=d.ts;
+  const frame = d.images.length ? `<div class="stf prev" data-tframe="story">${imgTag(d.images[0])}${stxHTML(d.text, ts, true)}${d.stags.map((t,k)=>exists(t.id)?stickerHTML(t.id,t.x,t.y,{edit:true,kind:"stag",i:k}):"").join("")}</div>
+      <div class="stf-tools"><button class="pbtn" data-a="crop-img" data-i="0">✎ Sistema foto</button><button class="pbtn" data-a="rm-img" data-i="0">✕ Cambia foto</button></div>
+      <p class="cr-hint" style="margin-bottom:6px">Tocca la foto per taggare qualcuno · trascina testo e adesivi per spostarli</p>`
+    : `<div class="cp-imgs"><button class="add" data-a="pick-imgs" style="width:120px;height:213px"><b>＋</b>Scegli la foto</button></div>`;
+  const b=(v,l)=>`<button class="${ts.bg===v?"on":""}" data-a="tg-bg" data-v="${v}">${l}</button>`;
+  const al=(v,l)=>`<button class="${ts.align===v?"on":""}" data-a="tg-al" data-v="${v}" title="${l}">${({left:"⟸",center:"⇔",right:"⟹"})[v]}</button>`;
+  return `<div class="stf-wrap">${frame}</div>
+    <div class="pf" style="padding-top:0">
+      ${ufHTML("Testo sulla storia (facoltativo)","text",d.text,250,{area:true,ph:"Scrivi qualcosa da mostrare sopra la foto…"})}
+      <div class="uf"><label>Stile del testo</label><div class="seg3">${b("box","Riquadro")}${b("outline","Contorno")}${b("plain","Semplice")}</div></div>
+      <div class="uf"><label>Colore</label><div class="tcol">${TS_COLORS.map(c=>`<button class="${ts.color.toLowerCase()===c?"on":""}" style="background:${c}" data-a="tg-col" data-v="${c}" title="${c}"></button>`).join("")}</div></div>
+      <div class="uf"><label>Grandezza e allineamento</label><div class="szrow"><span style="font-size:12px">A</span><input id="soTsSize" type="range" min="12" max="48" step="1" value="${ts.size}"><span style="font-size:20px">A</span>
+        <div class="seg3 al">${al("left","Sinistra")}${al("center","Centro")}${al("right","Destra")}</div></div></div>
+      ${ufHTML("Data","date",d.date,SOC_LIM.date,{ph:"Es. 3° giorno della Luna Rossa, 412 T.E.",hint:"La storia resta visibile per 3 ore, poi va in «Storie archiviate» sul profilo."})}
+    </div>`;
+}
+
+/* ---------- foglio: scegli chi taggare ---------- */
+DM_SHEETS.tagpick=function(sh){
+  return `<div class="sh-t">Tagga una persona</div>
+    <div class="ph-hd" style="border:none;padding:4px 14px 8px"><label class="search">${IC.search}<input id="soTagQ" type="search" placeholder="Cerca un nome utente" autocomplete="off" autocapitalize="off" spellcheck="false" value="${esc(sh.q||"")}"></label></div>
+    <div id="soTagRes">${tagPickList(sh)}</div>
+    <button class="opt" data-a="sheet-x">Annulla</button>`;
+};
+function tagPickList(sh){
+  const d=soc.draft; if(!d) return "";
+  const g=taggableGroups(d.author, sh.q||"");
+  const row=id=>`<div class="row" data-a="tg-add" data-id="${esc(id)}">${avHTML(id)}<div class="tx">${star(id)}${esc(prof(id).username)}${badgeHTML(id)}<small>${esc(displayName(id))}${charTree(id)!==tree()?" · 📖 "+esc(charTree(id).name||""):""}</small></div></div>`;
+  let h="";
+  if(g.book.length) h+=`<div class="bk-h">Da questo libro</div>`+g.book.map(row).join("");
+  if(g.fol.length) h+=`<div class="bk-h">Profili che segui</div>`+g.fol.map(row).join("");
+  return h || `<div class="empty-s" style="padding:20px">Nessun profilo trovato.</div>`;
+}
+
+/* ---------- trascinamento di testo e adesivi ---------- */
+function bindTagFrames(){
+  document.querySelectorAll("#soScreen [data-tframe]").forEach(fr=>{
+    let drag=null;
+    fr.addEventListener("pointerdown", e=>{
+      if(e.button>0) return;
+      const tg=e.target.closest("[data-drag]");
+      if(e.target.closest("[data-a]") && !tg) return;
+      drag={el:tg, x0:e.clientX, y0:e.clientY, moved:false};
+      fr.setPointerCapture(e.pointerId);
+    });
+    fr.addEventListener("pointermove", e=>{
+      if(!drag||!drag.el) return;
+      if(!drag.moved && Math.hypot(e.clientX-drag.x0, e.clientY-drag.y0)<5) return;
+      drag.moved=true;
+      const r=fr.getBoundingClientRect();
+      const x=clamp01((e.clientX-r.left)/r.width), y=clamp01((e.clientY-r.top)/r.height);
+      drag.el.style.left=x*100+"%"; drag.el.style.top=y*100+"%"; drag.fx=x; drag.fy=y;
+    });
+    const end=e=>{
+      if(!drag) return;
+      const d=soc.draft, dr=drag; drag=null;
+      if(!d) return;
+      if(dr.el && dr.moved){
+        const k=dr.el.dataset.drag, i=+dr.el.dataset.i;
+        if(k==="text"){ d.ts.x=dr.fx; d.ts.y=dr.fy; }
+        else if(k==="stag" && d.stags[i]){ d.stags[i].x=dr.fx; d.stags[i].y=dr.fy; }
+        else if(k==="ptag" && d.tagPos[i]){ d.tagPos[i].x=dr.fx; d.tagPos[i].y=dr.fy; }
+        return;
+      }
+      if(dr.el){ if(dr.el.dataset.drag==="text"){ const ta=document.querySelector('#soScreen [data-f="text"]'); if(ta) ta.focus(); } return; }
+      if(e.type!=="pointerup") return;
+      const r=fr.getBoundingClientRect();
+      const x=clamp01((e.clientX-r.left)/r.width), y=clamp01((e.clientY-r.top)/r.height);
+      soc.sheet={k:"tagpick", target:fr.dataset.tframe, x, y, img:soc.tagEd?soc.tagEd.img:0, q:""};
+      renderSocial();
+    };
+    fr.addEventListener("pointerup", end); fr.addEventListener("pointercancel", end);
+  });
+}
+
+/* ---------- azioni ---------- */
+function tagAction(A, el, ev){
+  const d=soc.draft;
+  switch(A){
+    case "tg-open": if(d&&d.images.length){ if(!d.tagPos) d.tagPos=[]; soc.tagEd={img:0}; renderSocial(); } break;
+    case "tg-done": soc.tagEd=null; renderSocial(); break;
+    case "tg-img": if(soc.tagEd&&d){ soc.tagEd.img=Math.min(d.images.length-1,Math.max(0,soc.tagEd.img+(+el.dataset.d))); renderSocial(); } break;
+    case "tg-add": { const sh=soc.sheet; if(!d||!sh) break; const id=el.dataset.id;
+      if(sh.target==="story"){ d.stags=(d.stags||[]).filter(t=>t.id!==id); d.stags.push({id,x:sh.x,y:sh.y}); }
+      else { d.tagPos=(d.tagPos||[]).filter(t=>!(t.id===id&&t.img===sh.img)); d.tagPos.push({id,img:sh.img,x:sh.x,y:sh.y}); }
+      soc.sheet=null; renderSocial(); break; }
+    case "tg-rm": { if(!d) break; ev.stopPropagation(); const i=+el.dataset.i;
+      if(el.dataset.k==="stag") d.stags.splice(i,1); else d.tagPos.splice(i,1); renderSocial(); break; }
+    case "tg-bg": if(d&&d.ts){ d.ts.bg=el.dataset.v; renderSocial(); } break;
+    case "tg-col": if(d&&d.ts){ d.ts.color=el.dataset.v; renderSocial(); } break;
+    case "tg-al": if(d&&d.ts){ d.ts.align=el.dataset.v; renderSocial(); } break;
+  }
+}
+function tagInput(el){
+  if(el.id==="soTagQ"){ if(soc.sheet){ soc.sheet.q=el.value; const L=document.getElementById("soTagRes"); L.innerHTML=tagPickList(soc.sheet); hydrateImgs(L); } return true; }
+  if(el.id==="soTsSize"){ const d=soc.draft; if(d&&d.ts){ d.ts.size=+el.value; const t=document.querySelector("#soScreen .stf.prev .stx"); if(t) t.style.setProperty("--fs", d.ts.size); } return true; }
+  return false;
+}
+// anteprima del testo della storia aggiornata mentre scrivi
+document.getElementById("soScreen").addEventListener("input", e=>{
+  const d=soc.draft; if(!d||d.kind!=="story"||e.target.dataset.f!=="text") return;
+  const fr=document.querySelector("#soScreen .stf.prev"); if(!fr) return;
+  let t=fr.querySelector(".stx");
+  if(!d.text){ if(t) t.remove(); return; }
+  if(!t){ fr.insertAdjacentHTML("beforeend", stxHTML(d.text, d.ts, true)); }
+  else t.textContent=d.text;
+});
+// tocco sulla foto di un post: mostra/nasconde i tag (doppio tocco = mi piace)
+function postMediaTap(id, el){
+  const now=Date.now();
+  if(lastTap.id===id && now-lastTap.t<320){
+    clearTimeout(tapTimer); lastTap={id:null,t:0};
+    toggleLike(id,true); renderSocial();
+    const nh=document.querySelector(`#soScreen .po-media[data-id="${CSS.escape(id)}"] .po-heart`);
+    if(nh){ nh.classList.remove("pop"); void nh.offsetWidth; nh.classList.add("pop"); }
+    return;
+  }
+  lastTap={id,t:now};
+  clearTimeout(tapTimer);
+  tapTimer=setTimeout(()=>{
+    const p=postById(id); if(!p || !normTagPos(p.tagPos).some(t=>exists(t.id))) return;
+    if(soc.showTags.has(id)) soc.showTags.delete(id); else soc.showTags.add(id);
+    document.querySelectorAll(`#soScreen .po-media[data-id="${CSS.escape(id)}"] .po-slide`).forEach(s=>s.classList.toggle("show-tags", soc.showTags.has(id)));
+  }, 330);
+}
+
 /* ============================================================
    INIT
 ============================================================ */
