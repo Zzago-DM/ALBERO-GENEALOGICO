@@ -1154,7 +1154,7 @@
       }
     }
   ],
-  "currentId": "ce880fc1-fb1b-4407-b369-4a24799b5474",
+  "currentId": "050ce71b-d79c-42dc-a82e-332a30526afb",
   "dms": {
     "threads": [
       {
@@ -1201,6 +1201,7 @@
             "text": "I know you love me",
             "images": [],
             "post": null,
+            "story": null,
             "date": "",
             "at": 1794382063682,
             "likes": []
@@ -1211,6 +1212,7 @@
             "text": "in your dreams",
             "images": [],
             "post": null,
+            "story": null,
             "date": "",
             "at": 1794382092838,
             "likes": []
