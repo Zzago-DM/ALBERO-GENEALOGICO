@@ -1180,42 +1180,6 @@
             "date": "",
             "at": 1794380249953,
             "likes": []
-          },
-          {
-            "id": "87b76d1d-76be-46ef-b8f8-09437ff4d58a",
-            "from": "dcdaa1e3-6c21-4288-b951-7ce9d4543701",
-            "text": "your modesty",
-            "images": [],
-            "post": null,
-            "story": {
-              "tree": "ce880fc1-fb1b-4407-b369-4a24799b5474",
-              "id": "6358dd9d-9fa6-440f-890b-e1a6553d2b88"
-            },
-            "date": "",
-            "at": 1794381233514,
-            "likes": []
-          },
-          {
-            "id": "9372bd60-3376-4091-b016-836f3af7b005",
-            "from": "a4784486-8866-4daf-837f-74c7ac1a323c",
-            "text": "I know you love me",
-            "images": [],
-            "post": null,
-            "story": null,
-            "date": "",
-            "at": 1794381258399,
-            "likes": []
-          },
-          {
-            "id": "59af07a1-ec21-42de-9237-27f3a6b641b7",
-            "from": "dcdaa1e3-6c21-4288-b951-7ce9d4543701",
-            "text": "in your dreams",
-            "images": [],
-            "post": null,
-            "story": null,
-            "date": "",
-            "at": 1794381307422,
-            "likes": []
           }
         ]
       }
