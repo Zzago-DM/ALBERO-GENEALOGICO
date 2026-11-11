@@ -932,7 +932,12 @@
             "text": "something's missing",
             "date": "",
             "at": 1794381190744,
-            "likes": [],
+            "likes": [
+              {
+                "by": "dcdaa1e3-6c21-4288-b951-7ce9d4543701",
+                "at": 1794381204682
+              }
+            ],
             "tags": [],
             "ts": {
               "x": 0.5,
