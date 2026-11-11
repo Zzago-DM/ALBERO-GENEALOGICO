@@ -924,7 +924,26 @@
             "comments": []
           }
         ],
-        "stories": [],
+        "stories": [
+          {
+            "id": "6358dd9d-9fa6-440f-890b-e1a6553d2b88",
+            "author": "a4784486-8866-4daf-837f-74c7ac1a323c",
+            "image": "social/ce880fc1-dbcb4c8b18bc4e.jpg",
+            "text": "something's missing",
+            "date": "",
+            "at": 1794381190744,
+            "likes": [],
+            "tags": [],
+            "ts": {
+              "x": 0.5,
+              "y": 0.74,
+              "bg": "outline",
+              "color": "#f2e8cf",
+              "size": 16,
+              "align": "center"
+            }
+          }
+        ],
         "acting": "a4784486-8866-4daf-837f-74c7ac1a323c"
       }
     },
