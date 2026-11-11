@@ -597,7 +597,7 @@
             "likes": [
               {
                 "by": "a4784486-8866-4daf-837f-74c7ac1a323c",
-                "at": 1794088042026
+                "at": 1794380224216
               }
             ],
             "comments": []
@@ -616,7 +616,12 @@
             "at": 1794379959492,
             "tags": [],
             "tagPos": [],
-            "likes": [],
+            "likes": [
+              {
+                "by": "a4784486-8866-4daf-837f-74c7ac1a323c",
+                "at": 1794380222083
+              }
+            ],
             "comments": []
           },
           {
@@ -633,7 +638,12 @@
             "at": 1794380005312,
             "tags": [],
             "tagPos": [],
-            "likes": [],
+            "likes": [
+              {
+                "by": "a4784486-8866-4daf-837f-74c7ac1a323c",
+                "at": 1794380220566
+              }
+            ],
             "comments": []
           },
           {
@@ -650,7 +660,12 @@
             "at": 1794380041686,
             "tags": [],
             "tagPos": [],
-            "likes": [],
+            "likes": [
+              {
+                "by": "a4784486-8866-4daf-837f-74c7ac1a323c",
+                "at": 1794380218612
+              }
+            ],
             "comments": []
           },
           {
@@ -667,7 +682,12 @@
             "at": 1794380090518,
             "tags": [],
             "tagPos": [],
-            "likes": [],
+            "likes": [
+              {
+                "by": "a4784486-8866-4daf-837f-74c7ac1a323c",
+                "at": 1794380216713
+              }
+            ],
             "comments": []
           },
           {
@@ -684,11 +704,46 @@
             "at": 1794380139064,
             "tags": [],
             "tagPos": [],
-            "likes": [],
+            "likes": [
+              {
+                "by": "a4784486-8866-4daf-837f-74c7ac1a323c",
+                "at": 1794380212874
+              }
+            ],
             "comments": []
           }
         ],
-        "stories": [],
+        "stories": [
+          {
+            "id": "8a10e63f-813f-4f84-a826-856a3c4813db",
+            "author": "dcdaa1e3-6c21-4288-b951-7ce9d4543701",
+            "image": "social/050ce71b-695d336cf0f146.jpg",
+            "text": "tf you doing, silver head?",
+            "date": "",
+            "at": 1794380191400,
+            "likes": [
+              {
+                "by": "a4784486-8866-4daf-837f-74c7ac1a323c",
+                "at": 1794380229352
+              }
+            ],
+            "tags": [
+              {
+                "id": "a4784486-8866-4daf-837f-74c7ac1a323c",
+                "x": 0.3717357910906298,
+                "y": 0.8495361713445564
+              }
+            ],
+            "ts": {
+              "x": 0.674347158218126,
+              "y": 0.674130498472356,
+              "bg": "outline",
+              "color": "#f2e8cf",
+              "size": 14,
+              "align": "center"
+            }
+          }
+        ],
         "acting": "dcdaa1e3-6c21-4288-b951-7ce9d4543701"
       }
     },
@@ -781,23 +836,6 @@
                 "at": 1794081678345
               }
             ],
-            "comments": []
-          },
-          {
-            "id": "543777d1-d6bf-4c5f-8fcf-6c51543abed2",
-            "author": "a4784486-8866-4daf-837f-74c7ac1a323c",
-            "images": [
-              "social/ce880fc1-3df1c4e2f72740.jpg"
-            ],
-            "text": "...",
-            "date": "",
-            "place": "Londra",
-            "at": 1794210743617,
-            "nLikes": "4583",
-            "nComments": "455",
-            "tags": [],
-            "tagPos": [],
-            "likes": [],
             "comments": []
           }
         ],
@@ -982,7 +1020,7 @@
       }
     }
   ],
-  "currentId": "050ce71b-d79c-42dc-a82e-332a30526afb",
+  "currentId": "ce880fc1-fb1b-4407-b369-4a24799b5474",
   "dms": {
     "threads": [
       {
@@ -994,7 +1032,22 @@
           "a4784486-8866-4daf-837f-74c7ac1a323c"
         ],
         "at": 1794077042701,
-        "msgs": []
+        "msgs": [
+          {
+            "id": "d1acba65-30bf-4cbc-862f-96b9d6ab9eb9",
+            "from": "a4784486-8866-4daf-837f-74c7ac1a323c",
+            "text": "nothing important, Sorcerer's job",
+            "images": [],
+            "post": null,
+            "story": {
+              "tree": "050ce71b-d79c-42dc-a82e-332a30526afb",
+              "id": "8a10e63f-813f-4f84-a826-856a3c4813db"
+            },
+            "date": "",
+            "at": 1794380249953,
+            "likes": []
+          }
+        ]
       }
     ],
     "acting": "a4784486-8866-4daf-837f-74c7ac1a323c"
