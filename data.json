@@ -80,7 +80,18 @@
             "created": false
           }
         },
-        "follows": [],
+        "follows": [
+          {
+            "from": "1bdd0544-71b1-4371-bf0c-89712a72bd7c",
+            "to": "dcdaa1e3-6c21-4288-b951-7ce9d4543701",
+            "at": 1794401436568
+          },
+          {
+            "from": "1bdd0544-71b1-4371-bf0c-89712a72bd7c",
+            "to": "a4784486-8866-4daf-837f-74c7ac1a323c",
+            "at": 1794401437136
+          }
+        ],
         "posts": [
           {
             "id": "24fb953b-cc25-46f6-8ade-314c20f5f96f",
