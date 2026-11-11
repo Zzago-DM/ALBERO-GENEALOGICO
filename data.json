@@ -197,7 +197,19 @@
             "comments": []
           }
         ],
-        "stories": [],
+        "stories": [
+          {
+            "id": "ff1d9334-ed0d-4f96-909a-240b664bf74d",
+            "author": "1bdd0544-71b1-4371-bf0c-89712a72bd7c",
+            "image": "social/e0f216d1-007111a571654e.jpg",
+            "text": "",
+            "date": "",
+            "at": 1794401475012,
+            "likes": [],
+            "tags": [],
+            "ts": null
+          }
+        ],
         "acting": "1bdd0544-71b1-4371-bf0c-89712a72bd7c"
       }
     },
