@@ -1334,50 +1334,6 @@
       }
     },
     {
-      "id": "a88e858e-0b41-4e18-98f4-21267b7cdc6b",
-      "name": "BEATRICE",
-      "nodes": [],
-      "edges": [],
-      "view": {
-        "panX": 0,
-        "panY": 0,
-        "zoom": 1
-      },
-      "cover": "#d8c8a0",
-      "story": {
-        "chapters": []
-      },
-      "social": {
-        "profiles": {},
-        "follows": [],
-        "posts": [],
-        "stories": [],
-        "acting": null
-      }
-    },
-    {
-      "id": "a9852ea5-26ed-4d26-9922-9e9b9db4d426",
-      "name": "NEI'MORA",
-      "nodes": [],
-      "edges": [],
-      "view": {
-        "panX": 0,
-        "panY": 0,
-        "zoom": 1
-      },
-      "cover": "#8ce2f3",
-      "story": {
-        "chapters": []
-      },
-      "social": {
-        "profiles": {},
-        "follows": [],
-        "posts": [],
-        "stories": [],
-        "acting": null
-      }
-    },
-    {
       "id": "c0f780bb-007c-4cf7-a869-4c1e586ad1b9",
       "name": "GEA",
       "nodes": [],
