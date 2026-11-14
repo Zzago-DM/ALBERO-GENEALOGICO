@@ -1,28 +1,6 @@
 {
   "trees": [
     {
-      "id": "19997cfa-b34f-4f62-a067-204c6bac7635",
-      "name": "ATHENA SILVER",
-      "nodes": [],
-      "edges": [],
-      "view": {
-        "panX": 0,
-        "panY": 100,
-        "zoom": 1
-      },
-      "cover": "#1d2c4a",
-      "story": {
-        "chapters": []
-      },
-      "social": {
-        "profiles": {},
-        "follows": [],
-        "posts": [],
-        "stories": [],
-        "acting": null
-      }
-    },
-    {
       "id": "e0f216d1-9f5b-4f51-8b4c-fe5425491384",
       "name": "ALEX SASHA KENNEDY",
       "nodes": [
@@ -1466,7 +1444,7 @@
       }
     }
   ],
-  "currentId": "19997cfa-b34f-4f62-a067-204c6bac7635",
+  "currentId": "e0f216d1-9f5b-4f51-8b4c-fe5425491384",
   "dms": {
     "threads": [
       {
