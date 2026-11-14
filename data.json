@@ -688,23 +688,6 @@
         "follows": [],
         "posts": [
           {
-            "id": "7c62d40e-1506-4506-b0db-d0ae96afbcfe",
-            "author": "4d3dda6b-2712-44e4-8c51-c4de5d8b2c2a",
-            "images": [
-              "social/f19ec9de-6903c6cdab5b49.jpg"
-            ],
-            "text": "",
-            "date": "",
-            "place": "Waterdeep",
-            "at": 1794660171956,
-            "nLikes": "4643",
-            "nComments": "433",
-            "tags": [],
-            "tagPos": [],
-            "likes": [],
-            "comments": []
-          },
-          {
             "id": "a57bb4b0-f205-4135-bb85-9702b611ceaa",
             "author": "4d3dda6b-2712-44e4-8c51-c4de5d8b2c2a",
             "images": [
