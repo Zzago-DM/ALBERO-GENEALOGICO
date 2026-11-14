@@ -1455,28 +1455,6 @@
       }
     },
     {
-      "id": "22cec225-80c1-47af-bb3c-1e17d9f749cf",
-      "name": "MORIGAN & XELIN",
-      "nodes": [],
-      "edges": [],
-      "view": {
-        "panX": 0,
-        "panY": 0,
-        "zoom": 1
-      },
-      "cover": "#1f3b2c",
-      "story": {
-        "chapters": []
-      },
-      "social": {
-        "profiles": {},
-        "follows": [],
-        "posts": [],
-        "stories": [],
-        "acting": null
-      }
-    },
-    {
       "id": "c0f780bb-007c-4cf7-a869-4c1e586ad1b9",
       "name": "GEA",
       "nodes": [
