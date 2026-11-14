@@ -1320,7 +1320,7 @@
             "nFollowing": "",
             "verified": false,
             "avatar": "social/c75a8a81-d6c5744b1d4642.jpg",
-            "created": false
+            "created": true
           }
         },
         "follows": [],
@@ -1440,7 +1440,7 @@
       }
     }
   ],
-  "currentId": "f19ec9de-106c-436e-a987-0c1a50b22067",
+  "currentId": "c75a8a81-b250-4289-8f35-02493b808174",
   "dms": {
     "threads": [
       {
