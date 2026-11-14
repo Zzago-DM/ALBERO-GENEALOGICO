@@ -1530,7 +1530,8 @@
             "nFollowers": "",
             "nFollowing": "",
             "verified": false,
-            "avatar": null
+            "avatar": null,
+            "created": false
           }
         },
         "follows": [],
