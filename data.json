@@ -1314,10 +1314,10 @@
             "username": "mionacuga",
             "name": "mimi - 🪻",
             "website": "",
-            "bio": "♬ 🖇️ * <3 @ ° !\nlove my babies\n/ by my own order \\",
+            "bio": "♬ 🖇️ * <3 @ ° !\nlove my babies",
             "nPosts": "",
-            "nFollowers": "8653",
-            "nFollowing": "865",
+            "nFollowers": "",
+            "nFollowing": "",
             "verified": false,
             "avatar": "social/c75a8a81-8805ea54e08d42.jpg",
             "created": true
@@ -1543,7 +1543,7 @@
       }
     }
   ],
-  "currentId": "c75a8a81-b250-4289-8f35-02493b808174",
+  "currentId": "c0f780bb-007c-4cf7-a869-4c1e586ad1b9",
   "dms": {
     "threads": [
       {
