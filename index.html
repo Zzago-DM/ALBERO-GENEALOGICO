@@ -1055,6 +1055,13 @@
   .sv-tags{position:absolute;inset:0;z-index:2;display:flex;align-items:center;justify-content:center;container-type:size;pointer-events:none}
   .sv-tags .stf{background:none;pointer-events:none}
   .sv-tags .tgs{pointer-events:auto}
+
+  /* ---------- Account senza albero ---------- */
+  .so-book.blank .pg-frame{display:none}
+  .opt.acc-new{color:var(--gold-bright);font-weight:700;border-top:1px solid #2c2416;margin-top:10px}
+  .opt.acc-new small{display:block;font-weight:500;font-size:11.5px;color:var(--on-ink-muted);margin-top:2px}
+  .acc-del-wrap{margin-top:22px;padding-top:14px;border-top:1px solid #2c2416}
+  .pbtn.acc-del{flex:none;background:#3a1d17;color:#f0b9a8}
 </style>
 </head>
 <body class="view-library">
@@ -1510,6 +1517,7 @@ function normalize(s){
   }));
   s.trees.forEach(t=>t.edges.forEach(e=>{ if(e.type==="generic") e.type="other"; }));
   s.dms = normDms(s.dms);
+  s.extra = normExtra(s.extra);
   return s;
 }
 
@@ -1527,7 +1535,7 @@ function save(){
   saveLocalOnly();
   if(typeof autoSyncOn==="function" && autoSyncOn()) scheduleGhPush();
 }
-function persistState(){ return { trees:state.trees, currentId, dms:DM() }; }
+function persistState(){ return { trees:state.trees, currentId, dms:DM(), extra:EXTRA() }; }
 function flashSaved(){
   const p = document.getElementById("savedPill");
   p.innerHTML = '<span class="chk">✓</span> Salvato';
@@ -3290,25 +3298,39 @@ function normSocial(s){
   }));
   return { profiles, follows, posts, stories:normStories(s.stories), acting:(typeof s.acting==="string"?s.acting:null) };
 }
+/* ---------- account senza albero: un "libro invisibile" che non compare in biblioteca ---------- */
+var EXTRA_ID="__extra__";
+var socBookId=null;   // EXTRA_ID quando nel social usi un account senza albero
+function normExtra(e){
+  e=(e&&typeof e==="object")?e:{};
+  return { id:EXTRA_ID, name:"Account senza albero", hidden:true, cover:"#6b5a3a", edges:[],
+    nodes:(Array.isArray(e.nodes)?e.nodes:[]).filter(n=>n&&n.id).map(n=>({id:n.id, name:String(n.name||""), color:n.color||"#3f6b4a", photo:n.photo||null, x:0, y:0})),
+    social:normSocial(e.social) };
+}
+function EXTRA(){ if(!state.extra || !state.extra.hidden) state.extra=normExtra(state.extra); return state.extra; }
+function allBooks(){ return state.trees.concat([EXTRA()]); }
+// il libro di cui il social mostra feed e account: di solito quello aperto, oppure il libro invisibile
+function stree(){ if(socBookId===EXTRA_ID) return EXTRA(); return tree(); }
+function bookLabel(t){ return t && t.hidden ? "✦ Account senza albero" : "📖 "+((t&&t.name)||"Senza titolo"); }
 function socOf(t){ if(!t.social || !t.social.profiles) t.social=normSocial(t.social); if(!Array.isArray(t.social.stories)) t.social.stories=[]; if(!Array.isArray(t.social.follows)) t.social.follows=[]; return t.social; }
-function S(){ return socOf(tree()); }
-function charRef(id){ const c=tree(); if(c){ const n=c.nodes.find(n=>n.id===id); if(n) return {t:c,n}; }
-  for(const t of state.trees){ const n=t.nodes.find(n=>n.id===id); if(n) return {t,n}; } return null; }
+function S(){ return socOf(stree()); }
+function charRef(id){ const c=stree(); if(c){ const n=c.nodes.find(n=>n.id===id); if(n) return {t:c,n}; }
+  for(const t of allBooks()){ const n=t.nodes.find(n=>n.id===id); if(n) return {t,n}; } return null; }
 function nodeOf(id){ const r=charRef(id); return r&&r.n; }
 function exists(id){ return !!charRef(id); }
-function alive(id){ return tree().nodes.some(n=>n.id===id); }
+function alive(id){ return stree().nodes.some(n=>n.id===id); }
 function slugName(name){
   let s=String(name||"").normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase().replace(/\s+/g,"_").replace(/[^a-z0-9._]/g,"");
   s=s.replace(/^[._]+|[._]+$/g,"").slice(0,26);
   return s||"personaggio";
 }
 function usernameTaken(u, exceptId, t){
-  t=t||(charRef(exceptId)||{t:tree()}).t;
+  t=t||(charRef(exceptId)||{t:stree()}).t;
   const ps=socOf(t).profiles; u=u.toLowerCase();
   return t.nodes.some(n=>n.id!==exceptId && ps[n.id] && ps[n.id].username.toLowerCase()===u);
 }
 function prof(id){
-  const r=charRef(id); const s=socOf(r?r.t:tree()); let p=s.profiles[id];
+  const r=charRef(id); const s=socOf(r?r.t:stree()); let p=s.profiles[id];
   if(!p){ p=s.profiles[id]={username:"",name:"",website:"",bio:"",nPosts:"",nFollowers:"",nFollowing:"",verified:false,avatar:null}; }
   if(!p.username){
     const n=nodeOf(id); const base=slugName(n&&n.name); let u=base, i=2;
@@ -3320,7 +3342,7 @@ function prof(id){
 // un personaggio "ha un profilo" se l'hai creato/scelto o se l'hai già usato nel social
 function socialUsedSet(){
   const u=new Set();
-  state.trees.forEach(t=>{
+  allBooks().forEach(t=>{
     const s=socOf(t);
     Object.entries(s.profiles).forEach(([id,p])=>{ if(p && (p.created||p.avatar||p.bio||p.website||p.name||p.verified||p.nPosts||p.nFollowers||p.nFollowing)) u.add(id); });
     s.posts.forEach(p=>{ u.add(p.author); p.likes.forEach(l=>u.add(l.by)); p.comments.forEach(c=>{ u.add(c.author); c.likes.forEach(l=>u.add(l.by)); }); });
@@ -3336,36 +3358,39 @@ function accountsHTML(act, cur, rowFn){
   const has=charsGrouped(id=>used.has(id)).length, rest=charsGrouped(id=>!used.has(id)).length;
   return `<div class="sh-t">Cambia account</div>`+
     (has?top:`<div class="empty-s" style="padding:18px 20px">Nessun profilo social ancora.<br>Scegline uno qui sotto per crearlo.</div>`)+
-    (rest?`<div class="sec-h acc-sep">Non ancora aggiunti<small>Tocca un personaggio per creargli il profilo social</small></div>`+groupedRows(id=>!used.has(id), rowFn):"");
+    (rest?`<div class="sec-h acc-sep">Non ancora aggiunti<small>Tocca un personaggio per creargli il profilo social</small></div>`+groupedRows(id=>!used.has(id), rowFn):"")+
+    `<button class="opt acc-new" data-a="acc-new">＋ Nuovo account senza albero<small>Un profilo social che non appartiene a nessun albero genealogico</small></button>`;
 }
 function displayName(id){ const p=prof(id), n=nodeOf(id); return p.name || (n&&n.name) || ""; }
 function byUsername(u){ u=String(u||"").toLowerCase(); if(!u) return null;
-  let n=tree().nodes.find(n=>prof(n.id).username.toLowerCase()===u); if(n) return n.id;
+  let n=stree().nodes.find(n=>prof(n.id).username.toLowerCase()===u); if(n) return n.id;
   const a=acting(); if(a){ const f=followingOf(a).find(id=>prof(id).username.toLowerCase()===u); if(f) return f; }
-  for(const t of state.trees){ n=t.nodes.find(n=>{ const p=socOf(t).profiles[n.id]; return p&&p.username.toLowerCase()===u; }); if(n) return n.id; }
+  for(const t of allBooks()){ n=t.nodes.find(n=>{ const p=socOf(t).profiles[n.id]; return p&&p.username.toLowerCase()===u; }); if(n) return n.id; }
   return null; }
 function acting(){
-  const s=S(), t=tree();
+  const s=S(), t=stree();
   if(!s.acting || !alive(s.acting)) s.acting = t.nodes[0] ? t.nodes[0].id : null;
   return s.acting;
 }
 function treePosts(t){ return socOf(t).posts.filter(p=>t.nodes.some(n=>n.id===p.author)); }
-function charTree(id){ const r=charRef(id); return r?r.t:tree(); }
-function allFollows(){ const out=[]; state.trees.forEach(t=>socOf(t).follows.forEach(f=>out.push(f))); return out; }
-function livePosts(){ return treePosts(tree()).sort((a,b)=>b.at-a.at); }
+function charTree(id){ const r=charRef(id); return r?r.t:stree(); }
+function allFollows(){ const out=[]; allBooks().forEach(t=>socOf(t).follows.forEach(f=>out.push(f))); return out; }
+function livePosts(){ return treePosts(stree()).sort((a,b)=>b.at-a.at); }
 // feed: tutti i post del libro aperto + quelli dei personaggi di altri alberi seguiti dal personaggio in uso
 function feedPosts(){
-  const a=acting(), cur=tree(), fol=new Set(a?followingOf(a):[]), out=treePosts(cur);
-  state.trees.forEach(t=>{ if(t!==cur) treePosts(t).forEach(p=>{ if(fol.has(p.author)) out.push(p); }); });
+  const a=acting(), cur=stree(), fol=new Set(a?followingOf(a):[]);
+  if(cur.hidden){ return allBooks().flatMap(t=>treePosts(t)).filter(p=>p.author===a || fol.has(p.author)).sort((x,y)=>y.at-x.at); }
+  const out=treePosts(cur);
+  allBooks().forEach(t=>{ if(t!==cur) treePosts(t).forEach(p=>{ if(fol.has(p.author)) out.push(p); }); });
   return out.sort((x,y)=>y.at-x.at);
 }
-function postOwner(id){ for(const t of state.trees){ const p=socOf(t).posts.find(x=>x.id===id); if(p) return {t,p}; } return null; }
+function postOwner(id){ for(const t of allBooks()){ const p=socOf(t).posts.find(x=>x.id===id); if(p) return {t,p}; } return null; }
 function postById(id){ const r=postOwner(id); return r&&r.p; }
 function follows(a,b){ return allFollows().some(f=>f.from===a && f.to===b); }
 function followersOf(id){ return [...new Set(allFollows().filter(f=>f.to===id && exists(f.from)).map(f=>f.from))]; }
 function followingOf(id){ return [...new Set(allFollows().filter(f=>f.from===id && exists(f.to)).map(f=>f.to))]; }
 function postsOf(id){ return treePosts(charTree(id)).filter(p=>p.author===id).sort((a,b)=>b.at-a.at); }
-function taggedIn(id){ return state.trees.flatMap(t=>treePosts(t)).filter(p=>p.tags.includes(id)).sort((a,b)=>b.at-a.at); }
+function taggedIn(id){ return allBooks().flatMap(t=>treePosts(t)).filter(p=>p.tags.includes(id)).sort((a,b)=>b.at-a.at); }
 function liveLikes(arr){ return arr.filter(l=>exists(l.by)); }
 function liveComments(p){ return p.comments.filter(c=>exists(c.author)); }
 function fmtNum(v){
@@ -3449,7 +3474,7 @@ function pendingList(){ try{ return JSON.parse(localStorage.getItem(SOC_PENDING_
 function setPending(a){ try{ localStorage.setItem(SOC_PENDING_KEY, JSON.stringify(a)); }catch(e){} }
 async function storeImage(ref){
   if(!ref || !ref.startsWith("data:")) return ref;
-  const path=`${SOC_DIR}/${String(tree().id).slice(0,8)}-${uid().replace(/-/g,"").slice(0,14)}.jpg`;
+  const path=`${SOC_DIR}/${String(stree().id).slice(0,8)}-${uid().replace(/-/g,"").slice(0,14)}.jpg`;
   socImgMem.set(path, ref);
   await idbPut(path, ref);
   const p=pendingList(); p.push(path); setPending(p);
@@ -3589,7 +3614,7 @@ function postHTML(p){
 
 /* ---------- schermate ---------- */
 function scrFeed(){
-  const t=tree(), posts=feedPosts();
+  const t=stree(), posts=feedPosts();
   const body = storyBarHTML() + (posts.length ? posts.map(postHTML).join("")
     : `<div class="empty-s"><span class="big">❦</span>Ancora nessun post in questo mondo.<br>Tocca <b>＋</b> in basso per pubblicare il primo.</div>`);
   return hd(treeBackBtn(), `<span class="crest">❦</span> ${acting()?esc(prof(acting()).username)+badgeHTML(acting()):esc(t.name||"Social")}`, `<button class="ib" data-a="dm-inbox" title="Messaggi">${IC.dm}${dmUnreadDot()}</button>`) + `<div class="ph-main">${body}</div>`;
@@ -3599,11 +3624,11 @@ function scrSearch(){
     <div class="ph-main" id="soResults">${searchResults()}</div>`;
 }
 function searchResults(){
-  return groupedRows(id=>matchQ(id,soc.q), id=>rowHTML(id,{follow:true, sub:charTree(id)!==tree()?"📖 "+(charTree(id).name||""):""}));
+  return groupedRows(id=>matchQ(id,soc.q), id=>rowHTML(id,{follow:true, sub:charTree(id)!==stree()?bookLabel(charTree(id)):""}));
 }
 function searchResultsOld(){
   const q=soc.q.trim().replace(/^@/,"").toLowerCase();
-  const ids=tree().nodes.map(n=>n.id).filter(id=>!q || prof(id).username.toLowerCase().includes(q) || displayName(id).toLowerCase().includes(q));
+  const ids=stree().nodes.map(n=>n.id).filter(id=>!q || prof(id).username.toLowerCase().includes(q) || displayName(id).toLowerCase().includes(q));
   if(!ids.length) return `<div class="empty-s">Nessun profilo trovato per «${esc(soc.q)}».</div>`;
   if(q) ids.sort((a,b)=>(prof(a).username.toLowerCase().startsWith(q)?0:1)-(prof(b).username.toLowerCase().startsWith(q)?0:1));
   return `${q?"":`<div class="sec-h">Tutti i personaggi</div>`}`+ids.map(id=>rowHTML(id)).join("");
@@ -3635,8 +3660,8 @@ function scrActivity(){
     }
     p.comments.forEach(c=>{ if(c.author===a) liveLikes(c.likes).forEach(l=>{ if(l.by!==a) ev.push({at:l.at, by:l.by, txt:"ha messo mi piace al tuo commento: "+short(c.text), post:p, cm:true}); }); });
   });
-  socOf(tree()).stories.forEach(st=>{ if(st.author===a) st.likes.forEach(l=>{ if(l.by!==a && exists(l.by)) ev.push({at:l.at, by:l.by, txt:"ha messo mi piace alla tua storia.", story:st}); }); });
-  state.trees.forEach(t=>{
+  socOf(stree()).stories.forEach(st=>{ if(st.author===a) st.likes.forEach(l=>{ if(l.by!==a && exists(l.by)) ev.push({at:l.at, by:l.by, txt:"ha messo mi piace alla tua storia.", story:st}); }); });
+  allBooks().forEach(t=>{
     treePosts(t).forEach(p=>{ if(p.tags.includes(a) && p.author!==a) ev.push({at:p.at, by:p.author, txt:"ti ha taggato in un post.", post:p}); });
     socOf(t).stories.forEach(st=>{ if((st.tags||[]).some(x=>x.id===a) && st.author!==a && exists(st.author)) ev.push({at:st.at, by:st.author, txt:"ti ha taggato in una storia.", story:st}); });
   });
@@ -3683,7 +3708,7 @@ function scrProfile(id, inStack){
     <div class="pr-info"><div class="nm">${esc(displayName(id))}</div>
       ${p.bio?`<div class="bio">${richText(p.bio)}</div>`:""}
       ${web?`<a class="web" href="${esc(webHref)}" target="_blank" rel="noopener">${esc(web)}</a>`:""}
-      ${!alive(id)?`<div><span class="fy">📖 ${esc(charTree(id).name||"")}</span></div>`:""}
+      ${!alive(id)?`<div><span class="fy">${esc(bookLabel(charTree(id)))}</span></div>`:""}
       ${!own&&a&&follows(id,a)?`<div><span class="fy">Ti segue</span></div>`:""}
     </div>
     <div class="pr-btns">${btns}</div>
@@ -3760,12 +3785,13 @@ function scrEditProfile(){
     ${ufHTML("Numero di follower","nFollowers",e.nFollowers,SOC_LIM.num,{num:true,ph:`automatico (${followersOf(id).length})`})}
     ${ufHTML("Numero di seguiti","nFollowing",e.nFollowing,SOC_LIM.num,{num:true,ph:`automatico (${followingOf(id).length})`,hint:"Se lasci vuoto, il numero si conta da solo con i personaggi dell'albero."})}
     <label class="ck"><input type="checkbox" data-f="verified" ${e.verified?"checked":""}> Segno ufficiale</label>
+    ${charTree(id).hidden?`<div class="acc-del-wrap"><button class="pbtn acc-del" data-a="acc-del" data-id="${esc(id)}">🗑 Elimina questo account</button><div class="hint">È un account senza albero: eliminandolo spariscono anche i suoi post e le sue storie.</div></div>`:""}
   </div></div>`;
 }
 function scrCompose(){
   const d=soc.draft; if(!d) return "";
   const a=d.author;
-  const others=tree().nodes.filter(n=>n.id!==a);
+  const others=stree().nodes.filter(n=>n.id!==a);
   const story=d.kind==="story";
   const kindBar = d.editId ? "" : `<div class="seg2 kind"><button class="${story?"":"on"}" data-a="story-kind" data-k="post">Post</button><button class="${story?"on":""}" data-a="story-kind" data-k="story">Storia</button></div>`;
   if(story) return hd(`<button class="ib" data-a="back" title="Annulla">${IC.close}</button>`,"Nuova storia",`<button class="ib gold txt" data-a="publish">Condividi</button>`,true)+kindBar+
@@ -3818,9 +3844,9 @@ function sheetHTML(){
 function topScreen(){ return soc.stack[soc.stack.length-1]||null; }
 function viewKey(){ const s=topScreen(); return s ? s.k+":"+(s.id||"")+":"+(s.w||"") : "tab:"+soc.tab; }
 function renderSocial(){
-  const t=tree(); if(!t) return;
+  const t=stree(); if(!t) return;
   document.getElementById("soName").textContent=t.name||"Senza titolo";
-  const bk=document.getElementById("soBook"); if(bk){ bk.style.setProperty("--bc", t.cover||"#6b1f1f"); document.getElementById("soBookTitle").textContent=t.name||"Senza titolo"; }
+  const bk=document.getElementById("soBook"); if(bk){ bk.style.setProperty("--bc", t.cover||"#6b1f1f"); bk.classList.toggle("blank", !!t.hidden); document.getElementById("soBookTitle").textContent=t.hidden?"":(t.name||"Senza titolo"); }
   const root=document.getElementById("soScreen");
   const key=viewKey();
   const oldMain=root.querySelector(".ph-main");
@@ -3866,9 +3892,36 @@ function fitBookTitle(){
   const lh=()=>parseFloat(getComputedStyle(el).lineHeight)||size*1.15;
   while(size>11 && (el.scrollWidth>el.clientWidth+1 || el.scrollHeight>lh()*3+2)){ size-=1; el.style.fontSize=size+"px"; }
 }
+function extraAction(A, el){
+  const X=EXTRA();
+  if(A==="acc-new"){
+    const id=uid(); const cols=["#3f6b4a","#2f5d8a","#6b3f8a","#7d3a36","#b8923f","#4a6b6b"];
+    X.nodes.push({id, name:"Nuovo account", color:cols[X.nodes.length%cols.length], photo:null, x:0, y:0});
+    const p=prof(id); p.created=true; p.name="";
+    socOf(X).acting=id; socBookId=EXTRA_ID; soc.sheet=null; soc.stack=[]; soc.tab="profile"; soc.lastKey="";
+    save(); renderAll(); openEditProfile(id);
+    toast("✦ Nuovo account senza albero: scegli nome e nome utente");
+    return;
+  }
+  if(A==="acc-del"){
+    const id=el.dataset.id, r=charRef(id); if(!r||!r.t.hidden) return;
+    if(!confirm("Eliminare l'account @"+prof(id).username+"? Spariscono anche i suoi post e le sue storie.")) return;
+    const so=socOf(X);
+    const imgs=so.posts.filter(p=>p.author===id).flatMap(p=>p.images).concat(so.stories.filter(s=>s.author===id).map(s=>s.image));
+    if(so.profiles[id] && so.profiles[id].avatar) imgs.push(so.profiles[id].avatar);
+    so.posts=so.posts.filter(p=>p.author!==id); so.stories=so.stories.filter(s=>s.author!==id);
+    delete so.profiles[id]; X.nodes=X.nodes.filter(n=>n.id!==id);
+    allBooks().forEach(t=>{ const s2=socOf(t); s2.follows=s2.follows.filter(f=>f.from!==id&&f.to!==id); });
+    deleteImages(imgs);
+    soc.edit=null; soc.stack=[];
+    if(so.acting===id) so.acting=null;
+    if(socBookId===EXTRA_ID && !X.nodes.length){ socBookId=null; }
+    save(); renderAll(); toast("Account eliminato");
+  }
+}
 /* ---------- navigazione ---------- */
 function openSocial(){
-  flushSave();
+  flushSave(); socBookId=null;
   soc.stack=[]; soc.sheet=null; soc.tab="feed"; soc.lastKey="";
   showView("social"); renderSocial();
   const m=document.querySelector("#soScreen .ph-main"); if(m) m.scrollTop=0;
@@ -3902,7 +3955,7 @@ function toggleLike(postId, forceOn){
 }
 function toggleFollow(id){
   const a=acting(); if(!a||id===a) return;
-  if(follows(a,id)) state.trees.forEach(t=>{ const s=socOf(t); s.follows=s.follows.filter(f=>!(f.from===a&&f.to===id)); });
+  if(follows(a,id)) allBooks().forEach(t=>{ const s=socOf(t); s.follows=s.follows.filter(f=>!(f.from===a&&f.to===id)); });
   else socOf(charTree(a)).follows.push({from:a,to:id,at:Date.now()});
   save(); renderSocial();
 }
@@ -3973,6 +4026,7 @@ async function saveProfile(){
   if(e.origAvatar && e.origAvatar!==avatar) deleteImages([e.origAvatar]);
   Object.assign(p,{name:e.name.trim(), username:u, website:e.website.trim(), bio:e.bio.replace(/\s+$/,""),
     nPosts:e.nPosts.replace(/\D/g,""), nFollowers:e.nFollowers.replace(/\D/g,""), nFollowing:e.nFollowing.replace(/\D/g,""), verified:!!e.verified, avatar:avatar||null});
+  { const r=charRef(e.id); if(r && r.t.hidden) r.n.name=p.name||p.username; }
   soc.edit=null; soc.stack.pop(); save(); renderSocial(); toast("Profilo salvato ✓");
   if(avatar && pendingList().includes(avatar)) socKickUploads();
 }
@@ -3987,7 +4041,7 @@ function sendComment(){
   soc.replyTo=null; save(); renderSocial();
   const m=document.querySelector("#soScreen .ph-main"); if(m && !replyTo) m.scrollTop=m.scrollHeight;
 }
-function findComment(id){ for(const p of state.trees.flatMap(t=>socOf(t).posts)){ const c=p.comments.find(x=>x.id===id); if(c) return {p,c}; } return null; }
+function findComment(id){ for(const p of allBooks().flatMap(t=>socOf(t).posts)){ const c=p.comments.find(x=>x.id===id); if(c) return {p,c}; } return null; }
 
 let socFilePurpose=null, lastTap={id:null,t:0};
 function socHandleClick(ev){
@@ -3997,6 +4051,7 @@ function socHandleClick(ev){
   if(A.startsWith("sv-") || A.startsWith("story-")){ storyAction(A, el); return; }
   if(A.startsWith("crop-")){ cropAction(A, el); return; }
   if(A.startsWith("tg-")){ tagAction(A, el, ev); return; }
+  if(A==="acc-new"||A==="acc-del"){ extraAction(A, el); return; }
   switch(A){
     case "close-social": closeSocial(); break;
     case "tab": soc.stack=[]; soc.sheet=null;
@@ -4013,14 +4068,15 @@ function socHandleClick(ev){
     case "media": postMediaTap(id, el); break;
     case "follow": ev.stopPropagation(); toggleFollow(id); break;
     case "act-as": prof(id).created=true; S().acting=id; save(); toast("Ora usi @"+prof(id).username); renderSocial(); break;
-    case "accounts": if(!tree().nodes.length) break; soc.sheet={k:"accounts"}; renderSocial(); break;
+    case "accounts": if(!stree().nodes.length) break; soc.sheet={k:"accounts"}; renderSocial(); break;
     case "set-acting":
       prof(id).created=true;
-      if(!alive(id)){            // personaggio di un altro albero: il social passa a quel libro
-        const t2=charTree(id); flushSave(); currentId=t2.id; socOf(t2).acting=id;
+      if(!alive(id)){            // personaggio di un altro albero (o account senza albero): il social passa a quel libro
+        const t2=charTree(id); flushSave(); socOf(t2).acting=id;
+        if(t2.hidden) socBookId=EXTRA_ID; else { socBookId=null; currentId=t2.id; }
         soc.stack=soc.stack.filter(x=>x.k==="compose"); soc.profTab={}; soc.car={}; soc.lastKey="";
         if(soc.draft && !soc.draft.editId){ soc.draft.author=id; soc.draft.tags=[]; }
-        soc.sheet=null; save(); renderAll(); toast("📖 Ora sei nel libro «"+(t2.name||"Senza titolo")+"»", 2600); break;
+        soc.sheet=null; save(); renderAll(); toast(t2.hidden?"✦ Ora usi un account senza albero":"📖 Ora sei nel libro «"+(t2.name||"Senza titolo")+"»", 2600); break;
       }
       S().acting=id; save(); soc.sheet=null;
       if(soc.draft && !soc.draft.editId){ soc.draft.author=id; soc.draft.tags=soc.draft.tags.filter(x=>x!==id); }
@@ -4119,7 +4175,7 @@ function normDms(d){
   return { threads, acting:(typeof d.acting==="string"?d.acting:null) };
 }
 function DM(){ if(!state.dms || !Array.isArray(state.dms.threads)) state.dms=normDms(state.dms); return state.dms; }
-function allCharIds(){ const out=[]; state.trees.forEach(t=>t.nodes.forEach(n=>out.push(n.id))); return out; }
+function allCharIds(){ const out=[]; allBooks().forEach(t=>t.nodes.forEach(n=>out.push(n.id))); return out; }
 function dmActing(){
   const d=DM();
   if(!d.acting || !exists(d.acting)) d.acting = acting() || allCharIds()[0] || null;
@@ -4145,8 +4201,8 @@ function star(id){ return isMain(id) ? `<span class="star" title="Personaggio pr
 function dmUnreadDot(){ return ""; }
 // personaggi di tutti gli alberi, divisi per libro: il libro aperto per primo, in ogni libro il principale in cima
 function charsGrouped(filter){
-  const cur=tree();
-  return state.trees.slice().sort((a,b)=>(a===cur?-1:b===cur?1:0)).map(t=>{
+  const cur=stree();
+  return allBooks().slice().sort((a,b)=>(a===cur?-1:b===cur?1:0)).map(t=>{
     let ns=t.nodes.slice().sort((a,b)=>(b.main?1:0)-(a.main?1:0));
     if(filter) ns=ns.filter(n=>filter(n.id));
     return {t, ids:ns.map(n=>n.id)};
@@ -4160,7 +4216,7 @@ function gRow(id, opts){
 function groupedRows(filter, rowFn){
   const gs=charsGrouped(filter);
   if(!gs.length) return `<div class="empty-s">Nessun personaggio trovato.</div>`;
-  return gs.map(g=>`<div class="bk-h">📖 ${esc(g.t.name||"Senza titolo")}</div>`+g.ids.map(rowFn).join("")).join("");
+  return gs.map(g=>`<div class="bk-h">${esc(bookLabel(g.t))}</div>`+g.ids.map(rowFn).join("")).join("");
 }
 function matchQ(id,q){ q=q.trim().replace(/^@/,"").toLowerCase(); return !q || prof(id).username.toLowerCase().includes(q) || displayName(id).toLowerCase().includes(q); }
 
@@ -4186,7 +4242,7 @@ function inboxList(){
       prev = who + (m.story && !m.text ? "↩ Risposta a una storia" : m.text ? m.text : m.post ? "↗ Ha condiviso un post" : m.images.length ? "📷 Foto" : "");
     }
     const d=m?runningDate(t,t.msgs.length-1):"";
-    const sub = !t.group ? (()=>{ const o=t.members.find(x=>x!==a); const tn=o&&treeNameOf(o); return tn && tn!==(tree().name) ? " · 📖 "+tn : ""; })() : "";
+    const sub = !t.group ? (()=>{ const o=t.members.find(x=>x!==a); const tn=o&&treeNameOf(o); return tn && tn!==(stree().name) ? " · 📖 "+tn : ""; })() : "";
     return `<div class="row" data-a="dm-open" data-id="${esc(t.id)}">${threadAv(t,a)}
       <div class="tx"><span class="t1">${esc(threadTitle(t,a))}</span><small>${esc(prev.length>48?prev.slice(0,48)+"…":prev)}${d?" · "+esc(d):""}${esc(sub)}</small></div></div>`;
   }).join("");
@@ -4253,7 +4309,7 @@ function scrChat(s){
     </div>`;
 }
 function sharedPostHTML(ref){
-  const t=state.trees.find(x=>x.id===ref.tree), p=t && socOf(t).posts.find(x=>x.id===ref.id);
+  const t=allBooks().find(x=>x.id===ref.tree), p=t && socOf(t).posts.find(x=>x.id===ref.id);
   if(!p || !t.nodes.some(n=>n.id===p.author)) return `<div class="spost gone">Post non più disponibile</div>`;
   return `<div class="spost" data-a="dm-post" data-t="${esc(ref.tree)}" data-id="${esc(ref.id)}">
     <div class="sp-hd">${avHTML(p.author)}<b>${esc(prof(p.author).username)}</b>${badgeHTML(p.author)}</div>
@@ -4323,9 +4379,10 @@ async function dmSend(){
   if(imgs.length) socKickUploads();
 }
 function dmOpenPost(treeId, postId){
-  const t=state.trees.find(x=>x.id===treeId); if(!t) return;
-  if(t.id!==currentId){
-    currentId=t.id; flushSave(); renderAll(); toast("📖 Ora sei nel libro «"+(t.name||"Senza titolo")+"»", 2600);
+  const t=allBooks().find(x=>x.id===treeId); if(!t) return;
+  if(t.id!==stree().id){
+    if(t.hidden) socBookId=EXTRA_ID; else { socBookId=null; currentId=t.id; }
+    flushSave(); renderAll(); toast(t.hidden?"✦ Post di un account senza albero":"📖 Ora sei nel libro «"+(t.name||"Senza titolo")+"»", 2600);
   }
   socPush({k:"post", id:postId});
 }
@@ -4384,10 +4441,10 @@ function dmAction(A, el, ev){
       save(); while(soc.stack.length && soc.stack[soc.stack.length-1].k!=="inbox") soc.stack.pop(); renderSocial(); toast("Chat eliminata"); break; }
     case "share": if(!acting()) break; soc.sheet={k:"share", id}; renderSocial(); break;
     case "dm-share-to": { const t=threadById(id), a=acting(); if(!t||!a) break;
-      DM().acting=a; t.msgs.push({id:uid(), from:a, text:"", images:[], post:{tree:tree().id, id:el.dataset.p}, date:"", at:Date.now(), likes:[]});
+      DM().acting=a; t.msgs.push({id:uid(), from:a, text:"", images:[], post:{tree:stree().id, id:el.dataset.p}, date:"", at:Date.now(), likes:[]});
       soc.sheet=null; save(); renderSocial(); toast("↗ Inviato a "+threadTitle(t,a)); break; }
     case "dm-share-new": { const a=acting(); if(!a) break; DM().acting=a;
-      soc.dmNew={sel:[], q:"", name:"", share:{tree:tree().id, id}}; socPush({k:"newchat"}); break; }
+      soc.dmNew={sel:[], q:"", name:"", share:{tree:stree().id, id}}; socPush({k:"newchat"}); break; }
     case "dm-noop": break;
     case "dm-story": svOpen({mode:"arch", list:[id]}); break;
     case "dm-with": { const a=acting(); if(!a) break; DM().acting=a; const t=openThreadWith([id]); soc.dmTxt=""; soc.dmImgs=[]; soc.dmDateOpen=false; soc.dmStick=true; socPush({k:"chat", id:t.id}); break; }
@@ -4421,10 +4478,10 @@ function normStories(arr){
 function storiesOf(id){ return socOf(charTree(id)).stories.filter(s=>s.author===id).sort((a,b)=>a.at-b.at); }
 function activeStories(id){ const now=Date.now(); return storiesOf(id).filter(s=>now-s.at<STORY_MS); }
 function archivedStories(id){ const now=Date.now(); return storiesOf(id).filter(s=>now-s.at>=STORY_MS).reverse(); }
-function storyById(id){ for(const t of state.trees){ const s=socOf(t).stories.find(x=>x.id===id); if(s) return {t,s}; } return null; }
+function storyById(id){ for(const t of allBooks()){ const s=socOf(t).stories.find(x=>x.id===id); if(s) return {t,s}; } return null; }
 function hasStory(id){ return activeStories(id).length>0; }
 function storyBarIds(){
-  const a=acting(), ids=new Set(tree().nodes.map(n=>n.id));
+  const a=acting(), ids=new Set(stree().hidden?[]:stree().nodes.map(n=>n.id));
   if(a) followingOf(a).forEach(x=>ids.add(x));
   if(a) ids.delete(a);
   const last=id=>{ const s=activeStories(id); return s.length?s[s.length-1].at:0; };
@@ -4556,7 +4613,7 @@ function svReply(){
   const r=storyById(c.s.id);
   DM().acting=a;
   const t=openThreadWith([c.s.author]);
-  t.msgs.push({id:uid(), from:a, text:txt, images:[], post:null, story:{tree:r?r.t.id:tree().id, id:c.s.id}, date:"", at:Date.now(), likes:[]});
+  t.msgs.push({id:uid(), from:a, text:txt, images:[], post:null, story:{tree:r?r.t.id:stree().id, id:c.s.id}, date:"", at:Date.now(), likes:[]});
   save(); inp.value=""; soc.sv.paused=false; renderSocial();
   toast("↩ Risposta inviata in Direct a @"+prof(c.s.author).username);
 }
@@ -4764,7 +4821,7 @@ async function storyToSocial(){
   flushStorySave();
   const sv=document.getElementById("storyView");
   // il social si prepara sotto la Storia: libro "da vicino", telefono fuori schermo
-  soc.stack=[]; soc.sheet=null; soc.tab="feed"; soc.lastKey="";
+  soc.stack=[]; soc.sheet=null; soc.tab="feed"; soc.lastKey=""; socBookId=null;
   document.body.classList.add("view-social"); uiView="social"; renderSocial();
   const phone=document.querySelector("#socialView .phone"), book=document.getElementById("soBook"), bar=document.querySelector("#socialView .st-bar");
   try{
@@ -4918,9 +4975,9 @@ DM_SHEETS.tagpick=function(sh){
 function tagPickList(sh){
   const d=soc.draft; if(!d) return "";
   const g=taggableGroups(d.author, sh.q||"");
-  const row=id=>`<div class="row" data-a="tg-add" data-id="${esc(id)}">${avHTML(id)}<div class="tx">${star(id)}${esc(prof(id).username)}${badgeHTML(id)}<small>${esc(displayName(id))}${charTree(id)!==tree()?" · 📖 "+esc(charTree(id).name||""):""}</small></div></div>`;
+  const row=id=>`<div class="row" data-a="tg-add" data-id="${esc(id)}">${avHTML(id)}<div class="tx">${star(id)}${esc(prof(id).username)}${badgeHTML(id)}<small>${esc(displayName(id))}${charTree(id)!==stree()?" · "+esc(bookLabel(charTree(id))):""}</small></div></div>`;
   let h="";
-  if(g.book.length) h+=`<div class="bk-h">Da questo libro</div>`+g.book.map(row).join("");
+  if(g.book.length) h+=`<div class="bk-h">${charTree(d.author).hidden?"Account senza albero":"Da questo libro"}</div>`+g.book.map(row).join("");
   if(g.fol.length) h+=`<div class="bk-h">Profili che segui</div>`+g.fol.map(row).join("");
   return h || `<div class="empty-s" style="padding:20px">Nessun profilo trovato.</div>`;
 }
