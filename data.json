@@ -1637,13 +1637,35 @@
     "hidden": true,
     "cover": "#6b5a3a",
     "edges": [],
-    "nodes": [],
+    "nodes": [
+      {
+        "id": "a9708b99-2217-4e7d-99f5-6b9343c87358",
+        "name": "Nuovo account",
+        "color": "#3f6b4a",
+        "photo": null,
+        "x": 0,
+        "y": 0
+      }
+    ],
     "social": {
-      "profiles": {},
+      "profiles": {
+        "a9708b99-2217-4e7d-99f5-6b9343c87358": {
+          "username": "nuovo_account",
+          "name": "",
+          "website": "",
+          "bio": "",
+          "nPosts": "",
+          "nFollowers": "",
+          "nFollowing": "",
+          "verified": false,
+          "avatar": null,
+          "created": true
+        }
+      },
       "follows": [],
       "posts": [],
       "stories": [],
-      "acting": null
+      "acting": "a9708b99-2217-4e7d-99f5-6b9343c87358"
     }
   }
 }
