@@ -1561,9 +1561,24 @@
         "stories": [],
         "acting": null
       }
+    },
+    {
+      "id": "44b043f1-a769-4bf5-8e9d-0ef0548103e5",
+      "name": "spiderink",
+      "nodes": [],
+      "edges": [],
+      "view": {
+        "panX": 0,
+        "panY": 0,
+        "zoom": 1
+      },
+      "cover": "#1f3b2c",
+      "story": {
+        "chapters": []
+      }
     }
   ],
-  "currentId": "ea5949a0-a640-453b-811e-9a4cec241d0a",
+  "currentId": "44b043f1-a769-4bf5-8e9d-0ef0548103e5",
   "dms": {
     "threads": [
       {
