@@ -1561,24 +1561,9 @@
         "stories": [],
         "acting": null
       }
-    },
-    {
-      "id": "44b043f1-a769-4bf5-8e9d-0ef0548103e5",
-      "name": "spiderink",
-      "nodes": [],
-      "edges": [],
-      "view": {
-        "panX": 0,
-        "panY": 0,
-        "zoom": 1
-      },
-      "cover": "#1f3b2c",
-      "story": {
-        "chapters": []
-      }
     }
   ],
-  "currentId": "44b043f1-a769-4bf5-8e9d-0ef0548103e5",
+  "currentId": "e0f216d1-9f5b-4f51-8b4c-fe5425491384",
   "dms": {
     "threads": [
       {
@@ -1645,5 +1630,20 @@
       }
     ],
     "acting": "a4784486-8866-4daf-837f-74c7ac1a323c"
+  },
+  "extra": {
+    "id": "__extra__",
+    "name": "Account senza albero",
+    "hidden": true,
+    "cover": "#6b5a3a",
+    "edges": [],
+    "nodes": [],
+    "social": {
+      "profiles": {},
+      "follows": [],
+      "posts": [],
+      "stories": [],
+      "acting": null
+    }
   }
 }
