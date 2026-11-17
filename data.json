@@ -1640,7 +1640,7 @@
     "nodes": [
       {
         "id": "a9708b99-2217-4e7d-99f5-6b9343c87358",
-        "name": "Nuovo account",
+        "name": "friendlyspiderink",
         "color": "#3f6b4a",
         "photo": null,
         "x": 0,
@@ -1650,7 +1650,7 @@
     "social": {
       "profiles": {
         "a9708b99-2217-4e7d-99f5-6b9343c87358": {
-          "username": "nuovo_account",
+          "username": "friendlyspiderink",
           "name": "",
           "website": "",
           "bio": "",
