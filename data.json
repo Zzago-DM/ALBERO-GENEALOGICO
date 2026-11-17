@@ -1561,9 +1561,31 @@
         "stories": [],
         "acting": null
       }
+    },
+    {
+      "id": "d17dfc3b-a636-4d35-8da4-a4ca42e15da0",
+      "name": "spiderink",
+      "nodes": [],
+      "edges": [],
+      "view": {
+        "panX": 0,
+        "panY": 0,
+        "zoom": 1
+      },
+      "cover": "#2a2622",
+      "story": {
+        "chapters": []
+      },
+      "social": {
+        "profiles": {},
+        "follows": [],
+        "posts": [],
+        "stories": [],
+        "acting": null
+      }
     }
   ],
-  "currentId": "c0f780bb-007c-4cf7-a869-4c1e586ad1b9",
+  "currentId": "d17dfc3b-a636-4d35-8da4-a4ca42e15da0",
   "dms": {
     "threads": [
       {
